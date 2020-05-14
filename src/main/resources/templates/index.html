@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="datasonnet-version" content="TODO-load from maven"/>
+    <title>DataSonnet Editor</title>
+
+    <link rel="stylesheet" th:href="@{/static/custom.css}"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.css}"/>
+
+</head>
+<body>
+    <div class="container" style="height:100%">
+        <div class="row">
+            <div class="col-sm" style="height:100%;">
+                <input type="text" id="payload" name="payload" class="input-container">
+                One of three columns
+            </div>
+            <div class="col-sm">
+                One of three columns
+            </div>
+            <div class="col-sm">
+                One of three columns
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstap JS -->
+    <script th:href="@{/bootstrap/js/bootstrap.js}"></script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="dw-monaco-parser-version" content="2.3.0-20200330024745.commit-b0a8e37">
+    <meta name="build-timestamp" content="2020-3-31 19:22:58">
+    <title>DataSonnet Editor</title>
+    <link rel="stylesheet" th:href="@{/DW/styles.css}">
+    <link rel="stylesheet" th:href="@{/DW/anypoint-styles.css}">
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@3.4.1/dist/tippy.css">
+    <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
+    <script src="https://npmcdn.com/react@15.6.0/dist/react.js"></script>
+    <script src="https://npmcdn.com/react-dom@15.6.0/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/tippy.js@3.4.1/dist/tippy.min.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-152540530-1"></script>
+    <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag(){dataLayer.push(arguments);}
+         gtag('js', new Date());
+
+         gtag('config', 'UA-152540530-1');
+      </script>
+    <style type="text/css" media="screen" class="monaco-colors">.monaco-editor, .monaco-editor-background, .monaco-editor .inputarea.ime-input { background-color: #fffffe; }
+         .monaco-editor, .monaco-editor .inputarea.ime-input { color: #000000; }
+         .monaco-editor .margin { background-color: #fffffe; }
+         .monaco-editor .rangeHighlight { background-color: rgba(253, 255, 0, 0.2); }
+         .vs-whitespace { color: rgba(51, 51, 51, 0.2) !important; }
+         .monaco-editor .line-numbers { color: #237893; }
+         .monaco-editor .current-line ~ .line-numbers { color: #0b216f; }
+         .monaco-editor .view-overlays .current-line { border: 2px solid #eeeeee; }
+         .monaco-editor .margin-view-overlays .current-line-margin { border: 2px solid #eeeeee; }
+         .monaco-editor .lines-content .cigr { box-shadow: 1px 0 0 0 #d3d3d3 inset; }
+         .monaco-editor .lines-content .cigra { box-shadow: 1px 0 0 0 #939393 inset; }
+         .monaco-editor .minimap-slider, .monaco-editor .minimap-slider .minimap-slider-horizontal { background: rgba(100, 100, 100, 0.2); }
+         .monaco-editor .minimap-slider:hover, .monaco-editor .minimap-slider:hover .minimap-slider-horizontal { background: rgba(100, 100, 100, 0.35); }
+         .monaco-editor .minimap-slider.active, .monaco-editor .minimap-slider.active .minimap-slider-horizontal { background: rgba(0, 0, 0, 0.3); }
+         .monaco-editor .minimap-shadow-visible { box-shadow: #dddddd -6px 0 6px -6px inset; }
+         .monaco-editor .view-ruler { box-shadow: 1px 0 0 0 #d3d3d3 inset; }
+         .monaco-editor .scroll-decoration { box-shadow: #dddddd 0 6px 6px -6px inset; }
+         .monaco-editor .focused .selected-text { background-color: #add6ff; }
+         .monaco-editor .selected-text { background-color: #e5ebf1; }
+         .monaco-editor .cursor { background-color: #000000; border-color: #000000; color: #ffffff; }
+         .monaco-editor .squiggly-error { background: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%206%203'%20enable-background%3D'new%200%200%206%203'%20height%3D'3'%20width%3D'6'%3E%3Cg%20fill%3D'%23d60a0a'%3E%3Cpolygon%20points%3D'5.5%2C0%202.5%2C3%201.1%2C3%204.1%2C0'%2F%3E%3Cpolygon%20points%3D'4%2C0%206%2C2%206%2C0.6%205.4%2C0'%2F%3E%3Cpolygon%20points%3D'0%2C2%201%2C3%202.4%2C3%200%2C0.6'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") repeat-x bottom left; }
+         .monaco-editor .squiggly-warning { background: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%206%203'%20enable-background%3D'new%200%200%206%203'%20height%3D'3'%20width%3D'6'%3E%3Cg%20fill%3D'%23117711'%3E%3Cpolygon%20points%3D'5.5%2C0%202.5%2C3%201.1%2C3%204.1%2C0'%2F%3E%3Cpolygon%20points%3D'4%2C0%206%2C2%206%2C0.6%205.4%2C0'%2F%3E%3Cpolygon%20points%3D'0%2C2%201%2C3%202.4%2C3%200%2C0.6'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") repeat-x bottom left; }
+         .monaco-editor .squiggly-info { background: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%206%203'%20enable-background%3D'new%200%200%206%203'%20height%3D'3'%20width%3D'6'%3E%3Cg%20fill%3D'%23008000'%3E%3Cpolygon%20points%3D'5.5%2C0%202.5%2C3%201.1%2C3%204.1%2C0'%2F%3E%3Cpolygon%20points%3D'4%2C0%206%2C2%206%2C0.6%205.4%2C0'%2F%3E%3Cpolygon%20points%3D'0%2C2%201%2C3%202.4%2C3%200%2C0.6'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") repeat-x bottom left; }
+         .monaco-editor .squiggly-hint { background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%223%22%20width%3D%2212%22%3E%3Cg%20fill%3D%22%236c6c6c%22%3E%3Ccircle%20cx%3D%221%22%20cy%3D%221%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%225%22%20cy%3D%221%22%20r%3D%221%22%2F%3E%3Ccircle%20cx%3D%229%22%20cy%3D%221%22%20r%3D%221%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") no-repeat bottom left; }
+         .showUnused .monaco-editor .squiggly-inline-unnecessary { opacity: 0.467; will-change: opacity; }
+         .monaco-diff-editor .diff-review-line-number { color: #237893; }
+         .monaco-diff-editor .diff-review-shadow { box-shadow: #dddddd 0 -6px 6px -6px inset; }
+         .monaco-editor .line-insert, .monaco-editor .char-insert { background-color: rgba(155, 185, 85, 0.2); }
+         .monaco-diff-editor .line-insert, .monaco-diff-editor .char-insert { background-color: rgba(155, 185, 85, 0.2); }
+         .monaco-editor .inline-added-margin-view-zone { background-color: rgba(155, 185, 85, 0.2); }
+         .monaco-editor .line-delete, .monaco-editor .char-delete { background-color: rgba(255, 0, 0, 0.2); }
+         .monaco-diff-editor .line-delete, .monaco-diff-editor .char-delete { background-color: rgba(255, 0, 0, 0.2); }
+         .monaco-editor .inline-deleted-margin-view-zone { background-color: rgba(255, 0, 0, 0.2); }
+         .monaco-diff-editor.side-by-side .editor.modified { box-shadow: -6px 0 5px -5px #dddddd; }
+         .monaco-editor .bracket-match { background-color: rgba(0, 100, 0, 0.1); }
+         .monaco-editor .bracket-match { border: 1px solid #b9b9b9; }
+         .monaco-editor .monaco-editor-overlaymessage .anchor { border-top-color: #007acc; }
+         .monaco-editor .monaco-editor-overlaymessage .message { border: 1px solid #007acc; }
+         .monaco-editor .monaco-editor-overlaymessage .message { background-color: #d6ecf2; }
+         .monaco-editor .codelens-decoration { color: #999999; }
+         .monaco-editor .codelens-decoration > a:hover { color: #0000ff !important; }
+         .monaco-editor .findOptionsWidget { background-color: #f3f3f3; }
+         .monaco-editor .findOptionsWidget { box-shadow: 0 2px 8px #a8a8a8; }
+         .monaco-editor .findMatch { background-color: rgba(234, 92, 0, 0.33); }
+         .monaco-editor .currentFindMatch { background-color: #a8ac94; }
+         .monaco-editor .findScope { background-color: rgba(180, 180, 180, 0.3); }
+         .monaco-editor .find-widget { background-color: #f3f3f3; }
+         .monaco-editor .find-widget { box-shadow: 0 2px 8px #a8a8a8; }
+         .monaco-editor .find-widget.no-results .matchesCount { color: #a1260d; }
+         .monaco-editor .find-widget .monaco-sash { background-color: #c8c8c8; width: 3px !important; margin-left: -4px;}
+         .monaco-editor .find-widget .monaco-checkbox .checkbox:checked + .label { border: 1px solid #007acc; }
+         .monaco-editor .reference-zone-widget .ref-tree .referenceMatch { background-color: rgba(234, 92, 0, 0.3); }
+         .monaco-editor .reference-zone-widget .preview .reference-decoration { background-color: rgba(245, 216, 2, 0.87); }
+         .monaco-editor .reference-zone-widget .ref-tree { background-color: #f3f3f3; }
+         .monaco-editor .reference-zone-widget .ref-tree { color: #646465; }
+         .monaco-editor .reference-zone-widget .ref-tree .reference-file { color: #1e1e1e; }
+         .monaco-editor .reference-zone-widget .ref-tree .monaco-tree.focused .monaco-tree-rows > .monaco-tree-row.selected:not(.highlighted) { background-color: rgba(51, 153, 255, 0.2); }
+         .monaco-editor .reference-zone-widget .ref-tree .monaco-tree.focused .monaco-tree-rows > .monaco-tree-row.selected:not(.highlighted) { color: #6c6c6c !important; }
+         .monaco-editor .reference-zone-widget .preview .monaco-editor .monaco-editor-background,.monaco-editor .reference-zone-widget .preview .monaco-editor .inputarea.ime-input {	background-color: #f2f8fc;}
+         .monaco-editor .reference-zone-widget .preview .monaco-editor .margin {	background-color: #f2f8fc;}
+         .monaco-editor .goto-definition-link { color: #0000ff !important; }
+         .monaco-editor .hoverHighlight { background-color: rgba(173, 214, 255, 0.15); }
+         .monaco-editor .monaco-editor-hover { background-color: #f3f3f3; }
+         .monaco-editor .monaco-editor-hover { border: 1px solid #c8c8c8; }
+         .monaco-editor .monaco-editor-hover .hover-row:not(:first-child):not(:empty) { border-top: 1px solid rgba(200, 200, 200, 0.5); }
+         .monaco-editor .monaco-editor-hover a { color: #006ab1; }
+         .monaco-editor .monaco-editor-hover code { background-color: rgba(220, 220, 220, 0.4); }
+         .monaco-editor.vs .valueSetReplacement { outline: solid 2px #b9b9b9; }
+         .monaco-editor .detected-link-active { color: #0000ff !important; }
+         .monaco-editor .parameter-hints-widget { border: 1px solid #c8c8c8; }
+         .monaco-editor .parameter-hints-widget.multiple .body { border-left: 1px solid rgba(200, 200, 200, 0.5); }
+         .monaco-editor .parameter-hints-widget .signature.has-docs { border-bottom: 1px solid rgba(200, 200, 200, 0.5); }
+         .monaco-editor .parameter-hints-widget { background-color: #f3f3f3; }
+         .monaco-editor .parameter-hints-widget a { color: #006ab1; }
+         .monaco-editor .parameter-hints-widget code { background-color: rgba(220, 220, 220, 0.4); }
+         .monaco-editor .snippet-placeholder { background-color: rgba(10, 50, 100, 0.2); outline-color: transparent; }
+         .monaco-editor .finish-snippet-placeholder { background-color: transparent; outline-color: rgba(10, 50, 100, 0.5); }
+         .monaco-editor .suggest-widget .monaco-list .monaco-list-row .monaco-highlighted-label .highlight { color: #0066bf; }
+         .monaco-editor .suggest-widget { color: #000000; }
+         .monaco-editor .suggest-widget a { color: #006ab1; }
+         .monaco-editor .suggest-widget code { background-color: rgba(220, 220, 220, 0.4); }
+         .monaco-editor .focused .selectionHighlight { background-color: rgba(173, 214, 255, 0.3); }
+         .monaco-editor .selectionHighlight { background-color: rgba(173, 214, 255, 0.15); }
+         .monaco-editor .wordHighlight { background-color: rgba(87, 87, 87, 0.25); }
+         .monaco-editor .wordHighlightStrong { background-color: rgba(14, 99, 156, 0.25); }
+         .monaco-editor .accessibilityHelpWidget { background-color: #f3f3f3; }
+         .monaco-editor .accessibilityHelpWidget { box-shadow: 0 2px 8px #a8a8a8; }
+         .monaco-editor .tokens-inspect-widget { border: 1px solid #c8c8c8; }
+         .monaco-editor .tokens-inspect-widget .tokens-inspect-separator { background-color: #c8c8c8; }
+         .monaco-editor .tokens-inspect-widget { background-color: #f3f3f3; }
+         .mtk1 { color: #000000; }
+         .mtk2 { color: #fffffe; }
+         .mtk3 { color: #808080; }
+         .mtk4 { color: #ff0000; }
+         .mtk5 { color: #0451a5; }
+         .mtk6 { color: #0000ff; }
+         .mtk7 { color: #09885a; }
+         .mtk8 { color: #008000; }
+         .mtk9 { color: #dd0000; }
+         .mtk10 { color: #383838; }
+         .mtk11 { color: #cd3131; }
+         .mtk12 { color: #863b00; }
+         .mtk13 { color: #af00db; }
+         .mtk14 { color: #800000; }
+         .mtk15 { color: #e00000; }
+         .mtk16 { color: #3030c0; }
+         .mtk17 { color: #666666; }
+         .mtk18 { color: #778899; }
+         .mtk19 { color: #ff00ff; }
+         .mtk20 { color: #a31515; }
+         .mtk21 { color: #4f76ac; }
+         .mtk22 { color: #008080; }
+         .mtk23 { color: #001188; }
+         .mtk24 { color: #4864aa; }
+         .mtki { font-style: italic; }
+         .mtkb { font-weight: bold; }
+         .mtku { text-decoration: underline; text-underline-position: under; }
+      </style>
+    <style type="text/css" media="screen"></style>
+    <script type="text/javascript" charset="utf-8" async="" th:src="@{DW/1.bundle.js}"></script>
+</head>
+<body class="anypoint-styles">
+<div id="root">
+    <div data-reactroot="" class="" tabindex="0" style="outline: none;">
+        <!--<div class="TopBar_topBar_1-DuO">
+            <div class="TopBar_leftContent_28OAx">
+                  <span class="Icon_wrapper_1ueug" title="undefined" style="width: 32px; height: 32px;">
+                     <svg viewBox="0 0 25 25" style="fill: rgb(0, 162, 223);">
+                        <path xmlns="http://www.w3.org/2000/svg" d="M24.725 10.743l-8.223 11.743-2.281-3.257 1.221-1.744L16.502 19l5.781-8.257L20 7.486l1.221-1.743 3.504 5zm-14.166-.233L7.221 5.743 6 7.486l4.559 6.512L13 10.51l-1.221-1.743-1.22 1.743z"></path>
+                        <path xmlns="http://www.w3.org/2000/svg" d="M21.221 5.743L9.498 22.486 1.275 10.743 6 4l1.221 1.743-3.504 5L9.498 19 20 4l1.221 1.743z"></path>
+                     </svg>
+                  </span>
+                <input class="TopBar_projectName_3e6E9" value="Untitled project" style="width: 168.731px;"><span class="TopBar_ellipsis_2xgeN"></span>
+            </div>
+            <canvas style="display: none;"></canvas>
+            <div class="TopBar_actions_2NJL1">
+                <label>Language Level: </label>
+                <div class="DiscreteSelector_wrapper_Ysl5j">
+                    <div class="DiscreteSelector_wrapper_Ysl5j">
+                        <span class="DiscreteSelector_label_1BEyF">2.2.2</span>
+                        <span class="Icon_wrapper_1ueug DiscreteSelector_toggleIcon_3yFlm" title="undefined" style="width: 8px; height: 8px;">
+                           <svg viewBox="0 0 8 8">
+                              <polygon points="8,1 1,8 8,8"></polygon>
+                           </svg>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <div class="panelGroup" style="width: 100%; height: 100%; min-height: 231px; display: flex; flex-direction: column; flex-grow: 1;">
+            <div class="panelWrapper" style="height: 864px; width: 100%; min-height: 864px; flex-grow: 0; flex-shrink: 0; display: flex; overflow: hidden; position: relative;">
+                <div class="panelGroup" style="width: 100%; height: 100%; min-width: 602px; display: flex; flex-direction: row; flex-grow: 1;">
+                    <div class="panelWrapper" style="width: 306.75px; height: 100%; min-width: 306.75px; flex-grow: 0; flex-shrink: 0; display: flex; overflow: hidden; position: relative;">
+                        <div class="SideBar_wrapper_1HRyp">
+                            <div class="SideBar_fullSize_3vGV-" aria-disabled="false">
+                                <div class="SideBar_chooser_vqPh8">
+                                    <div class="panelGroup" style="width: 100%; height: 100%; min-height: 231px; display: flex; flex-direction: column; flex-grow: 1;">
+                                        <div class="panelWrapper" style="width: 100%; min-height: 0px; flex-grow: 1; flex-shrink: 1; display: flex; overflow: hidden; position: relative; height: 431.5px;">
+                                            <object type="text/html" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; z-index: -1; opacity: 0;" data="about:blank"></object>
+                                            <div class="InputList_wrapper_2wFE4">
+                                                <!-- react-empty: 31 -->
+                                                <div class="InputList_title_1wD-M">
+                                                    <!-- react-text: 33 -->Input Explorer<!-- /react-text -->
+                                                    <span class="Icon_wrapper_1ueug InputList_addButton__zzXI tippy" data-position="bottom" data-delay="350" title="Create new Input" tabindex="0" style="width: 16px; height: 16px;">
+                                                <svg viewBox="0 0 16 16">
+                                                   <path d="M14 7.5v1H8.5V14h-1V8.5H2v-1h5.5V2h1v5.5H14z"></path>
+                                                </svg>
+                                             </span>
+                                                </div>
+                                                <div class="styles_wrapper_X-FYB">
+                                             <span class="Leaf_wrapper_2sMip" style="padding-left: 16px;">
+                                                <span class="Icon_wrapper_1ueug Leaf_badge_1PN7b" title="undefined" style="width: 24px; height: 8px;">
+                                                   <svg viewBox="0 0 18 8" style="fill: rgb(23, 139, 234);">
+                                                      <path d="M1.12109375,7.6796875 C0.847654883,7.6796875 0.609376016,7.65104195 0.40625,7.59375 L0.40625,6.5859375 C0.614584375,6.63802109 0.804686641,6.6640625 0.9765625,6.6640625 C1.24218883,6.6640625 1.43229109,6.58138104 1.546875,6.41601562 C1.66145891,6.25065021 1.71875,5.99218926 1.71875,5.640625 L1.71875,0.2890625 L2.9296875,0.2890625 L2.9296875,5.6328125 C2.9296875,6.2994825 2.77734527,6.80728992 2.47265625,7.15625 C2.16796723,7.50521008 1.7174509,7.6796875 1.12109375,7.6796875 Z M7.73828125,4.4140625 C7.73828125,4.92969008 7.55273623,5.33593602 7.18164062,5.6328125 C6.81054502,5.92968898 6.29427414,6.078125 5.6328125,6.078125 C5.02343445,6.078125 4.48437734,5.96354281 4.015625,5.734375 L4.015625,4.609375 C4.40104359,4.78125086 4.72721221,4.9023434 4.99414062,4.97265625 C5.26106904,5.0429691 5.50520723,5.078125 5.7265625,5.078125 C5.99218883,5.078125 6.19596283,5.02734426 6.33789062,4.92578125 C6.47981842,4.82421824 6.55078125,4.67317809 6.55078125,4.47265625 C6.55078125,4.36067652 6.51953156,4.26106814 6.45703125,4.17382812 C6.39453094,4.08658811 6.30273498,4.00260457 6.18164062,3.921875 C6.06054627,3.84114543 5.81380395,3.71224047 5.44140625,3.53515625 C5.09244617,3.37109293 4.83073004,3.21354242 4.65625,3.0625 C4.48176996,2.91145758 4.34244844,2.73567809 4.23828125,2.53515625 C4.13411406,2.33463441 4.08203125,2.10026176 4.08203125,1.83203125 C4.08203125,1.32682039 4.2532535,0.929688945 4.59570312,0.640625 C4.93815275,0.351561055 5.41145531,0.20703125 6.015625,0.20703125 C6.31250148,0.20703125 6.59570178,0.242187148 6.86523438,0.3125 C7.13476697,0.382812852 7.4166652,0.481770195 7.7109375,0.609375 L7.3203125,1.55078125 C7.01562348,1.42578062 6.76367287,1.33854191 6.56445312,1.2890625 C6.36523338,1.23958309 6.1692718,1.21484375 5.9765625,1.21484375 C5.74739469,1.21484375 5.5716152,1.26822863 5.44921875,1.375 C5.3268223,1.48177137 5.265625,1.62109289 5.265625,1.79296875 C5.265625,1.89974012 5.29036434,1.99283814 5.33984375,2.07226562 C5.38932316,2.15169311 5.46809842,2.22851525 5.57617188,2.30273438 C5.68424533,2.3769535 5.94010215,2.5104157 6.34375,2.703125 C6.87760684,2.95833461 7.24348859,3.21419143 7.44140625,3.47070312 C7.63932391,3.72721482 7.73828125,4.0416648 7.73828125,4.4140625 Z M13.9570312,3.13671875 C13.9570312,4.08203598 13.7226586,4.80859121 13.2539062,5.31640625 C12.7851539,5.82422129 12.1132856,6.078125 11.2382812,6.078125 C10.3632769,6.078125 9.69140859,5.82422129 9.22265625,5.31640625 C8.75390391,4.80859121 8.51953125,4.07943184 8.51953125,3.12890625 C8.51953125,2.17838066 8.75455494,1.45247646 9.22460938,0.951171875 C9.69466381,0.449867285 10.3684852,0.19921875 11.2460938,0.19921875 C12.1237023,0.19921875 12.7949196,0.451820391 13.2597656,0.95703125 C13.7246117,1.46224211 13.9570312,2.18879734 13.9570312,3.13671875 Z M9.7890625,3.13671875 C9.7890625,3.77474277 9.91015504,4.25520672 10.1523438,4.578125 C10.3945325,4.90104328 10.756508,5.0625 11.2382812,5.0625 C12.2044319,5.0625 12.6875,4.42057934 12.6875,3.13671875 C12.6875,1.85025398 12.2070361,1.20703125 11.2460938,1.20703125 C10.7643205,1.20703125 10.4010429,1.369139 10.15625,1.69335938 C9.91145711,2.01757975 9.7890625,2.49869473 9.7890625,3.13671875 Z M20.2070312,6 L18.6679688,6 L16.1835938,1.6796875 L16.1484375,1.6796875 C16.1979169,2.44271215 16.2226562,2.98697754 16.2226562,3.3125 L16.2226562,6 L15.140625,6 L15.140625,0.2890625 L16.6679688,0.2890625 L19.1484375,4.56640625 L19.1757812,4.56640625 C19.1367186,3.82421504 19.1171875,3.2994807 19.1171875,2.9921875 L19.1171875,0.2890625 L20.2070312,0.2890625 L20.2070312,6 Z"></path>
+                                                   </svg>
+                                                </span>
+                                                <span class="Leaf_label_2Fe3_">payload</span>
+                                             </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="divider" style="width: auto; min-width: auto; height: 1px; min-height: 1px; max-height: 1px; flex-grow: 0; position: relative; background-color: rgb(204, 204, 204);">
+                                            <div style="position: absolute; width: 100%; height: 9px; left: 0px; top: -4px; cursor: ns-resize; z-index: 100;"></div>
+                                        </div>
+                                        <div class="panelWrapper" style="width: 100%; min-height: 0px; flex-grow: 1; flex-shrink: 1; display: flex; overflow: hidden; position: relative; height: 431.5px;">
+                                            <object type="text/html" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; z-index: -1; opacity: 0;" data="about:blank"></object>
+                                            <div class="ScriptList_wrapper_1YEsi">
+                                                <!-- react-empty: 48 -->
+                                                <div class="ScriptList_title_BvC4X">
+                                                    <!-- react-text: 50 -->Script Explorer<!-- /react-text -->
+                                                    <span class="Icon_wrapper_1ueug ScriptList_addButton_ede0M tippy" data-position="bottom" data-delay="350" title="Create new Script" tabindex="0" style="width: 16px; height: 16px;">
+                                                <svg viewBox="0 0 16 16">
+                                                   <path d="M14 7.5v1H8.5V14h-1V8.5H2v-1h5.5V2h1v5.5H14z"></path>
+                                                </svg>
+                                             </span>
+                                                </div>
+                                                <div class="styles_wrapper_X-FYB">
+                                             <span class="Leaf_wrapper_3Zxph Leaf_highlighted_1RluY" style="padding-left: 16px;">
+                                                <!-- react-text: 56 -->main<!-- /react-text --><!-- react-text: 57 -->.dwl<!-- /react-text -->
+                                             </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="file" accept=".json, .csv, .xml, .ndjson, .dwl, .xlsx, .txt, .multipart, .yaml, .urlencoded" autocomplete="off" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider" style="width: 1px; min-width: 1px; max-width: 1px; height: auto; min-height: auto; flex-grow: 0; position: relative; background-color: rgb(204, 204, 204);">
+                        <div style="position: absolute; width: 9px; height: 100%; left: -4px; top: 0px; cursor: ew-resize; z-index: 100;"></div>
+                    </div>
+                    <div class="panelWrapper" style="width: 552.15px; height: 100%; min-width: 552.15px; flex-grow: 0; flex-shrink: 0; display: flex; overflow: hidden; position: relative;">
+                        <div class="DataWeaveEditor_wrapper_fv-YY">
+                           <span class="DataWeaveEditor_title_DMS4C">
+                              <!-- react-text: 64 -->Script:<!-- /react-text -->
+                              <span class="DataWeaveEditor_filename_6mcE9">
+                                 <!-- react-text: 66 -->main<!-- /react-text --><!-- react-text: 67 -->.dwl<!-- /react-text -->
+                              </span>
+                           </span>
+                            <div class="DataWeaveEditor_editor_2CQZH" tabindex="0" style="outline: none;">
+                                <div data-test-id="undefined-monaco-editor" class="react-monaco-editor-container DataWeaveMonaco_wrapper_3-NqI showUnused" style="width: 100%; height: 100%;" data-keybinding-context="1" data-mode-id="dw">
+                                    <div class="monaco-editor vs" data-uri="file:///main.dwl" style="width: 552px; height: 829px;">
+                                        <div data-mprt="3" class="overflow-guard" style="width: 552px; height: 829px;">
+                                            <div class="margin" role="presentation" aria-hidden="true" style="position: absolute; will-change: transform; top: 0px; height: 829px; width: 62px;">
+                                                <div class="glyph-margin" style="left: 0px; width: 19px; height: 829px;"></div>
+                                                <div class="margin-view-zones" role="presentation" aria-hidden="true" style="position: absolute;"></div>
+                                                <div class="margin-view-overlays" role="presentation" aria-hidden="true" style="position: absolute; width: 62px; font-family: &quot;Droid Sans Mono&quot;, monospace, monospace, &quot;Droid Sans Fallback&quot;; font-weight: normal; font-size: 14px; line-height: 19px; letter-spacing: 0px; height: 829px;">
+                                                    <div style="position:absolute;top:0px;width:100%;height:19px;">
+                                                        <div class="line-numbers lh-odd" style="left:19px;width:17px;">1</div>
+                                                    </div>
+                                                    <div style="position:absolute;top:19px;width:100%;height:19px;">
+                                                        <div class="line-numbers lh-odd" style="left:19px;width:17px;">2</div>
+                                                    </div>
+                                                    <div style="position:absolute;top:38px;width:100%;height:19px;">
+                                                        <div class="line-numbers lh-odd" style="left:19px;width:17px;">3</div>
+                                                    </div>
+                                                    <div style="position:absolute;top:57px;width:100%;height:19px;">
+                                                        <div class="current-line" style="width:62px; height:19px;"></div>
+                                                        <div class="line-numbers lh-odd" style="left:19px;width:17px;">4</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="monaco-scrollable-element editor-scrollable vs" role="presentation" data-mprt="5" style="position: absolute; overflow: hidden; left: 62px; width: 490px; height: 829px;">
+                                                <div class="lines-content monaco-editor-background" style="position: absolute; overflow: hidden; width: 1e+06px; height: 1e+06px; will-change: transform; top: 0px; left: 0px;">
+                                                    <div class="view-overlays" role="presentation" aria-hidden="true" style="position: absolute; height: 0px; width: 490px;">
+                                                        <div style="position:absolute;top:0px;width:100%;height:19px;"></div>
+                                                        <div style="position:absolute;top:19px;width:100%;height:19px;"></div>
+                                                        <div style="position:absolute;top:38px;width:100%;height:19px;"></div>
+                                                        <div style="position:absolute;top:57px;width:100%;height:19px;">
+                                                            <div class="current-line" style="width:490px; height:19px;"></div>
+                                                            <div class="cdr selectionHighlight" style="left:67px;width:59px;height:19px;"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div role="presentation" aria-hidden="true" class="view-rulers"></div>
+                                                    <div class="view-zones" role="presentation" aria-hidden="true" style="position: absolute;"></div>
+                                                    <div class="view-lines" role="presentation" aria-hidden="true" data-mprt="7" style="position: absolute; font-family: &quot;Droid Sans Mono&quot;, monospace, monospace, &quot;Droid Sans Fallback&quot;; font-weight: normal; font-size: 14px; line-height: 19px; letter-spacing: 0px; width: 490px; height: 829px;">
+                                                        <div style="top:57px;height:19px;" class="view-line"><span><span class="mtk1">payload</span><span class="mtk6">.</span><span class="mtk1">message</span></span></div>
+                                                    </div>
+                                                    <div data-mprt="1" class="contentWidgets" style="position: absolute; top: 0px;">
+                                                        <div class="lightbulb-glyph" title="Show Fixes (Ctrl+.)" widgetid="LightBulbWidget" style="position: absolute; visibility: hidden; max-width: 770px;"></div>
+                                                    </div>
+                                                    <div role="presentation" aria-hidden="true" class="cursors-layer cursor-line-style cursor-solid">
+                                                        <div class="cursor " style="height: 19px; top: 57px; left: 125px; font-family: &quot;Droid Sans Mono&quot;, monospace, monospace, &quot;Droid Sans Fallback&quot;; font-weight: normal; font-size: 14px; line-height: 19px; letter-spacing: 0px; display: block; visibility: hidden; width: 2px;"></div>
+                                                    </div>
+                                                </div>
+                                                <div role="presentation" aria-hidden="true" class="invisible scrollbar horizontal" style="position: absolute; width: 476px; height: 10px; left: 0px; bottom: 0px;">
+                                                    <div class="slider" style="position: absolute; top: 0px; left: 0px; height: 10px; will-change: transform; width: 476px;"></div>
+                                                </div>
+                                                <canvas class="decorationsOverviewRuler" aria-hidden="true" width="14" height="829" style="position: absolute; will-change: transform; top: 0px; right: 0px; width: 14px; height: 829px;"></canvas>
+                                                <div role="presentation" aria-hidden="true" class="invisible scrollbar vertical" style="position: absolute; width: 14px; height: 829px; right: 0px; top: 0px;">
+                                                    <div class="slider" style="position: absolute; top: 0px; left: 0px; width: 14px; will-change: transform; height: 829px;"></div>
+                                                </div>
+                                            </div>
+                                            <div role="presentation" aria-hidden="true" style="width: 552px;"></div>
+                                            <textarea data-mprt="6" class="inputarea" wrap="off" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" aria-label="Editor content;Press Alt+F1 for Accessibility Options." role="textbox" aria-multiline="true" aria-haspopup="false" aria-autocomplete="both" style="font-size: 1px; line-height: 19px; top: 57px; left: 188px; width: 1px; height: 1px;"></textarea>
+                                            <div style="position: absolute; top: 0px; left: 0px; width: 0px; height: 0px;"></div>
+                                            <div data-mprt="4" class="overlayWidgets" style="width: 552px;">
+                                                <div class="accessibilityHelpWidget" role="dialog" aria-hidden="true" widgetid="editor.contrib.accessibilityHelpWidget" style="display: none; position: absolute;">
+                                                    <div role="document"></div>
+                                                </div>
+                                                <div class="monaco-editor-hover hidden" aria-hidden="true" role="presentation" widgetid="editor.contrib.modesGlyphHoverWidget" style="position: absolute;"></div>
+                                            </div>
+                                            <div data-mprt="8" class="minimap slider-mouseover" role="presentation" aria-hidden="true" style="position: absolute; left: 0px; width: 0px; height: 829px;">
+                                                <div class="minimap-shadow-hidden" style="height: 829px;"></div>
+                                                <canvas width="1" height="829" style="position: absolute; left: 0px; width: 1px; height: 829px;"></canvas>
+                                                <div class="minimap-slider" style="position: absolute; will-change: transform; width: 0px;">
+                                                    <div class="minimap-slider-horizontal" style="position: absolute; width: 0px; height: 0px;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div data-mprt="2" class="overflowingContentWidgets">
+                                            <div class="monaco-editor rename-box" widgetid="__renameInputWidget" style="height: 19px; box-shadow: rgb(168, 168, 168) 0px 2px 8px; position: absolute; visibility: hidden; max-width: 1848px;"><input class="rename-input" type="text" aria-label="Rename input. Type new name and press Enter to commit." style="font-family: &quot;Droid Sans Mono&quot;, monospace, monospace, &quot;Droid Sans Fallback&quot;; font-weight: normal; font-size: 14px; background-color: rgb(255, 255, 255); color: rgb(97, 97, 97); border-width: 0px; border-style: none;"></div>
+                                            <div class="monaco-editor-hover hidden" tabindex="0" widgetid="editor.contrib.modesContentHoverWidget" style="position: absolute; visibility: hidden; max-width: 1227px;">
+                                                <div class="monaco-scrollable-element " role="presentation" style="position: relative; overflow: hidden;">
+                                                    <div class="monaco-editor-hover-content" style="overflow: hidden; font-size: 14px; line-height: 19px; max-height: 250px;"></div>
+                                                    <div role="presentation" aria-hidden="true" class="invisible scrollbar horizontal" style="position: absolute;">
+                                                        <div class="slider" style="position: absolute; top: 0px; left: 0px; height: 10px; will-change: transform;"></div>
+                                                    </div>
+                                                    <div role="presentation" aria-hidden="true" class="invisible scrollbar vertical" style="position: absolute;">
+                                                        <div class="slider" style="position: absolute; top: 0px; left: 0px; width: 10px; will-change: transform;"></div>
+                                                    </div>
+                                                    <div class="shadow"></div>
+                                                    <div class="shadow"></div>
+                                                    <div class="shadow top-left-corner"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="context-view" aria-hidden="true" style="display: none;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider" style="width: 1px; min-width: 1px; max-width: 1px; height: auto; min-height: auto; flex-grow: 0; position: relative; background-color: rgb(204, 204, 204);">
+                        <div style="position: absolute; width: 9px; height: 100%; left: -4px; top: 0px; cursor: ew-resize; z-index: 100;"></div>
+                    </div>
+                    <div class="panelWrapper" style="width: 351.109px; height: 100%; min-width: 0px; flex-grow: 1; flex-shrink: 1; display: flex; overflow: hidden; position: relative;">
+                        <object type="text/html" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; z-index: -1; opacity: 0;" data="about:blank"></object>
+                        <div class="PreviewPanel_wrapper_2Pk_4">
+                            <div class="PreviewPanel_title_2Emzy">
+                                <div class="PreviewPanel_leftItems_10yXb">Output</div>
+                                <div class="DiscreteSelector_wrapper_Ysl5j PreviewPanel_selector_t3eQT">
+                                    <div class="DiscreteSelector_wrapper_Ysl5j">
+                                        <span class="DiscreteSelector_label_1BEyF">application/json</span>
+                                        <span class="Icon_wrapper_1ueug DiscreteSelector_toggleIcon_3yFlm" title="undefined" style="width: 8px; height: 8px;">
+                                       <svg viewBox="0 0 8 8">
+                                          <polygon points="8,1 1,8 8,8"></polygon>
+                                       </svg>
+                                    </span>
+                                    </div>
+                                    <!-- react-empty: 86 -->
+                                </div>
+                            </div>
+                            <div data-test-id="undefined-monaco-editor" class="react-monaco-editor-container PreviewPanel_editor_1mqv4 Monaco_wrapper_3w9i_ showUnused" style="width: 100%; height: 100%;" data-keybinding-context="1" data-mode-id="json">
+                                <div class="monaco-editor vs" data-uri="inmemory://model/2" style="width: 351px; height: 819px;">
+                                    <div data-mprt="3" class="overflow-guard" style="width: 351px; height: 819px;">
+                                        <div class="margin" role="presentation" aria-hidden="true" style="position: absolute; will-change: transform; top: 0px; height: 819px; width: 62px;">
+                                            <div class="glyph-margin" style="left: 0px; width: 19px; height: 819px;"></div>
+                                            <div class="margin-view-zones" role="presentation" aria-hidden="true" style="position: absolute;"></div>
+                                            <div class="margin-view-overlays" role="presentation" aria-hidden="true" style="position: absolute; width: 62px; font-family: &quot;Droid Sans Mono&quot;, monospace, monospace, &quot;Droid Sans Fallback&quot;; font-weight: normal; font-size: 14px; line-height: 19px; letter-spacing: 0px; height: 819px;">
+                                                <div style="position:absolute;top:0px;width:100%;height:19px;">
+                                                    <div class="current-line" style="width:62px; height:19px;"></div>
+                                                    <div class="line-numbers lh-odd" style="left:19px;width:17px;">1</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="monaco-scrollable-element editor-scrollable vs" role="presentation" data-mprt="5" style="position: absolute; overflow: hidden; left: 62px; width: 289px; height: 819px;">
+                                            <div class="lines-content monaco-editor-background" style="position: absolute; overflow: hidden; width: 1e+06px; height: 1e+06px; will-change: transform; top: 0px; left: 0px;">
+                                                <div class="view-overlays" role="presentation" aria-hidden="true" style="position: absolute; height: 0px; width: 289px;">
+                                                    <div style="position:absolute;top:0px;width:100%;height:19px;">
+                                                        <div class="current-line" style="width:289px; height:19px;"></div>
+                                                    </div>
+                                                </div>
+                                                <div role="presentation" aria-hidden="true" class="view-rulers"></div>
+                                                <div class="view-zones" role="presentation" aria-hidden="true" style="position: absolute;"></div>
+                                                <div class="view-lines" role="presentation" aria-hidden="true" data-mprt="7" style="position: absolute; font-family: &quot;Droid Sans Mono&quot;, monospace, monospace, &quot;Droid Sans Fallback&quot;; font-weight: normal; font-size: 14px; line-height: 19px; letter-spacing: 0px; width: 289px; height: 819px;">
+                                                    <div style="top:0px;height:19px;" class="view-line"><span><span class="mtk20">"Hello&nbsp;world!"</span></span></div>
+                                                </div>
+                                                <div data-mprt="1" class="contentWidgets" style="position: absolute; top: 0px;">
+                                                    <div class="lightbulb-glyph" title="Show Fixes (Ctrl+.)" widgetid="LightBulbWidget" style="position: absolute; visibility: hidden; max-width: 475px;"></div>
+                                                </div>
+                                                <div role="presentation" aria-hidden="true" class="cursors-layer cursor-line-style cursor-solid">
+                                                    <div class="cursor " style="height: 19px; top: 0px; left: 0px; font-family: &quot;Droid Sans Mono&quot;, monospace, monospace, &quot;Droid Sans Fallback&quot;; font-weight: normal; font-size: 14px; line-height: 19px; letter-spacing: 0px; display: block; visibility: hidden; width: 2px;"></div>
+                                                </div>
+                                            </div>
+                                            <div role="presentation" aria-hidden="true" class="invisible scrollbar horizontal" style="position: absolute; width: 275px; height: 10px; left: 0px; bottom: 0px;">
+                                                <div class="slider" style="position: absolute; top: 0px; left: 0px; height: 10px; will-change: transform; width: 275px;"></div>
+                                            </div>
+                                            <canvas class="decorationsOverviewRuler" aria-hidden="true" width="14" height="819" style="position: absolute; will-change: transform; top: 0px; right: 0px; width: 14px; height: 819px;"></canvas>
+                                            <div role="presentation" aria-hidden="true" class="invisible scrollbar vertical" style="position: absolute; width: 14px; height: 819px; right: 0px; top: 0px;">
+                                                <div class="slider" style="position: absolute; top: 0px; left: 0px; width: 14px; will-change: transform; height: 819px;"></div>
+                                            </div>
+                                        </div>
+                                        <div role="presentation" aria-hidden="true" style="width: 351px;"></div>
+                                        <textarea data-mprt="6" class="inputarea" wrap="off" autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false" aria-label="Editor content;Press Alt+F1 for Accessibility Options." role="textbox" aria-multiline="true" aria-haspopup="false" aria-autocomplete="both" style="font-size: 1px; line-height: 19px; top: 0px; left: 62px; width: 1px; height: 1px;"></textarea>
+                                        <div style="position: absolute; top: 0px; left: 0px; width: 0px; height: 0px;"></div>
+                                        <div data-mprt="4" class="overlayWidgets" style="width: 351px;">
+                                            <div class="accessibilityHelpWidget" role="dialog" aria-hidden="true" widgetid="editor.contrib.accessibilityHelpWidget" style="display: none; position: absolute;">
+                                                <div role="document"></div>
+                                            </div>
+                                            <div class="monaco-editor-hover hidden" aria-hidden="true" role="presentation" widgetid="editor.contrib.modesGlyphHoverWidget" style="position: absolute;"></div>
+                                        </div>
+                                        <div data-mprt="8" class="minimap slider-mouseover" role="presentation" aria-hidden="true" style="position: absolute; left: 0px; width: 0px; height: 819px;">
+                                            <div class="minimap-shadow-hidden" style="height: 819px;"></div>
+                                            <canvas width="1" height="819" style="position: absolute; left: 0px; width: 1px; height: 819px;"></canvas>
+                                            <div class="minimap-slider" style="position: absolute; will-change: transform; width: 0px;">
+                                                <div class="minimap-slider-horizontal" style="position: absolute; width: 0px; height: 0px;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-mprt="2" class="overflowingContentWidgets">
+                                        <div class="monaco-editor rename-box" widgetid="__renameInputWidget" style="height: 19px; box-shadow: rgb(168, 168, 168) 0px 2px 8px; position: absolute; visibility: hidden; max-width: 1848px;"><input class="rename-input" type="text" aria-label="Rename input. Type new name and press Enter to commit." style="font-family: &quot;Droid Sans Mono&quot;, monospace, monospace, &quot;Droid Sans Fallback&quot;; font-weight: normal; font-size: 14px; background-color: rgb(255, 255, 255); color: rgb(97, 97, 97); border-width: 0px; border-style: none;"></div>
+                                        <div class="monaco-editor-hover hidden" tabindex="0" widgetid="editor.contrib.modesContentHoverWidget" style="position: absolute; visibility: hidden; max-width: 1848px;">
+                                            <div class="monaco-scrollable-element " role="presentation" style="position: relative; overflow: hidden;">
+                                                <div class="monaco-editor-hover-content" style="overflow: hidden; font-size: 14px; line-height: 19px; max-height: 250px;"></div>
+                                                <div role="presentation" aria-hidden="true" class="invisible scrollbar horizontal" style="position: absolute;">
+                                                    <div class="slider" style="position: absolute; top: 0px; left: 0px; height: 10px; will-change: transform;"></div>
+                                                </div>
+                                                <div role="presentation" aria-hidden="true" class="invisible scrollbar vertical" style="position: absolute;">
+                                                    <div class="slider" style="position: absolute; top: 0px; left: 0px; width: 10px; will-change: transform;"></div>
+                                                </div>
+                                                <div class="shadow"></div>
+                                                <div class="shadow"></div>
+                                                <div class="shadow top-left-corner"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="context-view" aria-hidden="true" style="display: none;"></div>
+                                </div>
+                            </div>
+                            <!-- react-empty: 88 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="divider" style="width: auto; min-width: auto; height: 1px; min-height: 1px; max-height: 1px; flex-grow: 0; position: relative; background-color: rgb(204, 204, 204);">
+                <div style="position: absolute; width: 100%; height: 9px; left: 0px; top: -4px; cursor: ns-resize; z-index: 100;"></div>
+            </div>
+            <div class="panelWrapper" style="height: 25px; width: 100%; min-height: 0px; flex-grow: 1; flex-shrink: 1; display: flex; overflow: hidden; position: relative;">
+                <object type="text/html" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; z-index: -1; opacity: 0;" data="about:blank"></object>
+                <div class="ToolBar_wrapper_2yZEk">
+                    <div class="ToolBar_tabs_mToY7">
+                        <div class="Tab_wrapper_1WWIt tippy" data-position="top" data-delay="350" title="Show Log Viewer (⇧⌘L)" data-test-id="log-viewer-tab" tabindex="0">
+                           <span class="Icon_wrapper_1ueug Tab_icon_1Iz5k" title="undefined" style="width: 16px; height: 16px;">
+                              <svg viewBox="0 0 16 16">
+                                 <path d="M2,8.66666667 L3.33333333,8.66666667 L3.33333333,7.33333333 L2,7.33333333 L2,8.66666667 Z M2,11.3333333 L3.33333333,11.3333333 L3.33333333,10 L2,10 L2,11.3333333 Z M2,6 L3.33333333,6 L3.33333333,4.66666667 L2,4.66666667 L2,6 Z M4.66666667,8.66666667 L14,8.66666667 L14,7.33333333 L4.66666667,7.33333333 L4.66666667,8.66666667 Z M4.66666667,11.3333333 L14,11.3333333 L14,10 L4.66666667,10 L4.66666667,11.3333333 Z M4.66666667,4.66666667 L4.66666667,6 L14,6 L14,4.66666667 L4.66666667,4.66666667 Z"></path>
+                              </svg>
+                           </span>
+                            <span class="Tab_label_1RJan">Log Viewer</span>
+                        </div>
+                        <div class="Tab_wrapper_1WWIt tippy" data-position="top" data-delay="350" title="Show API Reference (⇧⌘L)" data-test-id="api-reference-tab" tabindex="0">
+                           <span class="Icon_wrapper_1ueug Tab_icon_1Iz5k" title="undefined" style="width: 16px; height: 16px;">
+                              <svg viewBox="0 0 16 16">
+                                 <path d="M8 4.594l4 2.801v1.221L8 5.815V4.594zm0 4.011l4 2.801v-1.221L8 7.384v1.221zm6-3.404v8.841L12.512 15 8 11.841 3.488 15 2 14.042V5.201L8 1l6 4.201zm-1 .521L8 2.221 3 5.722v7.775l.465.299L8 10.62l4.535 3.176.465-.299V5.722z"></path>
+                              </svg>
+                           </span>
+                            <span class="Tab_label_1RJan">API Reference</span>
+                        </div>
+                    </div>
+                    <div class="ToolBar_content_1x_8x">
+                        <div class="LogViewer_wrapper_20lKo LogViewer_notice_6zltu">
+                            <!-- react-empty: 107 -->
+                            <div class="LogViewer_noticeWrapper_rYfm2" data-test-id="log-viewer-notice">
+                                <span class="LogViewer_mainText_1UXP1">No logs available</span>
+                                <span class="LogViewer_subText_2pOqr">
+                                 <!-- react-text: 111 -->Learn more about the <!-- /react-text --><span class="LogViewer_pre_2qDJE">log()</span><!-- react-text: 113 --> function in the<!-- /react-text --><!-- react-text: 114 --> <!-- /react-text --><span class="LogViewer_action_15JXA">API Reference</span>
+                              </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{DW/bundle.js}"></script>
+<div class="monaco-aria-container">
+    <div class="monaco-alert" role="alert" aria-atomic="true"></div>
+    <div class="monaco-status" role="status" aria-atomic="true"></div>
+</div>
+</body>
+</html>
