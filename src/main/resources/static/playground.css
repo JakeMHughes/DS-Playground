@@ -1,0 +1,27 @@
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 20px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+}
+
+.editors {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    background: #000000;
+}
+
+.editorContainer {
+    width: 30%;
+    float: left;
+    margin-right: 5px;
+}
+
+.editor {
+    flex-basis: 33.3%;
+    height: 97.9vh;
+    width: 30%;
+    border: 1px #cecece solid;
+}

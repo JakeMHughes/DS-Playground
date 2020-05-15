@@ -6,23 +6,20 @@ import com.datasonnet.StringDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Service
+@org.springframework.stereotype.Service
 public class Services {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public ResponseEntity<?> transformLogic(DSMap input_data){
 
-        logger.info(input_data.toString());
         String payload = "";
         String payloadType="";
-        String resource= input_data.getResources().toString();
-        String script = resource.substring(resource.indexOf('=')+1, resource.lastIndexOf('}'));
+        String script = input_data.getResources().toString();
         logger.info("Script: " + script);
 
         Map<String, Document> variables = new HashMap<>();

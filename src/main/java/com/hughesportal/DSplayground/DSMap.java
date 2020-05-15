@@ -4,23 +4,18 @@ import java.util.ArrayList;
 
 public class DSMap {
 
-    private String main="";
     private ArrayList<Inputs> inputs = new ArrayList<>();
     private Object resources;
 
 
 
     DSMap(){}
-    DSMap(String main, ArrayList<Inputs> input, String res){
-        this.main = main;
-        this.inputs = input;
+    DSMap(ArrayList<Inputs> inputs, String res){
+        this.inputs = inputs;
         this.resources = res;
     }
 
 
-    public String getMain() {
-        return main;
-    }
 
     public ArrayList<Inputs> getInputs() {
         return inputs;
@@ -33,7 +28,6 @@ public class DSMap {
     @Override
     public String toString() {
         String content = "{\n";
-        content += "\t\"main\": \"" + main +"\",\n";
         content += "\t\"inputs\":";
         if(inputs.size()==0){
             content +="[],\n";
