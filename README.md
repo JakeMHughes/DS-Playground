@@ -12,17 +12,11 @@ or you can clone this repository to build and run manually.
 
 ### Prerequisites
 
-#### Local
-[Maven]("https://maven.apache.org/install.html")  
-[Datasonnet]("https://github.com/modusbox/datasonnet-mapper")   
-
-
----
-
-#### Docker
-[Docker]("https://docs.docker.com/get-docker/")  
-
----
+* Local  
+    * [Maven]("https://maven.apache.org/install.html")  
+    * [Datasonnet]("https://github.com/modusbox/datasonnet-mapper")   
+* Docker
+    * [Docker]("https://docs.docker.com/get-docker/")  
 
 ### Installing
 
