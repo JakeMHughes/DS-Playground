@@ -13,10 +13,10 @@ or you can clone this repository to build and run manually.
 ### Prerequisites
 
 * Local  
-    * [Maven]("https://maven.apache.org/install.html")  
-    * [Datasonnet]("https://github.com/modusbox/datasonnet-mapper")   
+    * [Maven](https://maven.apache.org/install.html)  
+    * [Datasonnet](https://github.com/modusbox/datasonnet-mapper)   
 * Docker
-    * [Docker]("https://docs.docker.com/get-docker/")  
+    * [Docker](https://docs.docker.com/get-docker/)  
 
 ### Installing
 
@@ -54,4 +54,4 @@ TODO
 
 ## License
 
-This project is licensed under [GPLv3]("https://choosealicense.com/licenses/gpl-3.0/")
+This project is licensed under [GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
