@@ -13,87 +13,51 @@ or you can clone this repository to build and run manually.
 ### Prerequisites
 
 #### Local
-
-<p style="margin-left:40px;">
 [Maven]("https://maven.apache.org/install.html")  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Datasonnet]("https://github.com/modusbox/datasonnet-mapper")  
-Validate Maven is installed by running `mvn --version`    
-To install Datasonnet:  
-```bash
-git clone https://github.com/modusbox/datasonnet-mapper && cd datasonnet-mapper
-mvn clean install
-```
-</p>
+[Datasonnet]("https://github.com/modusbox/datasonnet-mapper")   
 
+
+---
+
+#### Docker
+[Docker]("https://docs.docker.com/get-docker/")  
+
+---
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
+#### Local
+```bash
+git clone https://github.com/JakeMHughes/datasonnet-mapper/tree/dataweave && cd datasonnet-mapper
+mvn clean install
+git clone https://github.com/JakeMHughes/DS-Playground && cd DS-Playground
+mvn spring-boot:run
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
+#### Docker
+```bash
+docker pull ${image}
+docker run -d -p 8080:8080 --name=ds-playground ${image}
 ```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+* [Datasonnet](https://github.com/modusbox/datasonnet-mapper) - The data transformation
 * [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Ace](https://ace.c9.io/) - The code editors
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+TODO
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+TODO
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Jacob Hughes** - *Initial work* - [Personal Website](https://hughesportal.com)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+This project is licensed under [GPLv3]("https://choosealicense.com/licenses/gpl-3.0/")
