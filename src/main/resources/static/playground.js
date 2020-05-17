@@ -1,3 +1,5 @@
+
+//Edit each editor to set the font size
 $(function() {
    var editor;
    $('.editor').each(function( index ) {
@@ -8,37 +10,39 @@ $(function() {
 
 var beautify = ace.require("ace/ext/beautify"); // get reference to extension
 
-        ace.require("/ace/ext/language_tools");
+ace.require("/ace/ext/language_tools");
 
-        var payloadEditor = ace.edit("payload-editor");
-        payloadEditor.setTheme("ace/theme/twilight");
-        payloadEditor.getSession().setMode("ace/mode/json");
-        payloadEditor.setOptions({
-            enableBasicAutocompletion: true
-        });
+var payloadEditor = ace.edit("payload-editor");
+payloadEditor.setTheme("ace/theme/twilight");
+payloadEditor.getSession().setMode("ace/mode/json");
+payloadEditor.setOptions({
+    enableBasicAutocompletion: true
+});
 
-        var dsEditor = ace.edit("ds-editor");
-        dsEditor.setTheme("ace/theme/twilight");
-        dsEditor.getSession().setMode("ace/mode/json5");
-        dsEditor.setOptions({
-            enableBasicAutocompletion: true
-        });
+var dsEditor = ace.edit("ds-editor");
+dsEditor.setTheme("ace/theme/twilight");
+dsEditor.getSession().setMode("ace/mode/json5");
+dsEditor.setOptions({
+    enableBasicAutocompletion: true
+});
 
-        var outEditor = ace.edit("output-editor");
-        outEditor.setTheme("ace/theme/twilight");
-        outEditor.getSession().setMode("ace/mode/json");
-        outEditor.setReadOnly(true)
-        outEditor.setOptions({
-            enableBasicAutocompletion: true
-        });
+var outEditor = ace.edit("output-editor");
+outEditor.setTheme("ace/theme/twilight");
+outEditor.getSession().setMode("ace/mode/json");
+outEditor.setReadOnly(true)
+outEditor.setOptions({
+    enableBasicAutocompletion: true
+});
 
-        dsEditor.on("input", function(){
-            postTransform();
-        });
+/*******Handles the input change and then posts the data********/
 
-        payloadEditor.on("input", function(){
-            postTransform();
-        });
+dsEditor.on("input", function(){
+    postTransform();
+});
+
+payloadEditor.on("input", function(){
+    postTransform();
+});
 
 function postTransform(){
     var payloadName="payload";
@@ -78,6 +82,10 @@ function postTransform(){
 function encodBase64(value){
     return window.btoa(value);
 }
+
+/*********End input change and data post**********/
+
+//resize editor windows: https://ourcodeworld.com/articles/read/994/how-to-make-an-ace-editor-instance-resizable-by-the-user-dinamically-with-a-drag-and-drop-bar
 /* https://gist.github.com/zeffii/2983357
         // get markdown content
         var body_location = 'markdown/README.markdown';
