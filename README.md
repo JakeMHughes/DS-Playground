@@ -30,8 +30,8 @@ mvn spring-boot:run
 
 #### Docker
 ```bash
-docker pull ${image}
-docker run -d -p 8080:8080 --name=ds-playground ${image}
+docker pull jakeizundead/ds-playground:latest
+docker run -d -p 8080:8080 --name=ds-playground jakeizundead/ds-playground:latest
 ```
 
 ## Built With

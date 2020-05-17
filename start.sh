@@ -3,7 +3,7 @@
 COLOR_RED='\033[0;31m'
 COLOR_GREEN='\e[92m'
 COLOR_DEFAULT='\033[0m'
-
+IMAGE="jakeizundead/ds-playground:latest"
 
 function init(){
 
@@ -32,12 +32,12 @@ init;
 printf "${COLOR_GREEN}UPDATE:${COLOR_DEFAULT} Finished Initialization.\n"
 mvn clean package
 printf "${COLOR_GREEN}UPDATE:${COLOR_DEFAULT} Finished maven build.\n"
-if [[ $(docker image ls | grep ds-playground/latest) ]]; then
-	docker rmi ds-playground/latest
-	printf "${COLOR_GREEN}UPDATE:${COLOR_DEFAULT} Finished Removing ds-playground/latest image.\n"
+if [[ $(docker image ls | grep ds-playground) ]]; then
+	docker rmi "$IMAGE"
+	printf "${COLOR_GREEN}UPDATE:${COLOR_DEFAULT} Finished Removing $IMAGE image.\n"
 fi
-docker build -t ds-playground/latest .
+docker build -t "$IMAGE" .
 printf "${COLOR_GREEN}UPDATE:${COLOR_DEFAULT} Finished building docker image.\n"
-docker run -d -p 8080:8080 --rm --name=ds-playground ds-playground/latest
+docker run -d -p 8080:8080 --rm --name=ds-playground "$IMAGE"
 printf "${COLOR_GREEN}UPDATE:${COLOR_DEFAULT} Finished deploying container.\n"
 printf "${COLOR_GREEN}OK...${COLOR_DEFAULT}\n"
