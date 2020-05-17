@@ -3,7 +3,7 @@
 DS-Playground is a Thyme leaf application that makes it easy to 
 set an input and script value to be executed by Datasonnet. It works
 a lot like the Intellij plugin but provides an html interface.
-
+![DS](img/DS.png)
 ## Getting Started
 
 When getting started with DS-Playground you have two options, you can
@@ -22,7 +22,7 @@ or you can clone this repository to build and run manually.
 
 #### Local
 ```bash
-git clone https://github.com/JakeMHughes/datasonnet-mapper/tree/dataweave && cd datasonnet-mapper
+git clone https://github.com/JakeMHughes/datasonnet-mapper && cd datasonnet-mapper && git checkout dataweave
 mvn clean install
 git clone https://github.com/JakeMHughes/DS-Playground && cd DS-Playground
 mvn spring-boot:run
@@ -42,11 +42,7 @@ docker run -d -p 8080:8080 --name=ds-playground jakeizundead/ds-playground:lates
 
 ## Contributing
 
-TODO
-
-## Versioning
-
-TODO
+Anyone is welcome to contribute, but it probably won't be an active project. I recommend creating a fork.
 
 ## Authors
 
