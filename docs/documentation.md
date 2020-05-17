@@ -25,7 +25,7 @@ Output:
 ```
 
 ---
-### std.type(x)
+### std.type(x:any):string
 Return a string that indicates the type of the value. The possible return values are: "array", "boolean", "function", "null", "number", "object", and "string".
 
 The following functions are also available and return a boolean: std.isArray(v), std.isBoolean(v), std.isFunction(v), std.isNumber(v), std.isObject(v), and std.isString(v).
@@ -56,7 +56,7 @@ Output:
 ```
 
 ---
-### std.length(x)
+### std.length(x):number
 Depending on the type of the value given, either returns the number of elements in the array, the number of codepoints in the string, the number of parameters in the function, or the number of fields in the object. Raises an error if given a primitive value, i.e. null, true or false.
 
 Example:
@@ -78,108 +78,407 @@ Output:
 }
 ```
 ---
-### std.objectHas(o, f)
+### std.objectHas(o:object, f:string):boolean
 Returns true if the given object has the field (given as a string), otherwise false. Raises an error if the arguments are not object and string respectively. Returns false if the field is hidden.
 
+Example:
+```json5
+local obj={
+    message: "Hello World"
+};
+
+{
+    "message": std.objectHas(obj, "message"),
+    "value": std.objectHas(obj, "value")
+}
+```
+Output:
+```json5
+{
+  "message": true,
+  "value": false
+}
+```
+
 ---
-### std.objectFields(o)
+### std.objectFields(o:object):array
 Returns an array of strings, each element being a field from the given object. Does not include hidden fields.
 
+Example:
+```json5
+local obj={
+    message: "Hello World",
+    value:: "hidden field"
+};
+
+std.objectFields(obj)
+```
+Output:
+```json5
+[
+  "message"
+]
+```
+
 ---
-### std.objectHasAll(o, f)
+### std.objectHasAll(o:object, f:string):boolean
 As std.objectHas but also includes hidden fields.
 
+Example:
+```json5
+local obj={
+    message:: "Hello World"
+};
+
+{
+    "hiddenCheck": std.objectHasAll(obj, "message"),
+    "normalCheck": std.objectHas(obj, "message")
+    
+}
+```
+Output:
+```json5
+{
+  "hiddenCheck": true,
+  "normalCheck": false
+}
+```
+
 ---
-### std.objectFieldsAll(o)
+### std.objectFieldsAll(o:object):array
 As std.objectFields but also includes hidden fields.
 
----
-### std.prune(a)
-Recursively remove all "empty" members of a. "Empty" is defined as zero length `arrays`, zero length `objects`, or `null` values. The argument a may have any type.
+Example:
+```json5
+local obj={
+    message: "Hello World",
+    value:: "hidden field"
+};
+
+std.objectFieldsAll(obj)
+```
+Output:
+```json5
+[
+  "message",
+  "value"
+]
+```
 
 ---
-### std.mapWithKey(func, obj)
+### std.prune(a:array):array
+Recursively remove all "empty" members of a. "Empty" is defined as zero length `arrays`, zero length `objects`, or `null` values. The argument a may have any type.
+
+Example:
+```json5
+std.prune([1,[],2,{},3,null])
+```
+Output:
+```json5
+[
+  1,
+  2,
+  3
+]
+```
+
+---
+### std.mapWithKey(func:function, obj:object):object
 Apply the given function to all fields of the given object, also passing the field name. The function func is expected to take the field name as the first parameter and the field value as the second.
+
+Example:
+```json5
+local obj={
+    "message": "Hello World"  ,
+    "test": "value"
+};
+
+std.mapWithKey(function(key,vvalue) key == "message", obj)
+```
+Output:
+```json5
+{
+  "message": true,
+  "test": false
+}
+```
 
 ---
 ## Mathematical Utilities
 The following mathematical functions are available:
 
 ---
-### std.abs(n)
+### std.abs(n:number):number
+
+Example:
+```json5
+std.abs(-1)
+```
+Output:
+```json5
+1
+```
 
 ---
 ### std.sign(n)
 
----
-### std.max(a, b)
+Example:
+```json5
+std.sign(1) // error
+```
+Output:
+```json5
+
+```
 
 ---
-### std.min(a, b)
+### std.max(a:number, b:number):number
+
+Example:
+```json5
+std.max(5,1)
+```
+Output:
+```json5
+5
+```
 
 ---
-### std.pow(x, n)
+### std.min(a:number, b:number):number
+
+Example:
+```json5
+std.min(5,1)
+```
+Output:
+```json5
+1
+```
 
 ---
-### std.exp(x)
+### std.pow(x:number, exp:number):number
+
+Example:
+```json5
+std.pow(5,2)
+```
+Output:
+```json5
+25
+```
 
 ---
-### std.log(x)
+### std.exp(x:number):number
+The std.exp(x) function returns e<sup>x</sup>, where x is the argument, and e is Euler's number
+
+Example:
+```json5
+std.exp(-1)
+```
+Output:
+```json5
+0.36787944117144233
+```
 
 ---
-### std.exponent(x)
+### std.log(x:number):number
+
+Example:
+```json5
+std.log(2)
+```
+Output:
+```json5
+0.6931471805599453
+```
 
 ---
-### std.mantissa(x)
+### std.exponent(x:number):number
+
+Example:
+```json5
+std.exponent(10)
+```
+Output:
+```json5
+4
+```
 
 ---
-### std.floor(x)
+### std.mantissa(x:number):number
+
+Example:
+```json5
+std.mantissa(10)
+```
+Output:
+```json5
+0.625
+```
 
 ---
-### std.ceil(x)
+### std.floor(x:number):number
+
+Example:
+```json5
+std.floor(1.9)
+```
+Output:
+```json5
+1
+```
 
 ---
-### std.sqrt(x)
+### std.ceil(x:number):number
+
+Example:
+```json5
+std.ceil(1.9)
+```
+Output:
+```json5
+2
+```
 
 ---
-### std.sin(x)
+### std.sqrt(x:number):number
+
+Example:
+```json5
+std.sqrt(4)
+```
+Output:
+```json5
+2
+```
 
 ---
-### std.cos(x)
+### std.sin(x:number):number
+
+Example:
+```json5
+std.sin(1)
+```
+Output:
+```json5
+0.8414709848078965
+```
 
 ---
-### std.tan(x)
+### std.cos(x:number):number
+
+Example:
+```json5
+std.cos(1)
+```
+Output:
+```json5
+0.5403023058681398
+```
 
 ---
-### std.asin(x)
+### std.tan(x:number):number
+
+Example:
+```json5
+std.tan(1)
+```
+Output:
+```json5
+1.5574077246549023
+```
 
 ---
-### std.acos(x)
+### std.asin(x:number):number
+
+Example:
+```json5
+std.asin(1)
+```
+Output:
+```json5
+1.5707963267948966
+```
 
 ---
-### std.atan(x)
+### std.acos(x:number):number
+
+Example:
+```json5
+std.acos(1)
+```
+Output:
+```json5
+0
+```
+
+---
+### std.atan(x:number):number
 The function std.mod(a, b) is what the % operator is desugared to. It performs modulo arithmetic if the left hand side is a number, or if the left hand side is a string, it does Python-style string formatting with std.format().
+
+Example:
+```json5
+std.atan(1)
+```
+Output:
+```json5
+0.7853981633974483
+```
 
 ---
 ### std.clamp(x, minVal, maxVal)
 Available since version 0.15.0.
 Clamp a value to fit within the range [minVal, maxVal]. Equivalent to std.min(minVal, std.max(x, maxVal)).
 
-Example: std.clamp(-3, 0, 5) yields 0.
-
-Example 2: std.clamp(4, 0, 5) yields 4.
-
-Example 3: std.clamp(7, 0, 5) yields 5.
+Example: 
+```json5
+std.clamp(-3, 0, 5) //error
+```
+Output:
+```json5
+0
+```
 
 ---
 ## Assertions and Debugging
-### std.assertEqual(a, b)
+### std.assertEqual(any, any):boolean
 Ensure that a == b. Returns true or throws an error message.
+
+Example:
+```json5
+std.assertEqual(1, 2)
+```
+Output:
+```json5
+Problem executing map: sjsonnet.Error: assertEqual failed: 1 != 2
+    at line 6 column 16 of the transformation
+```
 
 ---
 ## String Manipulation
-### std.toString(a)
+### std.toString(any):string
 Convert the given argument to a string.
+
+Example:
+```json5
+{
+    "null": std.toString(null),
+    "number": std.toString(0),
+    "boolean": std.toString(true),
+    "object": std.toString({hello: "world"}),
+    "array": std.toString([1,2,3])
+}
+```
+Output:
+```json5
+{
+  "array": "[1, 2, 3]",
+  "boolean": "true",
+  "null": "null",
+  "number": "0",
+  "object": "{\"hello\": \"world\"}"
+}
+```
 
 ---
 ### std.codepoint(str)
