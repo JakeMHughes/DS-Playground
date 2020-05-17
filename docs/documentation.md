@@ -456,7 +456,7 @@ Problem executing map: sjsonnet.Error: assertEqual failed: 1 != 2
 
 ---
 ## String Manipulation
-### std.toString(any):string
+### `std.toString(any):string`
 Convert the given argument to a string.
 
 Example:
