@@ -1200,7 +1200,7 @@ Output:
 "21:00:00"
 ```
 ---
-### `toLocalDateTime(string datetime, string format)`
+### `toLocalDateTime(datetime:string, format:string):string`
 Returns local datetime part of the `datetime` parameter in the ISO-8601 format without the offset.
 
 Example:
@@ -1213,7 +1213,7 @@ Output:
 ```
 ---
 ## LocalDateTime
-### `now()`
+### `now():string`
 Returns the current date/time from the system UTC clock in ISO-8601 format without a time zone.
 
 Example:
@@ -1229,7 +1229,7 @@ Output:
 }
 ```
 ---
-### `offset(string datetime, string period)`
+### `offset(datetime:string, period:string):string`
 Returns a copy of this datetime with the specified amount added. The `datetime` parameter is in the ISO-8601 format without an offset.
 The `period` is a string in the ISO-8601 period format.
 
@@ -1242,7 +1242,7 @@ Output:
 "2020-07-23T21:00:00"
 ```
 ---
-### `format(string datetime, string inputFormat, string outputFormat)`
+### `format(datetime:string, inputFormat:string, outputFormat:string):string`
 Reformats a local date-time string.
 
 Example:
@@ -1254,7 +1254,7 @@ Output:
 "4 Jul 2019"
 ```
 ---
-### `compare(string datetime1, string format1, string datetime2, string format2)`
+### `compare(string datetime1, string format1, string datetime2, string format2):number`
 Returns `1` if `datetime1 > datetime2`, `-1` if `datetime1 < datetime2`, and `0` if `datetime1 == datetime2`.
 The `format1` and `format2` parameters must not have an offset or time zone.
 
@@ -1268,7 +1268,7 @@ Output:
 ```
 ---
 ## JsonPath
-### `select(object json, string path)`
+### `select(json:object, path:string):any`
 
 Evaluates JsonPath expression and returns the resulting JSON object.
 It uses the https://github.com/json-path/JsonPath[Jayway JsonPath implementation] and fully supports https://goessner.net/articles/JsonPath/[JsonPath specification].
@@ -1322,7 +1322,7 @@ Output:
 ```
 ---
 ## Util
-### `select(object obj, string path)`
+### `select(obj:object, path:string):any`
 Returns a value inside the object by given path separated by dot ('.').
 
 Payload:
@@ -1348,7 +1348,7 @@ Output:
 }
 ```
 ---
-### `filterEx(array objects, string key, string value, function filter_func=function(value1, value2) value1 == value2)`
+### `filterEx(objects:array, key:string, value:string, function filter_func=function(value1, value2) value1 == value2):array`
 Filters array of objects by given condition.
 
 Payload:
@@ -1394,7 +1394,7 @@ Output:
 ]
 ```
 ---
-### `groupBy(array arr, string keyName)`
+### `groupBy(arr:array, keyName:string):object`
 Partitions an array into a Object that contains Arrays, according to the discriminator key you define.
 The discriminator can be a path inside the objects to group, e.g. 'language.name'
 
@@ -1465,7 +1465,7 @@ Output:
 }
 ```
 ---
-### `remove(object obj, string keyName)`
+### `remove(obj:object, keyName:string):object`
 Removes a property with given name from the object and returns the remaining object
 
 Payload:
@@ -1496,7 +1496,7 @@ Output:
  }
 ```
 ---
-### `removeAll(object obj, array keyNames)`
+### `removeAll(obj:object, keyNames:array):object`
 Removes all properties with names from a provided list of strings from the object and returns the remaining object
 
 Payload:
@@ -1525,7 +1525,7 @@ Output:
  }
 ```
 ---
-### `deepFlattenArrays(array arr)`
+### `deepFlattenArrays(arr:array):array`
 Flattens multiple nested arrays into a single array.
 
 Payload:
@@ -1568,7 +1568,7 @@ Output:
 ]
 ```
 ---
-### `reverse(array arr)`
+### `reverse(arr:array):array`
 Returns an array with elements in reverse order.
 
 Payload:
@@ -1594,7 +1594,7 @@ Output:
 ]
 ```
 ---
-### `parseDouble(string str)`
+### `parseDouble(str:string):number`
 Parses a string which contains a double number and returns its numeric representation
 
 Payload:
@@ -1616,7 +1616,7 @@ Output:
 }
 ```
 ---
-### `duplicates(array arr, function keyF=id, boolean set=true)`
+### `duplicates(arr:array, keyF=id:function, set=true:boolean):array`
 Returns an array containing duplicate elements from input array. An optional key function returns a value which will be used as a comparison key. If `set` parameter is set to true, only the first duplicate value will be included.
 
 Payload:
@@ -1658,7 +1658,7 @@ Output:
 ]
 ```
 ---
-### `sum(array arr)`
+### `sum(arr:array):number`
 Returns sum of all elements in the array.
 
 Payload:
@@ -1674,7 +1674,7 @@ Output:
 60
 ```
 ---
-### `round(double num, int precision)`
+### `round(num:number, precision:number):number`
 Rounds a double to the number of digits after the decimal point
 
 Payload
@@ -1692,7 +1692,7 @@ Output:
 123.562568
 ```
 ---
-### `counts(array arr, function keyF=id)`
+### `counts(arr:array, keyF=id:function):object`
 Returns an object where keys are the results of calling keyF on the values, and the values are the counts of values that produced the corresponding key.
 
 Payload
@@ -1733,7 +1733,7 @@ Output:
 }
 ```
 ---
-### `mapToObject(arr, keyF, valueF=id)`
+### `mapToObject(arr, keyF, valueF=id):object`
 Maps an array into an object, where the keys are the result of calling keyF on each value (which becomes the value at the key). If valueF is provided it gets run on the value. Duplicate keys are removed.
 
 Payload
@@ -1785,7 +1785,7 @@ Output:
 ```
 ---
 ## Regex
-### `regexFullMatch(string pattern, string input)`
+### `regexFullMatch(pattern:string, input:string):object`
 Matches the entire input against the pattern (anchored start and end). If there's no match, returns `null`. If there's a match, returns a JSON object which has the following structure:
 
 - `string` - the matched string;
@@ -1809,7 +1809,7 @@ Output:
 }
 ```
 ---
-### `regexPartialMatch(string pattern, string input)`
+### `regexPartialMatch(pattern:string, input:string):object`
 Matches the input against the pattern (unanchored). If there's no match, returns `null`. If there's a match, returns a JSON object which has the following structure:
 
 - `string` - the matched string;
@@ -1833,7 +1833,7 @@ Output:
 }
 ```
 ---
-### `regexScan(string pattern, string input)`
+### `regexScan(pattern:string, input:string):object`
 Finds all matches of the input against the pattern. If there are any matches, returns an array of JSON objects which have the following structure:
 
 - `string` - the matched string;
@@ -1872,7 +1872,7 @@ Output:
 ]
 ```
 ---
-### `regexQuoteMeta(string str)`
+### `regexQuoteMeta(str:string):string`
 Returns a literal pattern string for the specified string.
 
 Example:
@@ -1884,7 +1884,7 @@ Output:
 "1\\.5-2\\.0\\?"
 ```
 ---
-### `regexReplace(string str, string pattern, string replacement)`
+### `regexReplace(str:string, pattern:string, replacement:string):string`
 Returns the input with the first match replaced by `replacement` string.
 
 Example:
@@ -1896,7 +1896,7 @@ Output:
 "wandyfishyisishy"
 ```
 ---
-### `regexGlobalReplace(string str, string pattern, string replacement)`
+### `regexGlobalReplace(str:string, pattern:string, replacement:string):string`
 Returns the input with all matches replaced by `replacement` string.
 
 Example:
@@ -1908,7 +1908,7 @@ Output:
 "wandyfandyisandy"
 ```
 ---
-### `regexGlobalReplace(string str, string pattern, function replacement)`
+### `regexGlobalReplace(str:string, pattern:string, replacement:function):string`
 Returns the input with all matches replaced by the result of the `replacement` function. The function must return string result and take a single object as an argument in the following structure:
 
 - `string` - the matched string;
@@ -1926,8 +1926,7 @@ DS.Regex.regexGlobalReplace("xxx2yyy4zzz6aaa", "\\d", square)
 ```
 ---
 ## URL
-### `encode(string data, string encoding="UTF-8")`
-
+### `encode(data:string, string encoding="UTF-8"):string`
 Translates a string into `application/x-www-form-urlencoded` format using the supplied encoding scheme to obtain the bytes for unsafe characters. The default encoding is `UTF-8`.
 
 Example:
@@ -1939,8 +1938,7 @@ Output:
 "Hello+World"
 ```
 ---
-### `decode(string data, string encoding="UTF-8")`
-
+### `decode(data:string, string encoding="UTF-8"):string`
 Decodes a application/x-www-form-urlencoded string using a specific encoding scheme. The supplied encoding is used to determine what characters are represented by any consecutive sequences of the form "%xy".
 
 Example:
