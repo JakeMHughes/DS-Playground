@@ -78,6 +78,7 @@ function postTransform(){
 function encodBase64(value){
     return window.btoa(value);
 }
+//resize editor windows: https://ourcodeworld.com/articles/read/994/how-to-make-an-ace-editor-instance-resizable-by-the-user-dinamically-with-a-drag-and-drop-bar
 /* https://gist.github.com/zeffii/2983357
         // get markdown content
         var body_location = 'markdown/README.markdown';

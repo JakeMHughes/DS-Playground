@@ -1950,4 +1950,850 @@ Output:
 "Hello World"
 ```
 ---
-## DW
+# DW
+## Core
+### `abs(n:number):number`
+Returns the absolute value of a number.
+Example:
+```json5
+[ abs(-2), abs(2.5), abs(-3.4), abs(3) ]
+```
+Output:
+```json5
+[ 2, 2.5, 3.4, 3 ]
+```
+---
+### `avg(n:number):number`
+Returns the average of numbers listed in an array.
+
+An array that is empty or that contains a non-numeric value results in an error.
+
+Example:
+```json5
+{ a: avg([1, 1000]), b: avg([1, 2, 3]) }
+```
+Output:
+```json5
+{ "a": 500.5, "b": 2.0 }
+```
+---
+### `ceil(n:number):number`
+Rounds a number up to the nearest whole number.
+
+Example:
+```json5
+[ ceil(1.5), ceil(2.1), ceil(3) ]
+```
+Output:
+```json5
+[ 2, 3, 3 ]
+```
+---
+### `contains(arr:array, any:any):boolean`
+Returns `true` if an input contains a given value, `false` if not.
+
+This version of `contains` accepts an array as input. Other versions accept a string and can use another string or regular expression to determine whether there is a match.
+
+Example:
+```json5
+contains([ 1, 2, 3, 4 ], 2)
+```
+Output:
+```json5
+true
+```
+---
+### `daysBetween(d1:date, d2:date):number`
+Returns the number of days between two dates.
+
+Example:
+```json5
+daysBetween('2016-10-01T23:57:59-03:00', '2017-10-01T23:57:59-03:00')
+```
+Output:
+```json5
+365
+```
+---
+### `distinctBy(arr:array, funct(it,ind):function):array`
+Iterates over an array and returns the unique elements in it.
+
+This version of `distinctBy` finds unique values in an array. Other versions act on an object and handle a null value.
+
+Example:
+```json5
+ distinctBy([0, 1, 2, 3, 3, 2, 1, 4], function(it,ind) it)
+```
+Output:
+```json5
+[ 0, 1, 2, 3, 4]
+```
+---
+### `endsWith(str1:string, str2:string):boolean`
+Returns `true` if a string ends with a provided substring, `false` if not.
+
+Example:
+```json5
+endsWith("Hello World!", "!")
+```
+Output:
+```json5
+true
+```
+---
+### `entriesOf(obj:object):object`
+Returns an array of key-value pairs that describe the key, value, and any attributes in the input object.
+Example:
+```json5
+DW.Core.entriesOf({testK:  "testV"})
+```
+Output:
+```json5
+[
+  {
+    "key": "testK",
+    "value": "testV"
+  }
+]
+```
+---
+### `filter(arr:array, funct(it,ind):function):array`
+Iterates over an array and applies an expression that returns matching values.
+
+The expression must return `true` or `false`. If the expression returns `true` for a value or index in the array, the value gets captured in the output array. If it returns `false` for a value or index in the array, that item gets filtered out of the output. If there are no matches, the output array will be empty.
+
+Example:
+```json5
+filter([9,2,3,4,5], function(it,ind) it > 2)
+```
+Output:
+```json5
+[9,3,4,5]
+```
+---
+### `filterObject(obj:object, funct(v,k,ind):function):object`
+Iterates a list of key-value pairs in an object and applies an expression that returns only matching objects, filtering out the rest from the output.
+
+The expression must return `true` or `false`. If the expression returns `true` for a key, value, or index of an object, the object gets captured in the output. If it returns `false` for any of them, the object gets filtered out of the output. If there are no matches, the output array will be empty.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `find(arr:array, any:any):array`
+Returns indices of an input that match a specified value.
+
+This version of the function returns indices of an array. Others return indices of a string.
+
+Example:
+```json5
+find(["Bond", "James", "Bond"], "Bond")
+```
+Output:
+```json5
+[0,2]
+```
+---
+### `flatMap(arr:array, funct(it,ind):function):array`
+Iterates over each item in an array and flattens the results.
+
+Instead of returning an array of arrays (as `map` does when you iterate over the 
+values within an input like `[ [1,2], [3,4] ]`), `flatMap` returns a flattened 
+array that looks like this: `[1, 2, 3, 4]`. `flatMap` is similar to `flatten`, 
+but `flatten` only acts on the values of the arrays, while `flatMap` can act on 
+values and indices of items in the array.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `flatten(arr:array):array`
+Turns a set of subarrays (such as `[ [1,2,3], [4,5,[6]], [], [null] ]`) into a 
+single, flattened array (such as `[ 1, 2, 3, 4, 5, [6], null ]`).
+
+Note that it flattens only the first level of subarrays and omits empty subarrays.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `floor(n:number):number`
+Rounds a number down to the nearest whole number.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+### `groupBy(arr:array, funct(it,ind):function):object`
+Returns an object that groups items from an array based on specified criteria, 
+such as an expression or matching selector.
+
+This version of `groupBy` groups the elements of an array using the `criteria` function. 
+Other versions act on objects and handle null values.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `isBlank(n:string):boolean`
+Returns `true` if the given string is empty or completely composed of whitespace, `false` if not.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `isDecimal(n:number):boolean`
+Returns `true` if the given number contains a decimal, `false` if not.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `isEmpty(n:any):boolean`
+Returns `true` if the given input value is empty, `false` if not.
+
+This version of `isEmpty` acts on an array. Other versions act on a string or object, and handle null values.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `isEven(n:number):boolean`
+Returns `true` if the number or numeric result of a mathematical operation is even, `false` if not.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `isInteger(n:number):boolean`
+Returns true if the given number is an integer (which lacks decimals), false if not.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `isLeapYear(n:date):boolean`
+Returns true if it receives a date for a leap year, false if not.
+
+This version of leapYear acts on a DateTime type. Other versions act on the other date and time formats that DataWeave supports.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `isOdd(n:number):boolean`
+Returns true if the number or numeric result of a mathematical operation is odd, false if not.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `joinBy(arr:array, str:string):string`
+Merges an array into a single string value and uses the provided string as a separator between each item in the list.
+
+Note that joinBy performs the opposite task of splitBy.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `keysOf(obj:object):array`
+Returns an array of keys from key-value pairs within the input object.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `log(str:string):nothing`
+Without changing the value of the input, log returns the input as a system log.
+
+Use this function to help with debugging DataWeave scripts. A Mule app outputs the results through the DefaultLoggingService, which you can see in the Studio console.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `lower(str:string):string`
+Returns the provided string in lowercase characters.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `map(arr:array, funct(it,ind):function):array`
+Iterates over items in an array and outputs the results into a new array.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `mapObject(obj:object, funct(v,k,ind):function):object`
+Iterates over an object using a mapper that acts on keys, values, or indices of that object.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `match(str:string, regex:string):array`
+Uses a Java regular expression (regex) to match a string and then separates it into capture groups. Returns the results in an array.
+
+Note that you can use match for pattern matching expressions that include case statements.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `matches(str:string, regex:string):boolean`
+Checks if an expression matches the entire input string.
+
+For use cases where you need to output or conditionally process the matched value, see Pattern Matching in DataWeave.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `max(a:array):any`
+Returns the highest Comparable value in an array.
+
+The items must be of the same type, or the function throws an error. The function returns null if the array is empty.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `maxBy(a:array):any`
+Iterates over an array and returns the highest value of Comparable elements from it.
+
+The items must be of the same type. maxBy throws an error if they are not, and the function returns null if the array is empty.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `min(a:array):any`
+Returns the lowest Comparable value in an array.
+
+The items must be of the same type or min throws an error. The function returns null if the array is empty.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `minBy(a:array):any`
+Iterates over an array to return the lowest value of comparable elements from it.
+
+The items need to be of the same type. minBy returns an error if they are not, and it returns null when the array is empty.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `mod(n1:number, n2:number):number`
+Returns the modulo (the remainder after dividing the dividend by the divisor).
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `namesOf(obj:object):array`
+Returns an array of strings with the names of all the keys within the given object.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `native(str:string):nothing`
+Internal method used to indicate that a function implementation is not written in DataWeave but in Scala.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `now():date`
+Returns a DateTime value for the current date and time.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `orderBy(in:object|array, function((v,k)|(it,ind)):function):object|array`
+Reorders the elements of an input using criteria that acts on selected elements of that input.
+
+This version of orderBy takes an object as input. Other versions act on an input array or handle a null value.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `pluck(obj:object, function(v,k,ind):function):array`
+Useful for mapping an object into an array, pluck iterates over an object and returns an array of keys, values, or indices from the object.
+
+It is an alternative to mapObject, which is similar but returns an object, instead of an array.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `pow(n1:number, n2:number):number`
+Raises the value of a base number to the specified power.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `random():number`
+Returns a pseudo-random number greater than or equal to 0.0 and less than 1.0.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `randomInt(n:number):number`
+Returns a pseudo-random whole number from 0 to the specified number (exclusive).
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `read(str:string):any`
+Reads a string or binary and returns parsed content.
+
+This function can be useful if the reader cannot determine the content type by default.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `readUrl(str:string, type:string):any`
+Similar to the read function. However, readURL accepts a URL, including a classpath-based URL.
+
+The classpath-based URL uses the classpath:` protocol prefix, for example, classpath://myfolder/myFile.txt where myFolder is located under src/main/resources in a Mule project. Otherwise, readURL accepts the same arguments as read.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `reduce(arr:array, funct(it,acc):function,initial:any):any`
+Applies a reduction expression to the elements in an array.
+
+For each element of the input array, in order, reduce applies the reduction lambda expression (function), then replaces the accumulator with the new result. The lambda expression can use both the current input array element and the current accumulator value.
+
+Note that if the array is empty and no default value is set on the accumulator parameter, a null value is returned.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `replace(str:string, regex:string, replacement:string):string`
+Performs string replacement.
+
+This version of replace accepts a Java regular expression for matching part of a string. It requires the use of the with helper function to specify a replacement string for the matching part of the input string.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `round(n:number):number`
+Rounds a number up or down to the nearest whole number.
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `scan(str:string, regex:string):array`
+Returns an array with all of the matches found in an input string.
+
+Each match is returned as an array that contains the complete match followed by any capture groups in your regular expression (if present).
+
+Example:
+```json5
+
+```
+Output:
+```json5
+
+```
+---
+### `sizeOf(in:array|object|string):number`
+Returns the number of elements in an array. It returns 0 if the array is empty.
+
+This version of sizeOf takes an array or an array of arrays as input. Other versions act on arrays of objects, strings, or binary values.
+
+Example:
+```json5
+{
+  str: sizeOf("Hello World!"),
+  array: sizeOf([1,2]),
+  obj: sizeOf({a: 1})
+}
+```
+Output:
+```json5
+{
+  "str": 12,
+  "array": 2,
+  "obj": 1
+}
+```
+---
+### `splitBy(str:string, regex:string):array`
+Splits a string into a string array based on a value that matches part of that string. It filters out the matching part from the returned array.
+
+This version of splitBy accepts a Java regular expression (regex) to match the input string. The regex can match any character in the input string. Note that splitBy performs the opposite operation of joinBy.
+
+Example:
+```json5
+{
+  str: splitBy("a-b-c-d","-"),
+  regex: splitBy("a-b-c-d","[b]")
+}
+```
+Output:
+```json5
+{
+  "str": ["a", "b", "c"],
+  "regex": ["a-", "-c"]
+}
+```
+---
+### `sqrt(n:number):number`
+Returns the square root of a number.
+
+Example:
+```json5
+sqrt(4)
+```
+Output:
+```json5
+2
+```
+---
+### `startsWith(str:string, sub:string):boolean`
+Returns true or false depending on whether the input string starts with a matching prefix.
+
+Example:
+```json5
+startsWith("Hello World!", "Hell")
+```
+Output:
+```json5
+true
+```
+---
+### `sum(arr:array):number`
+Returns the sum of numeric values in an array.
+
+Returns 0 if the array is empty and produces an error when non-numeric values are in the array.
+
+Example:
+```json5
+sum([2,7,4,8,3,2,2])
+```
+Output:
+```json5
+28
+```
+---
+### `to(start:number, end:number):array`
+Returns a range with the specified boundaries.
+
+The upper boundary is inclusive.
+
+Example:
+```json5
+to(0,3)
+```
+Output:
+```json5
+[0,1,2,3]
+```
+---
+### `trim(str:string):string`
+Removes any blank spaces from the beginning and end of a string.
+
+Example:
+```json5
+trim("   Hello   World   ")
+```
+Output:
+```json5
+"Hello   World"
+```
+---
+### `typeOf(in:any):string`
+Returns the type of a value.
+
+Example:
+```json5
+{
+  "string": DW.Core.typeOf(""),
+  "null": DW.Core.typeOf(null),
+  "bool": DW.Core.typeOf(true),
+  "object": DW.Core.typeOf({}),
+  "array": DW.Core.typeOf([])
+}
+```
+Output:
+```json5
+{
+  "string": "string",
+  "null": "null",
+  "bool": "boolean",
+  "object": "object",
+  "array": "array"
+}
+```
+---
+### `unzip(arr:array):array`
+Performs the opposite of zip. It takes an array of arrays as input.
+
+The function groups the values of the input sub-arrays by matching indices, and it outputs new sub-arrays with the values of those matching indices. No sub-arrays are produced for unmatching indices. For example, if one input sub-array contains four elements (indices 0-3) and another only contains three (indices 0-2), the function will not produce a sub-array for the value at index 3.
+
+Example:
+```json5
+unzip([[0,"a"],[1,"b"],[2,"c"],[ 3,"d"]])
+```
+Output:
+```json5
+[[0,1,2,3],["a","b","c","d"]]
+```
+---
+### `upper(str:string):string`
+Returns the provided string in uppercase characters.
+
+Example:
+```json5
+upper("Hello World!")
+```
+Output:
+```json5
+"HELLO WORLD!"
+```
+---
+### `uuid():string`
+Returns a v4 UUID using random numbers as the source.
+
+Example:
+```json5
+uuid()
+```
+Output:
+```json5
+"7cc64d24-f2ad-4d43-8893-fa24a0789a99"
+```
+---
+### `valuesOf(obj:object):array`
+Returns an array of the values from key-value pairs in an object.
+
+Example:
+```json5
+valuesOf({a: true, b: 1})
+```
+Output:
+```json5
+[true,1]
+```
+---
+### `zip(arr1:array, arr2:array):array`
+Merges elements from two arrays into an array of arrays.
+
+The first sub-array in the output array contains the first indices of the input sub-arrays. The second index contains the second indices of the inputs, the third contains the third indices, and so on for every case where there are the same number of indices in the arrays.
+
+Example:
+```json5
+zip([0,1], ["a","b"])
+```
+Output:
+```json5
+[ [0,"a"], [1,"b"] ]
+```
+---
