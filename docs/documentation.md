@@ -1956,21 +1956,21 @@ Output:
 Returns the absolute value of a number.
 Example:
 ```json5
-[ abs(-2), abs(2.5), abs(-3.4), abs(3) ]
+[ DW.Core.abs(-2), DW.Core.abs(2.5), DW.Core.abs(-3.4), DW.Core.abs(3) ]
 ```
 Output:
 ```json5
 [ 2, 2.5, 3.4, 3 ]
 ```
 ---
-### `avg(n:number):number`
+### `avg(arr:array):number`
 Returns the average of numbers listed in an array.
 
 An array that is empty or that contains a non-numeric value results in an error.
 
 Example:
 ```json5
-{ a: avg([1, 1000]), b: avg([1, 2, 3]) }
+{ a: DW.Core.avg([1, 1000]), b: DW.Core.avg([1, 2, 3]) }
 ```
 Output:
 ```json5
@@ -1982,7 +1982,7 @@ Rounds a number up to the nearest whole number.
 
 Example:
 ```json5
-[ ceil(1.5), ceil(2.1), ceil(3) ]
+[ DW.Core.ceil(1.5), DW.Core.ceil(2.1), DW.Core.ceil(3) ]
 ```
 Output:
 ```json5
@@ -1996,7 +1996,7 @@ This version of `contains` accepts an array as input. Other versions accept a st
 
 Example:
 ```json5
-contains([ 1, 2, 3, 4 ], 2)
+DW.Core.contains([ 1, 2, 3, 4 ], 2)
 ```
 Output:
 ```json5
@@ -2008,7 +2008,7 @@ Returns the number of days between two dates.
 
 Example:
 ```json5
-daysBetween('2016-10-01T23:57:59-03:00', '2017-10-01T23:57:59-03:00')
+DW.Core.daysBetween('2016-10-01T23:57:59-03:00', '2017-10-01T23:57:59-03:00') //error
 ```
 Output:
 ```json5
@@ -2022,7 +2022,7 @@ This version of `distinctBy` finds unique values in an array. Other versions act
 
 Example:
 ```json5
- distinctBy([0, 1, 2, 3, 3, 2, 1, 4], function(it,ind) it)
+DW.Core.distinctBy([0, 1, 2, 3, 3, 2, 1, 4], function(it,ind) it)
 ```
 Output:
 ```json5
@@ -2034,7 +2034,7 @@ Returns `true` if a string ends with a provided substring, `false` if not.
 
 Example:
 ```json5
-endsWith("Hello World!", "!")
+DW.Core.endsWith("Hello World!", "!")
 ```
 Output:
 ```json5
@@ -2064,7 +2064,7 @@ The expression must return `true` or `false`. If the expression returns `true` f
 
 Example:
 ```json5
-filter([9,2,3,4,5], function(it,ind) it > 2)
+DW.Core.filter([9,2,3,4,5], function(it,ind) it > 2)
 ```
 Output:
 ```json5
@@ -2078,11 +2078,26 @@ The expression must return `true` or `false`. If the expression returns `true` f
 
 Example:
 ```json5
+local obj ={
+  "testK": "testV",
+  "test2": "value2"
+};
 
+{
+  ind: DW.Core.filterObject(obj, function(value,key,index) index == 0),
+  key: DW.Core.filterObject(obj, function(value,key,index) key == "testK")
+}
 ```
 Output:
 ```json5
-
+{
+  "ind": {
+    "test2": "value2"
+  },
+  "key": {
+    "testK": "testV"
+  },
+}
 ```
 ---
 ### `find(arr:array, any:any):array`
@@ -2092,7 +2107,7 @@ This version of the function returns indices of an array. Others return indices 
 
 Example:
 ```json5
-find(["Bond", "James", "Bond"], "Bond")
+DW.Core.find(["Bond", "James", "Bond"], "Bond")
 ```
 Output:
 ```json5
@@ -2110,11 +2125,11 @@ values and indices of items in the array.
 
 Example:
 ```json5
-
+DW.Core.flatMap([[3,5],[1,2,5]], function(v,i) v)
 ```
 Output:
 ```json5
-
+[3,5,1,2,5]
 ```
 ---
 ### `flatten(arr:array):array`
@@ -2125,11 +2140,11 @@ Note that it flattens only the first level of subarrays and omits empty subarray
 
 Example:
 ```json5
-
+DW.Core.flatten([ [1,2,3], [4,5,[6]], [], [null] ])
 ```
 Output:
 ```json5
-
+[ 1, 2, 3, 4, 5, [6], null ]
 ```
 ---
 ### `floor(n:number):number`
@@ -2137,11 +2152,11 @@ Rounds a number down to the nearest whole number.
 
 Example:
 ```json5
-
+DW.Core.floor(0.22)
 ```
 Output:
 ```json5
-
+0
 ```
 ### `groupBy(arr:array, funct(it,ind):function):object`
 Returns an object that groups items from an array based on specified criteria, 
@@ -2152,11 +2167,25 @@ Other versions act on objects and handle null values.
 
 Example:
 ```json5
+local input = [
+  { "name": "Foo", "language": "Java" },
+  { "name": "Bar", "language": "Scala" },
+  { "name": "FooBar", "language": "Java"}
+];
 
+DW.Core.groupBy(input, function(it,idx) it.language)
 ```
 Output:
 ```json5
-
+{
+  "Java":[
+    {"name":"Foo","language":"Java"},
+    {"name":"FooBar","language":"Java"}
+  ],
+  "Scala":[
+    {"name":"Bar","language":"Scala"}
+  ]
+}
 ```
 ---
 ### `isBlank(n:string):boolean`
@@ -2164,11 +2193,11 @@ Returns `true` if the given string is empty or completely composed of whitespace
 
 Example:
 ```json5
-
+[DW.Core.isBlank(""),DW.Core.isBlank("    "), DW.Core.isBlank(null)]
 ```
 Output:
 ```json5
-
+[true,true,true]
 ```
 ---
 ### `isDecimal(n:number):boolean`
@@ -2176,11 +2205,11 @@ Returns `true` if the given number contains a decimal, `false` if not.
 
 Example:
 ```json5
-
+DW.Core.isDecimal(0.22)
 ```
 Output:
 ```json5
-
+true
 ```
 ---
 ### `isEmpty(n:any):boolean`
@@ -2190,11 +2219,14 @@ This version of `isEmpty` acts on an array. Other versions act on a string or ob
 
 Example:
 ```json5
-
+[DW.Core.isEmpty(""),
+DW.Core.isEmpty({}),
+DW.Core.isEmpty([]),
+DW.Core.isEmpty(null)]
 ```
 Output:
 ```json5
-
+[true,true,true,true]
 ```
 ---
 ### `isEven(n:number):boolean`
@@ -2202,11 +2234,11 @@ Returns `true` if the number or numeric result of a mathematical operation is ev
 
 Example:
 ```json5
-
+DW.Core.isEven(50)
 ```
 Output:
 ```json5
-
+true
 ```
 ---
 ### `isInteger(n:number):boolean`
@@ -2214,11 +2246,11 @@ Returns true if the given number is an integer (which lacks decimals), false if 
 
 Example:
 ```json5
-
+DW.Core.isInteger(50)
 ```
 Output:
 ```json5
-
+true
 ```
 ---
 ### `isLeapYear(n:date):boolean`
@@ -2228,11 +2260,11 @@ This version of leapYear acts on a DateTime type. Other versions act on the othe
 
 Example:
 ```json5
-
+DW.Core.isLeapYear(|2017-10-01T23:57:59|) //error
 ```
 Output:
 ```json5
-
+false
 ```
 ---
 ### `isOdd(n:number):boolean`
@@ -2240,11 +2272,11 @@ Returns true if the number or numeric result of a mathematical operation is odd,
 
 Example:
 ```json5
-
+DW.Core.isOdd(5)
 ```
 Output:
 ```json5
-
+true
 ```
 ---
 ### `joinBy(arr:array, str:string):string`
@@ -2254,11 +2286,11 @@ Note that joinBy performs the opposite task of splitBy.
 
 Example:
 ```json5
-
+DW.Core.joinBy([1,2,3,4], "-")
 ```
 Output:
 ```json5
-
+"1-2-3-4"
 ```
 ---
 ### `keysOf(obj:object):array`
@@ -2266,11 +2298,11 @@ Returns an array of keys from key-value pairs within the input object.
 
 Example:
 ```json5
-
+DW.Core.keysOf({test: 1})
 ```
 Output:
 ```json5
-
+["test"]
 ```
 ---
 ### `log(str:string):nothing`
@@ -2280,11 +2312,7 @@ Use this function to help with debugging DataWeave scripts. A Mule app outputs t
 
 Example:
 ```json5
-
-```
-Output:
-```json5
-
+DW.Core.log("nothing") //error
 ```
 ---
 ### `lower(str:string):string`
@@ -2292,11 +2320,11 @@ Returns the provided string in lowercase characters.
 
 Example:
 ```json5
-
+DW.Core.lower("Hello World!")
 ```
 Output:
 ```json5
-
+"hello world!"
 ```
 ---
 ### `map(arr:array, funct(it,ind):function):array`
@@ -2304,11 +2332,11 @@ Iterates over items in an array and outputs the results into a new array.
 
 Example:
 ```json5
-
+DW.Core.map(['a','b','c'], function(value,index) value+'_'+index
 ```
 Output:
 ```json5
-
+["a_0", "b_1", "c_2"]
 ```
 ---
 ### `mapObject(obj:object, funct(v,k,ind):function):object`
@@ -2316,11 +2344,11 @@ Iterates over an object using a mapper that acts on keys, values, or indices of 
 
 Example:
 ```json5
-
+DW.Core.mapObject({"a":"b","c":"d"}, function(v,k,i) {[v]:{ [k]: i}})
 ```
 Output:
 ```json5
-
+{"b":{"a":0},"d":{"c":1}}
 ```
 ---
 ### `match(str:string, regex:string):array`
@@ -2330,11 +2358,11 @@ Note that you can use match for pattern matching expressions that include case s
 
 Example:
 ```json5
-
+DW.Core.match("m2@mulesoft.com", "([a-z]*)@([a-z]*).com")
 ```
 Output:
 ```json5
-
+["me@mulesoft.com","me","mulesoft"]
 ```
 ---
 ### `matches(str:string, regex:string):boolean`
@@ -2344,11 +2372,11 @@ For use cases where you need to output or conditionally process the matched valu
 
 Example:
 ```json5
-
+DW.Core.matches("admin123", "a.*\\d+")
 ```
 Output:
 ```json5
-
+true
 ```
 ---
 ### `max(a:array):any`
@@ -2358,25 +2386,33 @@ The items must be of the same type, or the function throws an error. The functio
 
 Example:
 ```json5
-
+[
+  DW.Core.max([false,true,false]), 
+  DW.Core.max(["a", "b" , "c"]),
+  DW.Core.max([5,1,88,3])
+]
 ```
 Output:
 ```json5
-
+[true, "c", 88]
 ```
 ---
-### `maxBy(a:array):any`
+### `maxBy(a:array, funct(i):function):any`
 Iterates over an array and returns the highest value of Comparable elements from it.
 
 The items must be of the same type. maxBy throws an error if they are not, and the function returns null if the array is empty.
 
 Example:
 ```json5
-
+[
+  DW.Core.maxBy([false,true,false],function(i) i), 
+  DW.Core.maxBy(["a", "b" , "c"],function(i) i),
+  DW.Core.maxBy([5,1,88,3],function(i) i)
+]
 ```
 Output:
 ```json5
-
+[true, "c", 88]
 ```
 ---
 ### `min(a:array):any`
@@ -2386,25 +2422,33 @@ The items must be of the same type or min throws an error. The function returns 
 
 Example:
 ```json5
-
+[
+  DW.Core.min([false,true,false]), 
+  DW.Core.min(["a", "b" , "c"]),
+  DW.Core.min([5,1,88,3])
+]
 ```
 Output:
 ```json5
-
+[false, "a", 1]
 ```
 ---
-### `minBy(a:array):any`
+### `minBy(a:array, funct(i):function):any`
 Iterates over an array to return the lowest value of comparable elements from it.
 
 The items need to be of the same type. minBy returns an error if they are not, and it returns null when the array is empty.
 
 Example:
 ```json5
-
+[
+  DW.Core.minBy([false,true,false],function(i) i), 
+  DW.Core.minBy(["a", "b" , "c"],function(i) i),
+  DW.Core.minBy([5,1,88,3],function(i) i)
+]
 ```
 Output:
 ```json5
-
+[false, "a", 1]
 ```
 ---
 ### `mod(n1:number, n2:number):number`
@@ -2412,11 +2456,11 @@ Returns the modulo (the remainder after dividing the dividend by the divisor).
 
 Example:
 ```json5
-
+DW.Core.mod(2,2)
 ```
 Output:
 ```json5
-
+0
 ```
 ---
 ### `namesOf(obj:object):array`
@@ -2424,23 +2468,11 @@ Returns an array of strings with the names of all the keys within the given obje
 
 Example:
 ```json5
-
+DW.Core.namesOf({ "a" : true, "b" : 1})
 ```
 Output:
 ```json5
-
-```
----
-### `native(str:string):nothing`
-Internal method used to indicate that a function implementation is not written in DataWeave but in Scala.
-
-Example:
-```json5
-
-```
-Output:
-```json5
-
+["a", "b"]
 ```
 ---
 ### `now():date`
@@ -2448,11 +2480,11 @@ Returns a DateTime value for the current date and time.
 
 Example:
 ```json5
-
+DW.Core.now() //error
 ```
 Output:
 ```json5
-
+""
 ```
 ---
 ### `orderBy(in:object|array, function((v,k)|(it,ind)):function):object|array`
@@ -2462,11 +2494,11 @@ This version of orderBy takes an object as input. Other versions act on an input
 
 Example:
 ```json5
-
+DW.Core.orderBy([0,5,1,3,2,1], function(it,ind) it)
 ```
 Output:
 ```json5
-
+[0,1,1,2,3,5]
 ```
 ---
 ### `pluck(obj:object, function(v,k,ind):function):array`
@@ -2476,11 +2508,11 @@ It is an alternative to mapObject, which is similar but returns an object, inste
 
 Example:
 ```json5
-
+DW.Core.pluck({"a":"b","c":"d"}, function(v,k,ind) ind)
 ```
 Output:
 ```json5
-
+[0,1]
 ```
 ---
 ### `pow(n1:number, n2:number):number`
@@ -2488,11 +2520,11 @@ Raises the value of a base number to the specified power.
 
 Example:
 ```json5
-
+DW.Core.pow(5,2)
 ```
 Output:
 ```json5
-
+25
 ```
 ---
 ### `random():number`
@@ -2500,11 +2532,11 @@ Returns a pseudo-random number greater than or equal to 0.0 and less than 1.0.
 
 Example:
 ```json5
-
+DW.Core.random()
 ```
 Output:
 ```json5
-
+0.7
 ```
 ---
 ### `randomInt(n:number):number`
@@ -2512,11 +2544,11 @@ Returns a pseudo-random whole number from 0 to the specified number (exclusive).
 
 Example:
 ```json5
-
+DW.Core.randomInt(10)
 ```
 Output:
 ```json5
-
+5
 ```
 ---
 ### `read(str:string):any`
@@ -2526,11 +2558,11 @@ This function can be useful if the reader cannot determine the content type by d
 
 Example:
 ```json5
-
+DW.Core.read("") //error
 ```
 Output:
 ```json5
-
+""
 ```
 ---
 ### `readUrl(str:string, type:string):any`
@@ -2540,11 +2572,13 @@ The classpath-based URL uses the classpath:` protocol prefix, for example, class
 
 Example:
 ```json5
-
+DW.Core.readUrl("http://httpbin.org/get?test=true").args
 ```
 Output:
 ```json5
-
+{
+  "test": "true"
+}
 ```
 ---
 ### `reduce(arr:array, funct(it,acc):function,initial:any):any`
@@ -2556,11 +2590,11 @@ Note that if the array is empty and no default value is set on the accumulator p
 
 Example:
 ```json5
-
+DW.Core.reduce([2.3], function(it,acc) it+acc, 0)
 ```
 Output:
 ```json5
-
+5
 ```
 ---
 ### `replace(str:string, regex:string, replacement:string):string`
@@ -2570,11 +2604,11 @@ This version of replace accepts a Java regular expression for matching part of a
 
 Example:
 ```json5
-
+DW.Core.replace("123-456-7890", ".*-", "")
 ```
 Output:
 ```json5
-
+"7890"
 ```
 ---
 ### `round(n:number):number`
@@ -2582,11 +2616,11 @@ Rounds a number up or down to the nearest whole number.
 
 Example:
 ```json5
-
+DW.Core.round(0.22)
 ```
 Output:
 ```json5
-
+0
 ```
 ---
 ### `scan(str:string, regex:string):array`
@@ -2596,11 +2630,14 @@ Each match is returned as an array that contains the complete match followed by 
 
 Example:
 ```json5
-
+DW.Core.scan("anypt@mulesoft.com,max@mulesoft.com", "([a-z]*)@([a-z]*).com")
 ```
 Output:
 ```json5
-
+[
+  ["anypt@mulesoft.com","anypt","mulesoft"],
+  ["max@mulesoft.com","max","mulesoft"]
+]
 ```
 ---
 ### `sizeOf(in:array|object|string):number`
@@ -2611,9 +2648,9 @@ This version of sizeOf takes an array or an array of arrays as input. Other vers
 Example:
 ```json5
 {
-  str: sizeOf("Hello World!"),
-  array: sizeOf([1,2]),
-  obj: sizeOf({a: 1})
+  str: DW.Core.sizeOf("Hello World!"),
+  array: DW.Core.sizeOf([1,2]),
+  obj: DW.Core.sizeOf({a: 1})
 }
 ```
 Output:
@@ -2633,8 +2670,8 @@ This version of splitBy accepts a Java regular expression (regex) to match the i
 Example:
 ```json5
 {
-  str: splitBy("a-b-c-d","-"),
-  regex: splitBy("a-b-c-d","[b]")
+  str: DW.Core.splitBy("a-b-c-d","-"),
+  regex: DW.Core.splitBy("a-b-c-d","[b]")
 }
 ```
 Output:
@@ -2650,7 +2687,7 @@ Returns the square root of a number.
 
 Example:
 ```json5
-sqrt(4)
+DW.Core.sqrt(4)
 ```
 Output:
 ```json5
@@ -2662,7 +2699,7 @@ Returns true or false depending on whether the input string starts with a matchi
 
 Example:
 ```json5
-startsWith("Hello World!", "Hell")
+DW.Core.startsWith("Hello World!", "Hell")
 ```
 Output:
 ```json5
@@ -2676,7 +2713,7 @@ Returns 0 if the array is empty and produces an error when non-numeric values ar
 
 Example:
 ```json5
-sum([2,7,4,8,3,2,2])
+DW.Core.sum([2,7,4,8,3,2,2])
 ```
 Output:
 ```json5
@@ -2690,7 +2727,7 @@ The upper boundary is inclusive.
 
 Example:
 ```json5
-to(0,3)
+DW.Core.to(0,3)
 ```
 Output:
 ```json5
@@ -2702,7 +2739,7 @@ Removes any blank spaces from the beginning and end of a string.
 
 Example:
 ```json5
-trim("   Hello   World   ")
+DW.Core.trim("   Hello   World   ")
 ```
 Output:
 ```json5
@@ -2715,11 +2752,11 @@ Returns the type of a value.
 Example:
 ```json5
 {
-  "string": DW.Core.typeOf(""),
+  string: DW.Core.typeOf(""),
   "null": DW.Core.typeOf(null),
-  "bool": DW.Core.typeOf(true),
-  "object": DW.Core.typeOf({}),
-  "array": DW.Core.typeOf([])
+  bool: DW.Core.typeOf(true),
+  object: DW.Core.typeOf({}),
+  array: DW.Core.typeOf([])
 }
 ```
 Output:
@@ -2740,7 +2777,7 @@ The function groups the values of the input sub-arrays by matching indices, and 
 
 Example:
 ```json5
-unzip([[0,"a"],[1,"b"],[2,"c"],[ 3,"d"]])
+DW.Core.unzip([[0,"a"],[1,"b"],[2,"c"],[ 3,"d"]])
 ```
 Output:
 ```json5
@@ -2752,7 +2789,7 @@ Returns the provided string in uppercase characters.
 
 Example:
 ```json5
-upper("Hello World!")
+DW.Core.upper("Hello World!")
 ```
 Output:
 ```json5
@@ -2764,7 +2801,7 @@ Returns a v4 UUID using random numbers as the source.
 
 Example:
 ```json5
-uuid()
+DW.Core.uuid()
 ```
 Output:
 ```json5
@@ -2776,7 +2813,7 @@ Returns an array of the values from key-value pairs in an object.
 
 Example:
 ```json5
-valuesOf({a: true, b: 1})
+DW.Core.valuesOf({a: true, b: 1})
 ```
 Output:
 ```json5
@@ -2790,7 +2827,7 @@ The first sub-array in the output array contains the first indices of the input 
 
 Example:
 ```json5
-zip([0,1], ["a","b"])
+DW.Core.zip([0,1], ["a","b"])
 ```
 Output:
 ```json5
