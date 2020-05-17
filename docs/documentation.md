@@ -678,6 +678,7 @@ Example:
 ```json5
 std.parseOctal("755") 
 ```
+Output:
 ```json5
 493
 ```
@@ -690,6 +691,7 @@ Example:
 ```json5
 std.parseHex("ff")
 ```
+Output:
 ```json5
 255
 ```
