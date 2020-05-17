@@ -12,7 +12,9 @@ If an external variable with the given name was defined, return its string value
 
 ---
 ## Types and Reflection
-### std.thisFile():string
+
+
+### `std.thisFile():string`
 Note that this is a field. It contains the current Jsonnet filename as a string.
 
 Example:
