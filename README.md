@@ -44,6 +44,11 @@ docker run -d -p 8080:8080 --name=ds-playground jakeizundead/ds-playground:lates
 
 Anyone is welcome to contribute, but it probably won't be an active project. I recommend creating a fork.
 
+* TODO:
+  * Add resizeable window for documentation reference
+  * Allow editors to be resizeable
+  * Add auto complete for function names
+  
 ## Authors
 
 * **Jacob Hughes** - *Initial work* - [Personal Website](https://hughesportal.com)
