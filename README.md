@@ -13,6 +13,7 @@ a lot like the Intellij plugin but provides an html interface.
   * The ability to resize editor windows and documentation size
   * Swap between light and dark theme via query parameter
   * Lexically analyzed auto complete
+  * Ability to have multiple files in payload section, i.e. vars file
 
 
 ![DS](img/DS.png)
