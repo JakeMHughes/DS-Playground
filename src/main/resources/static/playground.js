@@ -62,8 +62,9 @@ outEditor.setOptions({
 });
 
 /*******Handles the input change and then posts the data********/
-
+var beginTime=null;
 dsEditor.on("input", function(){
+    beginTime=new Date().getTime();
     console.log(typeof entries)
     postTransform();
 });
@@ -92,6 +93,7 @@ function postTransform(){
         dataType:"json"
     }).done(function( msg ) {
         console.log(msg);
+        console.log("Elapsed Time:" + ((new Date().getTime()) - beginTime));
         if(msg.success){
             if(msg.result.contentType == "application/json"){
                 var json = JSON.parse(msg.result.content);
