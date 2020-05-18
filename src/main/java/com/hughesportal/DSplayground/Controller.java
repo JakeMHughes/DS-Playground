@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.IOException;
+
 @org.springframework.stereotype.Controller
 public class Controller {
+
+
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -21,6 +25,15 @@ public class Controller {
         return "index";
     }
 
+    @GetMapping("/keywords")
+    public ResponseEntity<?> getKeywords() throws IOException {
+        return service.getKeywords();
+    }
+
+    @GetMapping("/docs")
+    public ResponseEntity<?> getDocs() throws IOException {
+        return  service.getDocs();
+    }
 
     @PostMapping("/transform")
     public ResponseEntity<?> transform(@RequestBody DSMap obj){

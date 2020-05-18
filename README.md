@@ -3,6 +3,13 @@
 DS-Playground is a Thyme leaf application that makes it easy to 
 set an input and script value to be executed by Datasonnet. It works
 a lot like the Intellij plugin but provides an html interface.
+
+* Features:
+  * Autocomplete for jsonnet, DS, and DW libraries
+  * Json & Json5 formatting
+  * Easily accessible documentation page
+  * Fast execution time
+
 ![DS](img/DS.png)
 ## Getting Started
 
@@ -44,6 +51,11 @@ docker run -d -p 8080:8080 --name=ds-playground jakeizundead/ds-playground:lates
 
 Anyone is welcome to contribute, but it probably won't be an active project. I recommend creating a fork.
 
+* TODO:
+  * Add resizeable window for documentation reference
+  * Allow editors to be resizeable
+  * Add auto complete for function names
+  
 ## Authors
 
 * **Jacob Hughes** - *Initial work* - [Personal Website](https://hughesportal.com)

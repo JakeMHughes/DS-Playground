@@ -21,7 +21,50 @@ body {
 
 .editor {
     flex-basis: 33.3%;
-    height: 97.9vh;
+    height: 94.3vh;
     width: 30%;
     border: 1px #cecece solid;
+}
+
+.docsContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height:4vh;
+    border-top: 4px solid white;
+    z-index:9999;
+}
+
+.docsHeader{
+    color: white;
+    background-color: #000000;
+}
+
+.docsBody{
+    background-color: white;
+    height: 100%;
+}
+
+.docsNavbar{
+    padding-left:20px;
+    height: 100%;
+    width: 40vh;
+    overflow-y: auto;
+    overflow-x: auto;
+    float: left;
+}
+
+.docsDocs{
+    padding-left:15vh;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+button{
+    background-color: white;
+    color: black;
+    border:solid;
+
 }
