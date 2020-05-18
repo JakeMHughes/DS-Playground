@@ -8,7 +8,7 @@
         3. length
         4. objectHas
         5. objectFields
-        6. objecyHasAll
+        6. objectHasAll
         7. objectFiledsAll
         8. prune
         9. mapWithKey
@@ -55,7 +55,6 @@
         18. escapeStringBash
         19. escapeStringDollars
         20. escapeStringJson
-        21. escapeStringPython
     6. Parsing
         1. parseInt
         2. parseOctal
@@ -88,7 +87,7 @@
         14. join
         15. lines
         16. flattenArrays
-        17. revers
+        17. reverse
         18. sort
         19. uniq
     9. Sets
@@ -103,17 +102,54 @@
         3. base64Decode
         4. md5
     11. JSON Merge Patch
-        1. mergePAtch
+        1. mergePatch
     12. Debugging
         1. trace
 2. DS
     1. Crypto
+        1. hash
+        2. hmac
+        3. encrypt
+        4. decrypt
     2. ZonedDateTime
+        1. now
+        2. offset
+        3. format
+        4. compare
+        5. changeTimeZone
+        6. toLocalDate
+        7. toLocalTime
     3. LocalDateTime
+        1. now
+        2. offset
+        3. format
+        4. compare
     4. JsonPath
+        1. select
     5. Util
+        1. select
+        2. filterEx
+        3. groupBy
+        4. remove
+        5. removeAll
+        6. deepFlattenArrays
+        7. reverse
+        8. parseDouble
+        9. duplicates
+        10. sum
+        11. round
+        12. counts
+        13. mapToObject
     6. Regex
+        1. regexFullMatch
+        2. regexPartialMatch
+        3. regexScan
+        4. regexQuoteMeta
+        5. regexReplace
+        6. regexGlobalReplace
     7. URL
+        1. encode
+        2. decode
 3. DW
     1. Core
         1. abs
