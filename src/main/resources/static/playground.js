@@ -9,8 +9,8 @@ $(function() {
 })
 
 var beautify = ace.require("ace/ext/beautify"); // get reference to extension
-
 var langTools = ace.require("ace/ext/language_tools");
+
 
 var payloadEditor = ace.edit("payload-editor");
 payloadEditor.setTheme("ace/theme/twilight");
@@ -30,6 +30,7 @@ dsEditor.setOptions({
 
 var entries=null;
 getKeywords();
+getDocs();
 
 var staticWordCompleter = {
     getCompletions: function(editor, session, pos, prefix, callback) {
@@ -125,28 +126,23 @@ function getKeywords(){
     });
 }
 
+function getDocs(){
+
+    console.log("Retrieving docs...");
+    $.ajax({
+        method:"GET",
+        url:"http://localhost:8080/docs"
+    }).done(function( msg ) {
+        console.log("Successfully retrieved docs.");
+        console.log(msg)
+        createDocsPage(msg.nav,msg.docs);
+    });
+}
+
+function createDocsPage(nav,doc){
+    var converter = new showdown.Converter();
+    document.getElementById("navDocs").innerHTML=converter.makeHtml(nav);
+    document.getElementById("mainDocs").innerHTML=converter.makeHtml(doc);
+}
 
 //resize editor windows: https://ourcodeworld.com/articles/read/994/how-to-make-an-ace-editor-instance-resizable-by-the-user-dinamically-with-a-drag-and-drop-bar
-/* https://gist.github.com/zeffii/2983357
-        // get markdown content
-        var body_location = 'markdown/README.markdown';
-
-        function getText(myUrl){
-            var result = null;
-            $.ajax( { url: myUrl,
-                      type: 'get',
-                      dataType: 'html',
-                      async: false,
-                      success: function(data) { result = data; }
-                    }
-            );
-            FileReady = true;
-            return result;
-        }
-
-        var markdown_source = getText(body_location);
-
-        // convert markdown to html
-        var output = markdown.toHTML( markdown_source );
-        document.write(output);
-        */

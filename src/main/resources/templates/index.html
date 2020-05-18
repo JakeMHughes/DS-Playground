@@ -7,22 +7,22 @@
     <!-- Latest jQuery from Google CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <!-- Crypto JS -->
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
+    <!--<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>-->
+    <!-- Together -->
+    <script src="https://togetherjs.com/togetherjs-min.js"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <!-- Showdown for markdown -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/playground.css}" type="text/css">
     <!-- Ace Editor -->
     <script th:src="@{/ace/ace.js}" type="text/javascript" charset="utf-8"></script>
     <script th:src="@{/ace/ext-language_tools.js}" type="text/javascript" charset="utf-8"></script>
     <script th:src="@{/ace/ext-beautify.js}" type="text/javascript" charset="utf-8"></script>
-    <!-- Together -->
-    <script src="https://togetherjs.com/togetherjs-min.js"></script>
-    <!-- Bootstrap Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <!-- Bootstrap Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-    <!-- JSTinker Style -->
-    <link rel="stylesheet" th:href="@{/playground.css}" type="text/css">
-    <!-- Bootstrap Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
     <script th:src="@{/ace/theme-twilight.js}" type="text/javascript" charset="utf-8"></script>
     <script th:src="@{/playground.js}" type="text/javascript" charset="utf-8"></script>
 </head>
@@ -31,12 +31,32 @@
     <div class="editor" id="payload-editor">{
     "message": "Hello World!"
 }</div>
+
     <div class="editor" id="ds-editor">payload.message</div>
+
     <div class="editor" id="output-editor" name="result" sandbox="allow-forms allow-popups allow-scripts allow-same-origin">"Hello World"</div>
+
+</div>
+<div id="resizable" class="docsContainer">
+    <div class="docsHeader">
+        <button type="button" onclick="test()">Documentation</button>
+    </div>
+    <div class="docsBody">
+        <div class="docsNavbar" id="navDocs"></div>
+        <div class="docsDocs" id="mainDocs"></div>
+    </div>
 </div>
 
 <!-- Set Editor Modes -->
 <script th:src="@{/playground.js}" type="text/javascript" charset="utf-8">
+
+      $( function() {
+    $( "#resizable" ).resizable();
+  } );
+
+
+
+
 
 </script>
 </body>

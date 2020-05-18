@@ -30,6 +30,11 @@ public class Controller {
         return service.getKeywords();
     }
 
+    @GetMapping("/docs")
+    public ResponseEntity<?> getDocs() throws IOException {
+        return  service.getDocs();
+    }
+
     @PostMapping("/transform")
     public ResponseEntity<?> transform(@RequestBody DSMap obj){
         logger.info(obj.toString());

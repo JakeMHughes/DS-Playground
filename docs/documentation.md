@@ -7,17 +7,17 @@ The standard library is implicitly added to all Jsonnet programs by enclosing th
 
 ---
 ## External Variables
-### `std.extVar(x)`
+### `extVar(x)`
 If an external variable with the given name was defined, return its string value. Otherwise, raise an error.
 
 ---
 ## Types and Reflection
-### `std.thisFile():string`
+### `thisFile():string`
 Note that this is a field. It contains the current Jsonnet filename as a string.
 
 Example:
-```scala 3
-std.thisFile
+```
+.thisFile
 ```
 Output:
 ```json5
@@ -25,7 +25,7 @@ Output:
 ```
 
 ---
-### `std.type(x:any):string`
+### `type(x:any):string`
 Return a string that indicates the type of the value. The possible return values are: "array", "boolean", "function", "null", "number", "object", and "string".
 
 The following functions are also available and return a boolean: std.isArray(v), std.isBoolean(v), std.isFunction(v), std.isNumber(v), std.isObject(v), and std.isString(v).
@@ -56,7 +56,7 @@ Output:
 ```
 
 ---
-### `std.length(x:any):number`
+### `length(x:any):number`
 Depending on the type of the value given, either returns the number of elements in the array, the number of codepoints in the string, the number of parameters in the function, or the number of fields in the object. Raises an error if given a primitive value, i.e. null, true or false.
 
 Example:
@@ -78,7 +78,7 @@ Output:
 }
 ```
 ---
-### `std.objectHas(o:object, f:string):boolean`
+### `objectHas(o:object, f:string):boolean`
 Returns true if the given object has the field (given as a string), otherwise false. Raises an error if the arguments are not object and string respectively. Returns false if the field is hidden.
 
 Example:
@@ -101,7 +101,7 @@ Output:
 ```
 
 ---
-### `std.objectFields(o:object):array`
+### `objectFields(o:object):array`
 Returns an array of strings, each element being a field from the given object. Does not include hidden fields.
 
 Example:
@@ -121,7 +121,7 @@ Output:
 ```
 
 ---
-### `std.objectHasAll(o:object, f:string):boolean`
+### `objectHasAll(o:object, f:string):boolean`
 As std.objectHas but also includes hidden fields.
 
 Example:
@@ -145,7 +145,7 @@ Output:
 ```
 
 ---
-### `std.objectFieldsAll(o:object):array`
+### `objectFieldsAll(o:object):array`
 As std.objectFields but also includes hidden fields.
 
 Example:
@@ -166,7 +166,7 @@ Output:
 ```
 
 ---
-### `std.prune(a:array):array`
+### `prune(a:array):array`
 Recursively remove all "empty" members of a. "Empty" is defined as zero length `arrays`, zero length `objects`, or `null` values. The argument a may have any type.
 
 Example:
@@ -183,7 +183,7 @@ Output:
 ```
 
 ---
-### `std.mapWithKey(func:function, obj:object):object`
+### `mapWithKey(func:function, obj:object):object`
 Apply the given function to all fields of the given object, also passing the field name. The function func is expected to take the field name as the first parameter and the field value as the second.
 
 Example:
@@ -208,7 +208,7 @@ Output:
 The following mathematical functions are available:
 
 ---
-### `std.abs(n:number):number`
+### `abs(n:number):number`
 
 Example:
 ```json5
@@ -220,7 +220,7 @@ Output:
 ```
 
 ---
-### `std.sign(n)`
+### `sign(n)`
 
 Example:
 ```json5
@@ -232,7 +232,7 @@ Output:
 ```
 
 ---
-### `std.max(a:number, b:number):number`
+### `max(a:number, b:number):number`
 
 Example:
 ```json5
@@ -244,7 +244,7 @@ Output:
 ```
 
 ---
-### `std.min(a:number, b:number):number`
+### `min(a:number, b:number):number`
 
 Example:
 ```json5
@@ -256,7 +256,7 @@ Output:
 ```
 
 ---
-### `std.pow(x:number, exp:number):number`
+### `pow(x:number, exp:number):number`
 
 Example:
 ```json5
@@ -268,7 +268,7 @@ Output:
 ```
 
 ---
-### `std.exp(x:number):number`
+### `exp(x:number):number`
 The std.exp(x) function returns e<sup>x</sup>, where x is the argument, and e is Euler's number
 
 Example:
@@ -281,7 +281,7 @@ Output:
 ```
 
 ---
-### `std.log(x:number):number`
+### `log(x:number):number`
 
 Example:
 ```json5
@@ -293,7 +293,7 @@ Output:
 ```
 
 ---
-### `std.exponent(x:number):number`
+### `exponent(x:number):number`
 
 Example:
 ```json5
@@ -305,7 +305,7 @@ Output:
 ```
 
 ---
-### `std.mantissa(x:number):number`
+### `mantissa(x:number):number`
 
 Example:
 ```json5
@@ -317,7 +317,7 @@ Output:
 ```
 
 ---
-### `std.floor(x:number):number`
+### `floor(x:number):number`
 
 Example:
 ```json5
@@ -329,7 +329,7 @@ Output:
 ```
 
 ---
-### `std.ceil(x:number):number`
+### `ceil(x:number):number`
 
 Example:
 ```json5
@@ -341,7 +341,7 @@ Output:
 ```
 
 ---
-### `std.sqrt(x:number):number`
+### `sqrt(x:number):number`
 
 Example:
 ```json5
@@ -353,7 +353,7 @@ Output:
 ```
 
 ---
-### `std.sin(x:number):number`
+### `sin(x:number):number`
 
 Example:
 ```json5
@@ -365,7 +365,7 @@ Output:
 ```
 
 ---
-### `std.cos(x:number):number`
+### `cos(x:number):number`
 
 Example:
 ```json5
@@ -377,7 +377,7 @@ Output:
 ```
 
 ---
-### `std.tan(x:number):number`
+### `tan(x:number):number`
 
 Example:
 ```json5
@@ -389,7 +389,7 @@ Output:
 ```
 
 ---
-### `std.asin(x:number):number`
+### `asin(x:number):number`
 
 Example:
 ```json5
@@ -401,7 +401,7 @@ Output:
 ```
 
 ---
-### `std.acos(x:number):number`
+### `acos(x:number):number`
 
 Example:
 ```json5
@@ -413,7 +413,7 @@ Output:
 ```
 
 ---
-### `std.atan(x:number):number`
+### `atan(x:number):number`
 
 
 Example:
@@ -426,7 +426,7 @@ Output:
 ```
 ---
 ## Assertions and Debugging
-### `std.assertEqual(a:any, b:any):boolean`
+### `assertEqual(a:any, b:any):boolean`
 Ensure that a == b. Returns true or throws an error message.
 
 Example:
@@ -441,7 +441,7 @@ Problem executing map: sjsonnet.Error: assertEqual failed: 1 != 2
 
 ---
 ## String Manipulation
-### `std.toString(any:any):string`
+### `toString(any:any):string`
 Convert the given argument to a string.
 
 Example:
@@ -466,7 +466,7 @@ Output:
 ```
 
 ---
-### `std.codepoint(str:string):number`
+### `codepoint(str:string):number`
 Returns the positive integer representing the unicode codepoint of the character in the given single-character string. This function is the inverse of std.char(n).
 
 Example:
@@ -478,7 +478,7 @@ Output:
 107
 ```
 ---
-### `std.char(n:number):string`
+### `char(n:number):string`
 Returns a string of length one whose only unicode codepoint has integer id n. This function is the inverse of std.codepoint(str).
 
 Example:
@@ -490,7 +490,7 @@ Output:
 "k"
 ```
 ---
-### `std.substr(str:string, from:number, len:number):string`
+### `substr(str:string, from:number, len:number):string`
 Returns a string that is the part of s that starts at offset from and is len codepoints long. If the string s is shorter than from+len, the suffix starting at position from will be returned.
 
 Example:
@@ -502,7 +502,7 @@ Output:
 "Hello"
 ```
 ---
-### `std.findSubstr(pat:string, str:string):array`
+### `findSubstr(pat:string, str:string):array`
 Returns an array that contains the indexes of all occurances of pat in str.
 
 Example:
@@ -514,7 +514,7 @@ Output:
 [4,7]
 ```
 ---
-### `std.startsWith(a:string, b:string):boolean`
+### `startsWith(a:string, b:string):boolean`
 Returns whether the string a is prefixed by the string b.
 
 Example:
@@ -526,7 +526,7 @@ Output:
 true
 ```
 ---
-### `std.endsWith(a:string, b:string):boolean`
+### `endsWith(a:string, b:string):boolean`
 Returns whether the string a is suffixed by the string b.
 
 Example:
@@ -538,7 +538,7 @@ Output:
 true
 ```
 ---
-### `std.split(str:string, c:string):array`
+### `split(str:string, c:string):array`
 Split the string str into an array of strings, divided by the single character c.
 
 Example:
@@ -550,7 +550,7 @@ Output:
 ["foo", "bar"]
 ```
 ---
-### `std.splitLimit(str:string, c:string, maxsplits:number):array`
+### `splitLimit(str:string, c:string, maxsplits:number):array`
 As std.split(str, c) but will stop after maxsplits splits, thereby the largest array it will return has length maxsplits + 1. A limit of -1 means unlimited.
 
 Example:
@@ -562,7 +562,7 @@ Output:
 ["foo", "bar"]
 ```
 ---
-### `std.strReplace(str:string, from:number, to:number):string`
+### `strReplace(str:string, from:number, to:number):string`
 Returns a copy of the string in which all occurrences of string from have been replaced with string to
 
 Example:
@@ -574,7 +574,7 @@ Output:
 "I like to surf with my surfboard"
 ```
 ---
-### `std.asciiUpper(str:string):string`
+### `asciiUpper(str:string):string`
 Returns a copy of the string in which all ASCII letters are capitalized.
 
 Example:
@@ -586,7 +586,7 @@ Output:
 "100 CATS!"
 ```
 ---
-### `std.asciiLower(str:string):string`
+### `asciiLower(str:string):string`
 Returns a copy of the string in which all ASCII letters are lower cased.
 
 Example:
@@ -598,7 +598,7 @@ Output:
 "100 cats!"
 ```
 ---
-### `std.stringChars(str:string):array`
+### `stringChars(str:string):array`
 Split the string str into an array of strings, each containing a single codepoint.
 
 Example:
@@ -610,7 +610,7 @@ Output:
 ["f", "o", "o"]
 ```
 ---
-### `std.format(str:string, vals:any):string`
+### `format(str:string, vals:any):string`
 Format the string str using the values in vals. The values can be an array, an object, or in other cases are treated as if they were provided in a singleton array. The string formatting follows the same rules as Python. The % operator can be used as a shorthand for this function.
 
 Example:
@@ -622,7 +622,7 @@ Output:
 "Hello 012"
 ```
 ---
-### `std.escapeStringBash(str:string):string`
+### `escapeStringBash(str:string):string`
 Wrap str in single quotes, and escape any single quotes within str by changing them to a sequence '"'"'. This allows injection of arbitrary strings as arguments of commands in bash scripts.
 
 Example:
@@ -634,7 +634,7 @@ Output:
 "'escaped string'"
 ```
 ---
-### `std.escapeStringDollars(str:string):string`
+### `escapeStringDollars(str:string):string`
 Convert $ to $$ in str. This allows injection of arbitrary strings into systems that use $ for string interpolation (like Terraform).
 
 Example:
@@ -646,7 +646,7 @@ Output:
 "$$"
 ```
 ---
-### `std.escapeStringJson(str:string):string`
+### `escapeStringJson(str:string):string`
 Convert str to allow it to be embedded in a JSON representation, within a string. This adds quotes, escapes backslashes, and escapes unprintable characters.
 
 Example:
@@ -659,7 +659,7 @@ Output:
 ```
 ---
 ## Parsing
-### `std.parseInt(str:string):number`
+### `parseInt(str:string):number`
 Parses a signed decimal integer from the input string.
 
 Example:
@@ -671,7 +671,7 @@ Output:
 123
 ```
 ---
-### `std.parseOctal(str:string):number`
+### `parseOctal(str:string):number`
 Parses an unsigned octal integer from the input string. Initial zeroes are tolerated.
 
 Example: 
@@ -684,7 +684,7 @@ Output:
 ```
 
 ---
-### `std.parseHex(str:string):number`
+### `parseHex(str:string):number`
 Parses an unsigned hexadecimal integer, from the input string. Case insensitive.
 
 Example: 
@@ -697,7 +697,7 @@ Output:
 ```
 
 ---
-### `std.parseJson(str:string):any`
+### `parseJson(str:string):any`
 Available since version 0.13.0.
 Parses a JSON string.
 
@@ -713,7 +713,7 @@ Output:
 ```
 ---
 ## Manifestation
-### `std.manifestIni(ini:object)`
+### `manifestIni(ini:object)`
 Convert the given structure to a string in INI format. This allows using Jsonnet's object model to build a configuration to be consumed by an application expecting an INI file. The data is in the form of a set of sections, each containing a key/value mapping. These examples should make it clear:
 
 Example:
@@ -741,7 +741,7 @@ p = yes
 q = 
 ```
 ---
-### `std.manifestPython(v:object)`
+### `manifestPython(v:object)`
 Convert the given value to a JSON-like form that is compatible with Python. The chief differences are True / False / None instead of true / false / null.
 
 Example:
@@ -763,7 +763,7 @@ Output:
 }
 ```
 ---
-### `std.manifestPythonVars(conf:object)`
+### `manifestPythonVars(conf:object)`
 Convert the given object to a JSON-like form that is compatible with Python. The key difference to std.manifestPython is that the top level is represented as a list of Python global variables.
 
 Example:
@@ -783,7 +783,7 @@ d = None
 e = {"f1": False, "f2": 42}
 ```
 ---
-### `std.manifestJsonEx(value:object, indent:string):object`
+### `manifestJsonEx(value:object, indent:string):object`
 Convert the given object to a JSON form. indent is a string containing one or more whitespaces that are used for indentation:
 
 Example:
@@ -818,7 +818,7 @@ Output:
 }
 ```
 ---
-### `std.manifestYamlDoc(value:object)`
+### `manifestYamlDoc(value:object)`
 Convert the given value to a YAML form. Note that std.manifestJson could also be used for this purpose, because any JSON is also valid YAML. But this function will produce more canonical-looking YAML.
 
 Example:
@@ -851,7 +851,7 @@ Output:
     - 2
 ```
 ---
-### `std.manifestYamlStream(value)`
+### `manifestYamlStream(value)`
 Given an array of values, emit a YAML "stream", which is a sequence of documents separated by --- and ending with ....
 
 Example:
@@ -871,7 +871,7 @@ Output:
 ...
 ```
 ---
-### `std.manifestXmlJsonml(value)`
+### `manifestXmlJsonml(value)`
 Convert the given JsonML-encoded value to a string containing the XML.
 
 Example:
@@ -899,7 +899,7 @@ Output:
 ```
 ---
 ## Arrays
-### `std.makeArray(sz:number, func:function):array`
+### `makeArray(sz:number, func:function):array`
 Create a new array of sz elements by calling func(i) to initialize each element. Func is expected to be a function that takes a single parameter, the index of the element it should initialize.
 
 Example:
@@ -911,7 +911,7 @@ Output:
 [0, 1, 4]
 ```
 ---
-### `std.count(arr:array, x:any):number`
+### `count(arr:array, x:any):number`
 Return the number of times that x occurs in arr.
 
 Example:
@@ -923,7 +923,7 @@ Output:
 2
 ```
 ---
-### `std.find(value:any, arr:array):array`
+### `find(value:any, arr:array):array`
 Returns an array that contains the indexes of all occurances of value in arr.
 
 Example:
@@ -935,7 +935,7 @@ Output:
 [0,3]
 ```
 ---
-### `std.map(func:function, arr:array):array`
+### `map(func:function, arr:array):array`
 Apply the given function to every element of the array to form a new array.
 
 Example:
@@ -952,7 +952,7 @@ Output:
 ]
 ```
 ---
-### `std.mapWithIndex(func:function, arr:array):array`
+### `mapWithIndex(func:function, arr:array):array`
 Similar to map above, but it also passes to the function the element's index in the array. The function func is expected to take the index as the first parameter and the element as the second.
 
 Example:
@@ -970,7 +970,7 @@ Output:
 ]
 ```
 ---
-### `std.filterMap(filter_func:function, map_func:function, arr:array):array`
+### `filterMap(filter_func:function, map_func:function, arr:array):array`
 This is primarily used to desugar array comprehension syntax. It first filters, then maps the given array, using the two functions provided.
 
 Example:
@@ -990,7 +990,7 @@ Output:
 ]
 ```
 ---
-### `std.flatMap(func:function, arr:array):array`
+### `flatMap(func:function, arr:array):array`
 Apply the given function to every element of the array to form a new array then flatten the result. It can be thought of as a generalized map, where each element can get mapped to 0, 1 or more elements.
 
 Example:
@@ -1002,7 +1002,7 @@ Output:
 [1, 1, 2, 2, 3, 3]
 ```
 ---
-### `std.filter(func:function, arr:array):array`
+### `filter(func:function, arr:array):array`
 Return a new array containing all the elements of arr for which the func function returns true.
 
 Example:
@@ -1021,7 +1021,7 @@ Output:
 ]
 ```
 ---
-### `std.foldl(func:function, arr:array, init:any):any`
+### `foldl(func:function, arr:array, init:any):any`
 Classic foldl function. Calls the function on the result of the previous function call and each array element, or init in the case of the initial element. Traverses the array from left to right.
 
 Example:
@@ -1037,7 +1037,7 @@ Output:
 "01234"
 ```
 ---
-### `std.foldr(func:function, arr:array, init:any):any`
+### `foldr(func:function, arr:array, init:any):any`
 Classic foldl function. Calls the function on each array element and the result of the previous function call, or init in the case of the initial element. Traverses the array from right to left.
 
 Example:
@@ -1053,7 +1053,7 @@ Output:
 "12340"
 ```
 ---
-### `std.range(from:number, to:number):array`
+### `range(from:number, to:number):array`
 Return an array of ascending numbers between the two limits, inclusively.
 
 Example:
@@ -1065,7 +1065,7 @@ Output:
 [0,1,2,3,4,5]
 ```
 ---
-### `std.join(sep:string, arr:array):any`
+### `join(sep:string, arr:array):any`
 If sep is a string, then arr must be an array of strings, in which case they are concatenated with sep used as a delimiter. If sep is an array, then arr must be an array of arrays, in which case the arrays are concatenated in the same way, to produce a single array.
 
 Example:
@@ -1077,7 +1077,7 @@ Output:
 "www.google.com"
 ```
 ---
-### `std.lines(arr:array):string`
+### `lines(arr:array):string`
 Concatenate an array of strings into a text file with newline characters after each string. This is suitable for constructing bash scripts and the like.
 
 Example:
@@ -1089,7 +1089,7 @@ Output:
 "a\nb\n"
 ```
 ---
-### `std.flattenArrays(arrs:array):array`
+### `flattenArrays(arrs:array):array`
 Concatenate an array of arrays into a single array.
 
 Example:
@@ -1101,7 +1101,7 @@ Output:
 [1, 2, 3, 4, [5, 6], [7, 8]]
 ```
 ---
-### `std.sort(arr:array, keyF=id):array`
+### `sort(arr:array, keyF=id):array`
 Sorts the array using the <= operator.
 
 Optional argument keyF is a single argument function used to extract comparison key from each array element. Default value is identity function keyF=function(x) x.
@@ -1115,7 +1115,7 @@ Output:
 [0,1,2,3]
 ```
 ---
-### `std.uniq(arr:array, keyF=id):array`
+### `uniq(arr:array, keyF=id):array`
 Removes successive duplicates. When given a sorted array, removes all duplicates.
 
 Optional argument keyF is a single argument function used to extract comparison key from each array element. Default value is identity function keyF=function(x) x.
@@ -1137,7 +1137,7 @@ Note that the std.set* functions rely on the uniqueness and ordering on arrays p
 All set.set* functions accept keyF function of one argument, which can be used to extract key to use from each element. All Set operations then use extracted key for the purpose of identifying uniqueness. Default value is identity function local id = function(x) x
 
 ---
-### `std.set(arr:array, keyF=id):array`
+### `set(arr:array, keyF=id):array`
 Shortcut for std.uniq(std.sort(arr)).
 
 Example:
@@ -1149,7 +1149,7 @@ Output:
 [0,1,2,3]
 ```
 ---
-### `std.setInter(a:array, b:array, keyF=id):array`
+### `setInter(a:array, b:array, keyF=id):array`
 Set intersection operation (values in both a and b).
 
 Example:
@@ -1161,7 +1161,7 @@ Output:
 [1]
 ```
 ---
-### `std.setUnion(a:array, b:array, keyF=id):array`
+### `setUnion(a:array, b:array, keyF=id):array`
 Set union operation (values in any of a or b). Note that + on sets will simply concatenate the arrays, possibly forming an array that is not a set (due to not being ordered without duplicates).
 
 Example:
@@ -1173,7 +1173,7 @@ Output:
 [1, 2, 3]
 ```
 ---
-### `std.setDiff(a:array, b:array, keyF=id):array`
+### `setDiff(a:array, b:array, keyF=id):array`
 Set difference operation (values in a but not b).
 
 Example:
@@ -1185,7 +1185,7 @@ Output:
 [1,2]
 ```
 ---
-### `std.setMember(x:any, arr:array, keyF=id):boolean`
+### `setMember(x:any, arr:array, keyF=id):boolean`
 Returns true if x is a member of array, otherwise false.
 
 Example:
@@ -1198,7 +1198,7 @@ true
 ```
 ---
 ## Encoding
-### `std.base64(input:string):string`
+### `base64(input:string):string`
 Encodes the given value into a base64 string. The encoding sequence is A-Za-z0-9+/ with = to pad the output to a multiple of 4 characters. The value can be a string or an array of numbers, but the codepoints / numbers must be in the 0 to 255 range. The resulting string has no line breaks.
 
 Example:
@@ -1210,7 +1210,7 @@ Output:
 "aGVsbG8="
 ```
 ---
-### `std.base64DecodeBytes(str:string):array`
+### `base64DecodeBytes(str:string):array`
 Decodes the given base64 string into an array of bytes (number values). Currently assumes the input string has no linebreaks and is padded to a multiple of 4 (with the = character). In other words, it consumes the output of std.base64().
 
 Example:
@@ -1228,7 +1228,7 @@ Output:
 ]
 ```
 ---
-### `std.base64Decode(str:string):string`
+### `base64Decode(str:string):string`
 Deprecated, use std.base64DecodeBytes and decode the string explicitly (e.g. with std.decodeUTF8) instead.
 Behaves like std.base64DecodeBytes() except returns a naively encoded string instead of an array of bytes.
 
@@ -1241,7 +1241,7 @@ Output:
 "hello"
 ```
 ---
-### `std.md5(s:string):string`
+### `md5(s:string):string`
 Encodes the given value into an MD5 string.
 
 Example:
@@ -1254,7 +1254,7 @@ Output:
 ```
 ---
 ## JSON Merge Patch
-### `std.mergePatch(target:any, patch:any):any`
+### `mergePatch(target:any, patch:any):any`
 Applies patch to target according to RFC7396
 
 Example:
@@ -1270,12 +1270,12 @@ Output:
 ```
 ---
 ## Debugging
-### `std.trace(str:string, rest:amy):any`
+### `trace(str:string, rest:amy):any`
 Available since version 0.11.0.
 Outputs the given string str to stderr and returns rest as the result.
 
 Example:
-```scala 3
+```
 local conditionalReturn(cond, in1, in2) =
     if (cond) then
         std.trace('cond is true returning '
@@ -1363,7 +1363,7 @@ Output:
 ```
 ---
 ## ZonedDateTime
-### `now():string`
+### `now():zoneddate`
 Returns the current date/time from the system UTC clock in ISO-8601 format.
 
 Example:
@@ -1379,7 +1379,7 @@ Output:
 }
 ```
 ---
-### `offset(datetime:string, period:string):string`
+### `offset(datetime:string, period:string):zoneddate`
 Returns a copy of this datetime with the specified amount added. The `datetime` parameter is in the ISO-8601 format.
 The `period` is a string in the ISO-8601 period format.
 
@@ -1392,7 +1392,7 @@ Output:
 "2020-07-23T21:00:00Z"
 ```
 ---
-### `format(datetime:string, inputFormat:string, outputFormat:string):string`
+### `format(datetime:string, inputFormat:string, outputFormat:string):zoneddate`
 Reformats a zoned date-time string.
 
 Example:
@@ -1466,7 +1466,7 @@ Output:
 ```
 ---
 ## LocalDateTime
-### `now():string`
+### `now():localdate`
 Returns the current date/time from the system UTC clock in ISO-8601 format without a time zone.
 
 Example:
@@ -1482,7 +1482,7 @@ Output:
 }
 ```
 ---
-### `offset(datetime:string, period:string):string`
+### `offset(datetime:string, period:string):localdate`
 Returns a copy of this datetime with the specified amount added. The `datetime` parameter is in the ISO-8601 format without an offset.
 The `period` is a string in the ISO-8601 period format.
 
@@ -1495,7 +1495,7 @@ Output:
 "2020-07-23T21:00:00"
 ```
 ---
-### `format(datetime:string, inputFormat:string, outputFormat:string):string`
+### `format(datetime:string, inputFormat:string, outputFormat:string):localdate`
 Reformats a local date-time string.
 
 Example:
@@ -1911,7 +1911,7 @@ Output:
 ]
 ```
 ---
-### `sum(arr:array):number`
+### `sum(array:array):number`
 Returns sum of all elements in the array.
 
 Payload:
