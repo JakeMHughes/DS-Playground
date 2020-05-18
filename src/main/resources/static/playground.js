@@ -126,6 +126,9 @@ function getKeywords(){
     });
 }
 
+
+/***********Start documentation logic************/
+
 function getDocs(){
 
     console.log("Retrieving docs...");
@@ -144,5 +147,19 @@ function createDocsPage(nav,doc){
     document.getElementById("navDocs").innerHTML=converter.makeHtml(nav);
     document.getElementById("mainDocs").innerHTML=converter.makeHtml(doc);
 }
+
+var extended=false;
+function buttonClick(){
+    if(extended){
+        $(".docsContainer").css('height','4vh');
+        extended=false;
+    }
+    else{
+        $(".docsContainer").css('height','45vh');
+        extended=true;
+    }
+}
+
+/***********End documentation logic************/
 
 //resize editor windows: https://ourcodeworld.com/articles/read/994/how-to-make-an-ace-editor-instance-resizable-by-the-user-dinamically-with-a-drag-and-drop-bar

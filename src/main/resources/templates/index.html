@@ -39,7 +39,7 @@
 </div>
 <div id="resizable" class="docsContainer">
     <div class="docsHeader">
-        <button type="button" onclick="test()">Documentation</button>
+        <button type="button" onclick="buttonClick()">Documentation</button>
     </div>
     <div class="docsBody">
         <div class="docsNavbar" id="navDocs"></div>
@@ -48,16 +48,6 @@
 </div>
 
 <!-- Set Editor Modes -->
-<script th:src="@{/playground.js}" type="text/javascript" charset="utf-8">
-
-      $( function() {
-    $( "#resizable" ).resizable();
-  } );
-
-
-
-
-
-</script>
+<script th:src="@{/playground.js}" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
