@@ -9,6 +9,12 @@ a lot like the Intellij plugin but provides an html interface.
   * Json & Json5 formatting
   * Easily accessible documentation page
   * Fast execution time
+* Wanted Features:
+  * The ability to resize editor windows and documentation size
+  * Swap between light and dark theme via query parameter
+  * Lexically analyzed auto complete
+  * Ability to have multiple files in payload section, i.e. vars file
+
 
 ![DS](img/DS.png)
 ## Getting Started
@@ -40,7 +46,12 @@ mvn spring-boot:run
 docker pull jakeizundead/ds-playground:latest
 docker run -d -p 8080:8080 --name=ds-playground jakeizundead/ds-playground:latest
 ```
+## Using
+The application gets deployed to port 8080 by default so to get access open up your web browser and travel
+to `http://localhost:8080`.
 
+The left panel is the payload panel, the middle panel is your Datasonnet panel and the right panel
+is a read only ouput panel
 ## Built With
 
 * [Datasonnet](https://github.com/modusbox/datasonnet-mapper) - The data transformation
@@ -50,11 +61,6 @@ docker run -d -p 8080:8080 --name=ds-playground jakeizundead/ds-playground:lates
 ## Contributing
 
 Anyone is welcome to contribute, but it probably won't be an active project. I recommend creating a fork.
-
-* TODO:
-  * Add resizeable window for documentation reference
-  * Allow editors to be resizeable
-  * Add auto complete for function names
   
 ## Authors
 

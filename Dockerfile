@@ -10,12 +10,16 @@ WORKDIR /app/datasonnet
 RUN  mvn -Ddockerfile.skip install
 COPY src /app/DS-playground/src
 COPY pom.xml /app/DS-playground
+COPY docs /app/DS-playground/docs
+COPY img /app/DS-playground/img
 WORKDIR /app/DS-playground
 RUN mvn package
 
 
 FROM openjdk:8-jre-alpine
 WORKDIR /app
+COPY /docs /app/docs
+COPY /img /app/img
 COPY --from=1 /app/DS-playground/target/DS-Playground*.jar /app/DS-Playground.jar
 RUN ls -al 
 CMD java -jar DS-Playground.jar
