@@ -62,4 +62,18 @@ public class Services {
 
         return ResponseEntity.ok().headers(responseHeaders).body(keywords);
     }
+
+    public ResponseEntity<?> getDocs() throws IOException {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Content-Type",
+                "application/json");
+
+        File nav = new File("./docs/nav.md");
+        String navStr = new String(Files.readAllBytes(nav.toPath()));
+
+        File docs = new File("./docs/documentation.md");
+        String docsStr = new String(Files.readAllBytes(docs.toPath()));
+
+        return ResponseEntity.ok().headers(responseHeaders).body(new Documentation(navStr,docsStr));
+    }
 }
