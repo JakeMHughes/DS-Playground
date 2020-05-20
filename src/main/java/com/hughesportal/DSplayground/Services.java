@@ -5,7 +5,6 @@ import com.datasonnet.document.Document;
 import com.datasonnet.document.StringDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
@@ -59,10 +58,10 @@ public class Services {
         responseHeaders.set("Content-Type",
                 "application/json");
 
-        File resource = new ClassPathResource("keywords.json").getFile();
-        String keywords = new String(Files.readAllBytes(resource.toPath()));
+        File wordsFile = new File("./docs/keywords.json");
+        String wordsStr = new String(Files.readAllBytes(wordsFile.toPath()));
 
-        return ResponseEntity.ok().headers(responseHeaders).body(keywords);
+        return ResponseEntity.ok().headers(responseHeaders).body(wordsStr);
     }
 
     public ResponseEntity<?> getDocs() throws IOException {

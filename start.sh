@@ -3,7 +3,7 @@
 COLOR_RED='\033[0;31m'
 COLOR_GREEN='\e[92m'
 COLOR_DEFAULT='\033[0m'
-IMAGE="jakeizundead/ds-playground:latest"
+IMAGE="jakeizundead/ds-playground:1.1.2"
 
 function init(){
 
