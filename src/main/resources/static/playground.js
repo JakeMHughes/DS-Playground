@@ -65,12 +65,11 @@ outEditor.setOptions({
 var beginTime=null;
 dsEditor.on("input", function(){
     beginTime=new Date().getTime();
-    console.log(typeof entries)
     postTransform();
 });
 
 payloadEditor.on("input", function(){
-
+    beginTime=new Date().getTime();
     postTransform();
 });
 
