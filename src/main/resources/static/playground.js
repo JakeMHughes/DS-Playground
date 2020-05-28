@@ -1,4 +1,5 @@
 
+
 //Edit each editor to set the font size
 $(function() {
    var editor;
@@ -10,6 +11,8 @@ $(function() {
 
 var beautify = ace.require("ace/ext/beautify"); // get reference to extension
 var langTools = ace.require("ace/ext/language_tools");
+
+var urlHost = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
 
 
 var payloadEditor = ace.edit("payload-editor");
@@ -86,7 +89,7 @@ function postTransform(){
     console.log(postData);
     $.ajax({
         method:"POST",
-        url:"http://localhost:8080/transform",
+        url: urlHost+"/transform",
         data:JSON.stringify(postData),
         contentType:"application/json; charset=utf-8",
         dataType:"json"
@@ -120,7 +123,7 @@ function getKeywords(){
     console.log("Retrieving keywords...");
     $.ajax({
         method:"GET",
-        url:"http://localhost:8080/keywords"
+        url: urlHost +"/keywords"
     }).done(function( msg ) {
         console.log("Successfully retrieved keywords.");
         entries=msg;
@@ -135,7 +138,7 @@ function getDocs(){
     console.log("Retrieving docs...");
     $.ajax({
         method:"GET",
-        url:"http://localhost:8080/docs"
+        url: urlHost+"/docs"
     }).done(function( msg ) {
         console.log("Successfully retrieved docs.");
         console.log(msg)
