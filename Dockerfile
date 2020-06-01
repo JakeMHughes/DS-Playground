@@ -1,6 +1,6 @@
 FROM alpine/git AS clone
 WORKDIR /app
-RUN git clone https://github.com/JakeMHughes/datasonnet-mapper && cd datasonnet-mapper
+RUN git clone https://github.com/MS3Inc/datasonnet-mapper.git
 
 
 

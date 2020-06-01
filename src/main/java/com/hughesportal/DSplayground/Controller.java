@@ -37,7 +37,7 @@ public class Controller {
 
     @PostMapping("/transform")
     public ResponseEntity<?> transform(@RequestBody DSMap obj){
-        logger.info(obj.toString());
+        //logger.info(obj.toString());
         return service.transformLogic((DSMap) obj);
     }
 }

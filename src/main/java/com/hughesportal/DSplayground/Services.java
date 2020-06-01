@@ -24,7 +24,7 @@ public class Services {
         String payload = "";
         String payloadType="";
         String script = input_data.getResources().toString();
-        logger.info("Script: " + script);
+        //logger.info("Script: " + script);
 
 
 
@@ -42,7 +42,7 @@ public class Services {
             Mapper mapper = new Mapper(script, variables.keySet(), true);
             Document transformedResult = mapper.transform(new StringDocument(payload, payloadType), variables, "application/json");
             String jsonResult = transformedResult.getContentsAsString();
-            logger.info("RESULT: " + jsonResult);
+            //logger.info("RESULT: " + jsonResult);
 
             resp = new Response(jsonResult, "application/json");
         }
