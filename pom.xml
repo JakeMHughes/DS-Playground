@@ -16,7 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<datasonnet.version>1.0.3-dataweave-SNAPSHOT</datasonnet.version>
+		<datasonnet.version>1.0.5-SNAPSHOT</datasonnet.version>
 	</properties>
 
 	<dependencies>

@@ -1,11 +1,10 @@
 package com.hughesportal.DSplayground;
 
-import com.datasonnet.Document;
 import com.datasonnet.Mapper;
-import com.datasonnet.StringDocument;
+import com.datasonnet.document.Document;
+import com.datasonnet.document.StringDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
@@ -25,7 +24,9 @@ public class Services {
         String payload = "";
         String payloadType="";
         String script = input_data.getResources().toString();
-        logger.info("Script: " + script);
+        //logger.info("Script: " + script);
+
+
 
         Map<String, Document> variables = new HashMap<>();
         for(Inputs var : input_data.getInputs()){
@@ -40,8 +41,8 @@ public class Services {
         try {
             Mapper mapper = new Mapper(script, variables.keySet(), true);
             Document transformedResult = mapper.transform(new StringDocument(payload, payloadType), variables, "application/json");
-            String jsonResult = transformedResult.contents();
-            logger.info("RESULT: " + jsonResult);
+            String jsonResult = transformedResult.getContentsAsString();
+            //logger.info("RESULT: " + jsonResult);
 
             resp = new Response(jsonResult, "application/json");
         }
@@ -57,10 +58,10 @@ public class Services {
         responseHeaders.set("Content-Type",
                 "application/json");
 
-        File resource = new ClassPathResource("keywords.json").getFile();
-        String keywords = new String(Files.readAllBytes(resource.toPath()));
+        File wordsFile = new File("./docs/keywords.json");
+        String wordsStr = new String(Files.readAllBytes(wordsFile.toPath()));
 
-        return ResponseEntity.ok().headers(responseHeaders).body(keywords);
+        return ResponseEntity.ok().headers(responseHeaders).body(wordsStr);
     }
 
     public ResponseEntity<?> getDocs() throws IOException {

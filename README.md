@@ -35,8 +35,8 @@ or you can clone this repository to build and run manually.
 
 #### Local
 ```bash
-git clone https://github.com/JakeMHughes/datasonnet-mapper && cd datasonnet-mapper && git checkout dataweave
-mvn clean install
+git clone https://github.com/MS3Inc/datasonnet-mapper
+mvn clean -Ddockerfile.skip install
 git clone https://github.com/JakeMHughes/DS-Playground && cd DS-Playground
 mvn spring-boot:run
 ```
@@ -44,7 +44,7 @@ mvn spring-boot:run
 #### Docker
 ```bash
 docker pull jakeizundead/ds-playground:latest
-docker run -d -p 8080:8080 --name=ds-playground jakeizundead/ds-playground:latest
+docker run -dp 8080:8080 --rm --name=ds-playground jakeizundead/ds-playground:latest
 ```
 ## Using
 The application gets deployed to port 8080 by default so to get access open up your web browser and travel
