@@ -213,5 +213,103 @@
   { "name": "upper", "value": "upper(str)", "packageName": "DW.Core"},
   { "name": "uuid", "value": "uuid", "packageName": "DW.Core"},
   { "name": "valuesOf", "value": "valuesOf(obj)", "packageName": "DW.Core"},
-  { "name": "zip", "value": "zip(arr,arr)", "packageName": "DW.Core"}
+  { "name": "zip", "value": "zip(arr,arr)", "packageName": "DW.Core"},
+
+
+
+
+
+  { "name": "countBy", "value": "countBy(arr,function(item))", "packageName": "DW.Arrays"},
+  { "name": "divideBy", "value": "divideBy(arr,size)", "packageName": "DW.Arrays"},
+  { "name": "drop", "value": "drop(arr,num)", "packageName": "DW.Arrays"},
+  { "name": "dropWhile", "value": "dropWhile(arr,function(item))", "packageName": "DW.Arrays"},
+  { "name": "every", "value": "every(value,function(item))", "packageName": "DW.Arrays"},
+  { "name": "firstWith", "value": "firstWith(arr,function(item))", "packageName": "DW.Arrays"},
+  { "name": "indexOf", "value": "indexOf(arr,value)", "packageName": "DW.Arrays"},
+  { "name": "indexWhere", "value": "indexWhere(arr,function(item))", "packageName": "DW.Arrays"},
+  { "name": "join", "value": "NOTIMPLEMENTED", "packageName": "DW.Arrays"},
+  { "name": "leftJoin", "value": "NOTIMPLEMENTED", "packageName": "DW.Arrays"},
+  { "name": "outerJoin", "value": "NOTIMPLEMENTED", "packageName": "DW.Arrays"},
+  { "name": "partition", "value": "partition(arr,function(item))", "packageName": "DW.Arrays"},
+  { "name": "slice", "value": "slice(arr,start,end)", "packageName": "DW.Arrays"},
+  { "name": "some", "value": "some(arr,function(item))", "packageName": "DW.Arrays"},
+  { "name": "splitAt", "value": "splitAt(arr,index)", "packageName": "DW.Arrays"},
+  { "name": "splitWhere", "value": "splitWhere(arr,function(item))", "packageName": "DW.Arrays"},
+  { "name": "sumBy", "value": "sumBy(arr,function(item))", "packageName": "DW.Arrays"},
+  { "name": "take", "value": "take(arr,index)", "packageName": "DW.Arrays"},
+  { "name": "takeWhile", "value": "takeWhile(arr,function(item))", "packageName": "DW.Arrays"},
+
+
+
+
+
+
+  { "name": "fromBase64", "value": "fromBase64(value)", "packageName": "DW.Binaries"},
+  { "name": "fromHex", "value": "fromHex(value)", "packageName": "DW.Binaries"},
+  { "name": "readLinesWith", "value": "readLinesWith(value,encoding)", "packageName": "DW.Binaries"},
+  { "name": "toBase64", "value": "toBase64(value)", "packageName": "DW.Binaries"},
+  { "name": "toHex", "value": "toHex(value)", "packageName": "DW.Binaries"},
+  { "name": "writeLinesWith", "value": "writeLinesWith(value,encoding)", "packageName": "DW.Binaries"},
+
+
+
+
+  { "name": "fromBinary", "value": "fromBinary(value)", "packageName": "DW.Numbers"},
+  { "name": "fromHex", "value": "fromHex(value)", "packageName": "DW.Numbers"},
+  { "name": "fromRadixNumber", "value": "fromRadixNumber(value,num)", "packageName": "DW.Numbers"},
+  { "name": "toBinary", "value": "toBinary(value)", "packageName": "DW.Numbers"},
+  { "name": "toHex", "value": "toHex(value)", "packageName": "DW.Numbers"},
+  { "name": "toRadixNumber", "value": "toRadixNumber(value, num)", "packageName": "DW.Numbers"},
+
+
+
+
+  { "name": "divideBy", "value": "divideBy(obj,num)", "packageName": "DW.Objects"},
+  { "name": "entrySet", "value": "entrySet(obj)", "packageName": "DW.Objects"},
+  { "name": "everyEntry", "value": "everyEntry(value,function(value,key))", "packageName": "DW.Objects"},
+  { "name": "keySet", "value": "keySet(obj)", "packageName": "DW.Objects"},
+  { "name": "mergeWith", "value": "mergeWith(valueOne,valueTwo)", "packageName": "DW.Objects"},
+  { "name": "nameSet", "value": "nameSet(obj)", "packageName": "DW.Objects"},
+  { "name": "someEntry", "value": "someEntry(value,function(value,key))", "packageName": "DW.Objects"},
+  { "name": "takeWhile", "value": "takeWhile(obj,function(value,key))", "packageName": "DW.Objects"},
+  { "name": "valueSet", "value": "valueSet(value)", "packageName": "DW.Objects"},
+
+
+
+
+  { "name": "appendIfMissing", "value": "appendIfMissing(str1,str2)", "packageName": "DW.Strings"},
+  { "name": "camelize", "value": "camelize(str)", "packageName": "DW.Strings"},
+  { "name": "capitalize", "value": "capitalize(str)", "packageName": "DW.Strings"},
+  { "name": "charCose", "value": "charCode(str)", "packageName": "DW.Strings"},
+  { "name": "charCodeAt", "value": "charCodeAt(str,num)", "packageName": "DW.Strings"},
+  { "name": "dasherize", "value": "dasherize(str)", "packageName": "DW.Strings"},
+  { "name": "fromCharCode", "value": "fromCharCode(num)", "packageName": "DW.Strings"},
+  { "name": "isAlpha", "value": "isAlpha(str)", "packageName": "DW.Strings"},
+  { "name": "isAlphanumeric", "value": "isAlphanumeric(str)", "packageName": "DW.Strings"},
+  { "name": "isLowerCase", "value": "isLowerCase(str)", "packageName": "DW.Strings"},
+  { "name": "isNumeric", "value": "isNumeric(str)", "packageName": "DW.Strings"},
+  { "name": "isUpperCase", "value": "isUpperCase(str)", "packageName": "DW.Strings"},
+  { "name": "isWhitespace", "value": "isWhitespace(str)", "packageName": "DW.Strings"},
+  { "name": "leftPad", "value": "leftPad(str,offset)", "packageName": "DW.Strings"},
+  { "name": "ordinalize", "value": "ordinalize(num)", "packageName": "DW.Strings"},
+  { "name": "pluralize", "value": "pluralize(value)", "packageName": "DW.Strings"},
+  { "name": "prependIfMissing", "value": "prependIfMissing(str1,str2)", "packageName": "DW.Strings"},
+  { "name": "repeat", "value": "repeat(str,num)", "packageName": "DW.Strings"},
+  { "name": "rightPad", "value": "rightPad(str,offset)", "packageName": "DW.Strings"},
+  { "name": "singularize", "value": "singularize(value)", "packageName": "DW.Strings"},
+  { "name": "substringAfter", "value": "substringAfter(value, sep)", "packageName": "DW.Strings"},
+  { "name": "substringAfterLast", "value": "substringAfterLast(value, sep)", "packageName": "DW.Strings"},
+  { "name": "substringBefore", "value": "substringBefore(value, sep)", "packageName": "DW.Strings"},
+  { "name": "substringBeforeLast", "value": "substringBeforeLast(value, sep)", "packageName": "DW.Strings"},
+  { "name": "underscore", "value": "underscore(str)", "packageName": "DW.Strings"},
+  { "name": "unwrap", "value": "unwrap(value,wrapper)", "packageName": "DW.Strings"},
+  { "name": "withMaxSize", "value": "withMaxSize(value,num)", "packageName": "DW.Strings"},
+  { "name": "wrapIfMissing", "value": "wrapIfMissing(value,wrapper)", "packageName": "DW.Strings"},
+  { "name": "wrapWith", "value": "wrapWith(value,wrapper)", "packageName": "DW.Strings"}
+
+
+
+
+
+
 ]
