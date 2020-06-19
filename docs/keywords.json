@@ -280,7 +280,7 @@
   { "name": "appendIfMissing", "value": "appendIfMissing(str1,str2)", "packageName": "DW.Strings"},
   { "name": "camelize", "value": "camelize(str)", "packageName": "DW.Strings"},
   { "name": "capitalize", "value": "capitalize(str)", "packageName": "DW.Strings"},
-  { "name": "charCose", "value": "charCode(str)", "packageName": "DW.Strings"},
+  { "name": "charCode", "value": "charCode(str)", "packageName": "DW.Strings"},
   { "name": "charCodeAt", "value": "charCodeAt(str,num)", "packageName": "DW.Strings"},
   { "name": "dasherize", "value": "dasherize(str)", "packageName": "DW.Strings"},
   { "name": "fromCharCode", "value": "fromCharCode(num)", "packageName": "DW.Strings"},
