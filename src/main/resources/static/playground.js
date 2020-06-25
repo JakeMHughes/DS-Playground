@@ -9,8 +9,6 @@ $(function() {
    });
 })
 
-//var Base64 = require('js-base64').Base64;
-
 var beautify = ace.require("ace/ext/beautify"); // get reference to extension
 var langTools = ace.require("ace/ext/language_tools");
 
@@ -39,7 +37,6 @@ getDocs();
 
 var staticWordCompleter = {
     getCompletions: function(editor, session, pos, prefix, callback) {
-        //var wordList = ["DW.Core", "map", "flatMap"];
         callback(null, entries.map(function(word) {
             return {
                 caption: word.name,
