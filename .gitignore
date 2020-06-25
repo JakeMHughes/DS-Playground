@@ -2,3 +2,4 @@
 DS-playground.iml
 mvnw*
 /.idea/
+/src/main/resources/static/js-base64-master/test/

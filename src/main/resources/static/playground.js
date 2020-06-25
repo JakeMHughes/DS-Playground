@@ -37,7 +37,6 @@ getDocs();
 
 var staticWordCompleter = {
     getCompletions: function(editor, session, pos, prefix, callback) {
-        //var wordList = ["DW.Core", "map", "flatMap"];
         callback(null, entries.map(function(word) {
             return {
                 caption: word.name,
@@ -113,7 +112,8 @@ function postTransform(){
 }
 
 function encodBase64(value){
-    return window.btoa(value);
+    return Base64.encode(value);
+    //return window.btoa(value);
 }
 
 /*********End input change and data post**********/
