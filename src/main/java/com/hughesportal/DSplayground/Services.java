@@ -11,8 +11,10 @@ import org.springframework.http.ResponseEntity;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 public class Services {
@@ -42,7 +44,6 @@ public class Services {
             Mapper mapper = new Mapper(script, variables.keySet(), true);
             Document transformedResult = mapper.transform(new StringDocument(payload, payloadType), variables, "application/json");
             String jsonResult = transformedResult.getContentsAsString();
-            //logger.info("RESULT: " + jsonResult);
 
             resp = new Response(jsonResult, "application/json");
         }
@@ -50,6 +51,63 @@ public class Services {
             resp = new Response(Response.errorLoc(0,0,0), Response.errorLoc(0,0,0), e.getMessage());
         }
         return  ResponseEntity.ok(resp.getMasterResponse());
+    }
+
+    public ResponseEntity<?> getScriptVariables(String script){
+        ArrayList<Keyword> keywords = new ArrayList<>();
+        Matcher scriptMatcher = Pattern.compile("local\\s+(\\S+|\\S+(\\(.*?\\))?)=(.*);")
+                .matcher(script.replaceAll("(\n|\\s+)", " "));
+        while(scriptMatcher.find()){
+            String name = scriptMatcher.group(1);
+            if(name.contains("(")){
+                keywords.add(new Keyword(name.substring(0, name.indexOf("(")), name, ""));
+                //TODO
+            }
+            else{
+                keywords.add(new Keyword(name, name, ""));
+            }
+        }
+        HttpHeaders responseHeaders = new HttpHeaders();
+        return ResponseEntity.ok().headers(responseHeaders).body(keywords);
+    }
+
+    private final Mapper payloadVariableMapper = new Mapper(
+                    "local getKeys(key, item)=\n" +
+                            "    if(std.type(item) == \"object\") then\n" +
+                            "        [   getKeys(key+\".\"+objKey, item[objKey])\n" +
+                            "            for objKey in std.objectFields(item)] + [key]\n" +
+                            "    else if(std.type(item) == \"array\") then\n" +
+                            "        std.map(function(x) getKeys(key, x), item)\n" +
+                            "    else \n" +
+                            "        [key];\n" +
+                            "\n" +
+                            "std.uniq(\n" +
+                            "    DS.Util.deepFlattenArrays(\n" +
+                            "        getKeys(\"payload\", payload) + [\"payload\"]\n" +
+                            "    )\n" +
+                            ")",Set.of(),true);
+
+
+    public ResponseEntity<?> getPayloadVariables(String payload){
+        logger.info("HERE");
+        try {
+            Document doc = payloadVariableMapper
+                    .transform(new StringDocument(payload, "application/json"), Map.of(), "application/json");
+
+            logger.info(doc.getContentsAsString());
+
+            List<Keyword> values = Arrays.stream(doc.getContentsAsString()
+                    .replaceAll("\"", "")
+                    .replace("[", "")
+                    .replace("]", "")
+                    .split(",").clone())
+                    .map(item -> new Keyword(item, item, ""))
+                    .collect(Collectors.toList());
+            return  ResponseEntity.ok(values);
+        } catch (Exception e){
+            logger.info("Invalid json");
+            return ResponseEntity.status(400).body(null);
+        }
     }
 
     public ResponseEntity<?> getKeywords() throws IOException {
