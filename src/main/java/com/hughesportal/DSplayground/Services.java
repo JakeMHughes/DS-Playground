@@ -39,7 +39,7 @@ public class Services {
                 variables.put(var.getName(), new StringDocument(var.getContent(), var.getContentType()));
             }
         }
-        Response resp = null;
+        Response resp;
         try {
             Mapper mapper = new Mapper(script, variables.keySet(), true);
             Document transformedResult = mapper.transform(new StringDocument(payload, payloadType), variables, "application/json");

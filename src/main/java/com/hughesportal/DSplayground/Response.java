@@ -11,8 +11,6 @@ public class Response {
     private Map<String, Object> error;
 
 
-    Response(){}
-
     Response(String jsonResult, String contentType){
         masterResponse.put("success", true);
         result = new HashMap<>();

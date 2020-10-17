@@ -7,9 +7,6 @@ public class DSMap {
     private ArrayList<Inputs> inputs = new ArrayList<>();
     private Object resources;
 
-
-
-    DSMap(){}
     DSMap(ArrayList<Inputs> inputs, String res){
         this.inputs = inputs;
         this.resources = res;
@@ -27,25 +24,25 @@ public class DSMap {
 
     @Override
     public String toString() {
-        String content = "{\n";
-        content += "\t\"inputs\":";
+        StringBuilder content = new StringBuilder("{\n");
+        content.append("\t\"inputs\":");
         if(inputs.size()==0){
-            content +="[],\n";
+            content.append("[],\n");
         }
         else{
-            content +="[\n";
+            content.append("[\n");
             for(Inputs in : inputs){
                 if(inputs.indexOf(in) == inputs.size()) {
-                    content += in.toString() +"\n";
+                    content.append(in.toString()).append("\n");
                 }else{
-                    content += in.toString() +",\n";
+                    content.append(in.toString()).append(",\n");
                 }
             }
-            content+="],\n";
+            content.append("],\n");
         }
-        content+="\"resources\": "+ resources.toString() + "\n";
-        content+="}";
+        content.append("\"resources\": ").append(resources.toString()).append("\n");
+        content.append("}");
 
-        return content;
+        return content.toString();
     }
 }
