@@ -1,4 +1,6 @@
 node
-node/*
 node/**
 node/
+etc
+etc/
+etc**
