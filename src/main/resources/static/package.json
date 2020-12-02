@@ -6,6 +6,11 @@
   "scripts": {},
   "author": "Jacob Hughes",
   "dependencies": {
-    "ace-builds": "1.4.12"
+    "ace-builds": "1.4.12",
+    "js-base64": "3.6.0",
+    "jquery": "3.5.1",
+    "jquery-ui-dist": "1.12.1",
+    "bootstrap": "3.3.2",
+    "showdown": "1.9.1"
   }
 }
