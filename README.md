@@ -1,4 +1,6 @@
 # DS-Playground
+[![Docker Hub Pulls](https://img.shields.io/docker/pulls/jakeizundead/ds-playground?color=%234518f5&label=Docker%20Pulls&logo=docker&logoColor=%23403d3d&style=for-the-badge)](https://hub.docker.com/r/jakeizundead/ds-playground)
+[![Docker Image Size](https://img.shields.io/docker/image-size/jakeizundead/ds-playground?color=%234518f5&label=Image%20Size&logo=docker&logoColor=%23403d3d&style=for-the-badge)](https://hub.docker.com/r/jakeizundead/ds-playground)
 
 DS-Playground is a Thyme leaf application that makes it easy to 
 set an input and script value to be executed by Datasonnet. It works
