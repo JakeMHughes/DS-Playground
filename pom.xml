@@ -10,14 +10,13 @@
 	</parent>
 	<groupId>com.hughesportal</groupId>
 	<artifactId>DS-Playground</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.2.2-SNAPSHOT</version>
 	<name>DS-playground</name>
 	<description>Playground for Datasonnet</description>
 
 	<properties>
 		<java.version>11</java.version>
 		<datasonnet.version>2.0.2</datasonnet.version>
-		<frontend.maven.version>1.10.4</frontend.maven.version>
 	</properties>
 
 	<dependencies>
