@@ -7,6 +7,10 @@
     <!-- Latest jQuery from Google CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://togetherjs.com/togetherjs-min.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
@@ -25,17 +29,25 @@
     <script th:src="@{/playground.js}" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-<div class="editors">
-    <div class="editor" id="input-editor">{
+<div class="editors" id="editorsContainer">
+    <div id="resizeLeft">
+        <div class="editor" id="input-editor">{
     "message": "Hello World!"
 }</div>
-
-    <div class="editor" id="datasonnet-editor">payload.message</div>
-
-    <div class="editor" id="output-editor" name="result" sandbox="allow-forms allow-popups allow-scripts allow-same-origin">"Hello World"</div>
-
+    </div>
+    <div id="resizeMid">
+        <div class="editor" id="datasonnet-editor">/** DataSonnet
+version=2.0
+output application/json
+input payload application/json
+*/
+payload.message</div>
+    </div>
+    <div id="resizeRight">
+        <div class="editor" id="output-editor" name="result" sandbox="allow-forms allow-popups allow-scripts allow-same-origin">"Hello World"</div>
+    </div>
 </div>
-<div id="resizable" class="docsContainer">
+<div class="docsContainer">
     <div class="docsHeader">
         <button type="button" onclick="buttonClick()">Documentation</button>
     </div>
@@ -47,5 +59,6 @@
 
 <!-- Set Editor Modes -->
 <script th:src="@{/playground.js}" type="text/javascript" charset="utf-8"></script>
+<script th:src="@{/documentation.js}" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

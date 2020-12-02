@@ -18,10 +18,9 @@ var payloadEditor = getEditor("input-editor", "ace/mode/json", false, false);
 var dsEditor =  getEditor("datasonnet-editor", "ace/mode/json5", true, false);
 var outEditor = getEditor("output-editor", "ace/mode/json5", false, true);
 
-//get documentation and keywords from api
+//get keywords from api
 var entries=null;
 getKeywords();
-getDocs();
 
 //build initial completers for autocomplete
 var staticWordCompleter = buildCompleter(entries);
@@ -52,6 +51,7 @@ function postTransform(){
     var input={name:payloadName,content:payloadContent,contentType:payloadContentType};
     var postData={inputs:[input],resources:script};
 
+    console.log("Posting...");
     $.ajax({
         method:"POST",
         url: urlHost+"/transform",
@@ -59,26 +59,60 @@ function postTransform(){
         contentType:"application/json; charset=utf-8",
         dataType:"json"
     }).done(function( msg ) {
+        console.log(msg);
         if(msg.success){
+
             if(msg.result.contentType == "application/json"){
                 var json = JSON.parse(msg.result.content);
+                outEditor.getSession().setMode("ace/mode/json");
                 outEditor.setValue(JSON.stringify(json, null, 2));
             }
+            else if(msg.result.contentType == "application/xml"){
+                outEditor.getSession().setMode("ace/mode/xml");
+                outEditor.setValue(prettifyXml(msg.result.content));
+            }
             else{
+                outEditor.getSession().setMode("ace/mode/text");
                 outEditor.setValue(msg.result.content);
             }
             outEditor.clearSelection();
         }else{
+            outEditor.getSession().setMode("ace/mode/json");
             outEditor.setValue(msg.error.message);
             outEditor.clearSelection();
+        }
+
+        var type = msg.success ? msg.result.inputType : msg.error.inputType;
+        switch(type){
+            case "application/json":
+                payloadEditor.getSession().setMode("ace/mode/json");
+                break;
+            case "application/xml":
+                payloadEditor.getSession().setMode("ace/mode/xml");
+                break;
+            default:
+                payloadEditor.getSession().setMode("ace/mode/text");
+                break;
         }
     });
 }
 
+function prettifyXml(xml, tab) { // tab = optional indent value, default is tab (\t)
+    var formatted = '', indent= '';
+    tab = tab || '\t';
+    xml.split(/>\s*</).forEach(function(node) {
+        if (node.match( /^\/\w/ )) indent = indent.substring(tab.length); // decrease indent by one 'tab'
+        formatted += indent + '<' + node + '>\r\n';
+        if (node.match( /^<?\w[^>]*[^\/]$/ )) indent += tab;              // increase indent
+    });
+    return formatted.substring(1, formatted.length-3);
+}
 
 function getEditor(id, mode, advancedAutoComplete, readOnly){
     var editor = ace.edit(document.getElementById(id));
-    editor.setTheme("ace/theme/twilight");
+    editor.setTheme(
+        getQueryParameterByName("theme").toUpperCase() == "LIGHT" ? "ace/theme/kuroir" : "ace/theme/twilight"
+    );
     editor.getSession().setMode(mode);
     editor.setReadOnly(readOnly);
     if(advancedAutoComplete){
@@ -96,6 +130,15 @@ function getEditor(id, mode, advancedAutoComplete, readOnly){
     return editor;
 }
 
+function getQueryParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return "";
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
 function postGetVariables(endpoint, dataIn, type){
     $.ajax({
         method:"POST",
@@ -104,7 +147,6 @@ function postGetVariables(endpoint, dataIn, type){
         contentType:"text/plain; charset=utf-8",
         async: false
     }).done(function( msg ) {
-        console.log(msg);
         if(msg != "[]"){
             if(type == "script"){
                 scriptVariablesCompleter = buildCompleter(msg);
@@ -139,6 +181,7 @@ function buildCompleter(inputData){
 
 function getKeywords(){
 
+    console.log("Retrieving keywords...");
     $.ajax({
         method:"GET",
         url: urlHost +"/keywords",
@@ -152,36 +195,25 @@ function getKeywords(){
 
 /***********Start documentation logic************/
 
-function getDocs(){
-
-    $.ajax({
-        method:"GET",
-        url: urlHost+"/docs"
-    }).done(function( msg ) {
-        console.log("Successfully retrieved docs.");
-        console.log(msg)
-        createDocsPage(msg.nav,msg.docs);
-    });
-}
-
-function createDocsPage(nav,doc){
-    var converter = new showdown.Converter();
-    document.getElementById("navDocs").innerHTML=converter.makeHtml(nav);
-    document.getElementById("mainDocs").innerHTML=converter.makeHtml(doc);
-}
-
-var extended=false;
-function buttonClick(){
-    if(extended){
-        $(".docsContainer").css('height','4vh');
-        extended=false;
-    }
-    else{
-        $(".docsContainer").css('height','45vh');
-        extended=true;
-    }
-}
-
 /***********End documentation logic************/
 
-//resize editor windows: https://ourcodeworld.com/articles/read/994/how-to-make-an-ace-editor-instance-resizable-by-the-user-dinamically-with-a-drag-and-drop-bar
+
+$( "#resizeLeft" ).resizable({
+    resize: function( event, ui ) {
+        payloadEditor.resize();
+        $("#resizeRight").width(
+            $( ".editors" ).width()-($( "#resizeLeft" ).width() + $( "#resizeMid" ).width())
+        );
+    },
+    handles: "e"
+});
+
+$( "#resizeMid" ).resizable({
+    resize: function( event, ui ) {
+        dsEditor.resize();
+        $("#resizeRight").width(
+            $( ".editors" ).width()-($( "#resizeLeft" ).width() + $( "#resizeMid" ).width())
+        );
+    },
+    handles: "e"
+});

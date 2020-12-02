@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
 
-@SuppressWarnings({"unused"})
 @org.springframework.stereotype.Controller
 public class Controller {
 
@@ -48,6 +47,6 @@ public class Controller {
 
     @PostMapping("/transform")
     public ResponseEntity<?> transform(@RequestBody DSMap obj){
-        return service.transformLogic(obj);
+        return service.transformLogic((DSMap) obj);
     }
 }

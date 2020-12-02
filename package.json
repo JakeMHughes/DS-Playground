@@ -1,0 +1,11 @@
+{
+  "name": "ds-playground",
+  "version": "1.0.0",
+  "description": "package list for NPM",
+  "main": "",
+  "scripts": {},
+  "author": "Jacob Hughes",
+  "dependencies": {
+    "ace-builds": "1.4.12"
+  }
+}

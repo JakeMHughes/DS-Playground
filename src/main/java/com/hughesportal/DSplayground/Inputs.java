@@ -4,8 +4,8 @@ import java.util.Base64;
 
 public class Inputs {
 
-    private final String name;
-    private final String content;
+    private String name;
+    private String content;
     private String contentType="application/json";
 
     Inputs(String name, String content, String contentType){

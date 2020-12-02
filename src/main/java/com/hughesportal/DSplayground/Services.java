@@ -1,8 +1,11 @@
 package com.hughesportal.DSplayground;
 
 import com.datasonnet.Mapper;
+import com.datasonnet.MapperBuilder;
+import com.datasonnet.document.DefaultDocument;
 import com.datasonnet.document.Document;
-import com.datasonnet.document.StringDocument;
+import com.datasonnet.document.MediaType;
+import com.datasonnet.document.MediaTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -24,34 +27,43 @@ public class Services {
     public ResponseEntity<?> transformLogic(DSMap input_data){
 
         String payload = "";
-        String payloadType="";
         String script = input_data.getResources().toString();
-        //logger.info("Script: " + script);
 
-
-
-        Map<String, Document> variables = new HashMap<>();
+        Map<String, Document<?>> variables = new HashMap<>();
         for(Inputs var : input_data.getInputs()){
             if(var.getName().equals("payload")){
                 payload=var.getContent();
-                payloadType=var.getContentType();
             }else {
-                variables.put(var.getName(), new StringDocument(var.getContent(), var.getContentType()));
+                variables.put(var.getName(), new DefaultDocument<>(var.getContent(), MediaType.parseMediaType(var.getContentType())));
             }
         }
-        Response resp;
-        try {
-            Mapper mapper = new Mapper(script, variables.keySet(), true);
-            Document transformedResult = mapper.transform(new StringDocument(payload, payloadType), variables, "application/json");
-            String jsonResult = transformedResult.getContentsAsString();
 
-            resp = new Response(jsonResult, "application/json");
+        String inputType = "application/json";
+
+        Matcher headerMatcher = Pattern.compile("\\/\\*\\* DataSonnet.*\\*\\/")
+                .matcher(script.replaceAll("\n", " "));
+        if(headerMatcher.find()){
+            String header = headerMatcher.group(0);
+            Matcher subMatcher = Pattern.compile("input \\s*payload \\s*(\\S*[^*]\\/[^ *]*)").matcher(header);
+            if(subMatcher.find()){
+                inputType = subMatcher.group(1);
+            }
+        }
+
+
+        Response resp = null;
+        try {
+            Document<Object> doc = new MapperBuilder(script).build()
+                    .transform(new DefaultDocument<>(payload, MediaTypes.UNKNOWN),Map.of(), MediaTypes.ANY,Object.class);
+            resp = new Response(doc.getContent().toString(), doc.getMediaType().toString(),inputType);
         }
         catch (Exception e){
-            resp = new Response(Response.errorLoc(0,0,0), Response.errorLoc(0,0,0), e.getMessage());
+            resp = new Response(Response.errorLoc(0,0,0), Response.errorLoc(0,0,0),
+                    Objects.requireNonNullElse(e.getMessage(), "Unknown Error"), inputType);
         }
         return  ResponseEntity.ok(resp.getMasterResponse());
     }
+
 
     public ResponseEntity<?> getScriptVariables(String script){
         ArrayList<Keyword> keywords = new ArrayList<>();
@@ -71,35 +83,43 @@ public class Services {
         return ResponseEntity.ok().headers(responseHeaders).body(keywords);
     }
 
-    private final Mapper payloadVariableMapper = new Mapper(
-                    "local getKeys(key, item)=\n" +
-                            "    if(std.type(item) == \"object\") then\n" +
-                            "        [   getKeys(key+\".\"+objKey, item[objKey])\n" +
-                            "            for objKey in std.objectFields(item)] + [key]\n" +
-                            "    else if(std.type(item) == \"array\") then\n" +
-                            "        std.map(function(x) getKeys(key, x), item)\n" +
-                            "    else \n" +
-                            "        [key];\n" +
-                            "\n" +
-                            "std.uniq(\n" +
-                            "    DS.Util.deepFlattenArrays(\n" +
-                            "        getKeys(\"payload\", payload) + [\"payload\"]\n" +
-                            "    )\n" +
-                            ")",Set.of(),true);
+    private final Mapper payloadVariableMapper = new MapperBuilder(
+            "/** DataSonnet\n" +
+                    "version=2.0\n" +
+                    "output application/json\n" +
+                    "input payload application/json\n" +
+                    "*/\n" +
+                    "local getKeys(key, item, update=\"\")=\n" +
+                    "    if(ds.typeOf(item) == \"object\") then\n" +
+                    "        ds.mapEntries(\n" +
+                    "            item, \n" +
+                    "            function(value,mapKey,index)\n" +
+                    "                getKeys(key+\".\"+mapKey, value)\n" +
+                    "        ) + [key]\n" +
+                    "    else if(ds.typeOf(item) == \"array\") then\n" +
+                    "        ds.map(\n" +
+                    "            item, \n" +
+                    "            function(item,index)\n" +
+                    "                getKeys(key+\"[]\", item)\n" +
+                    "        ) + [key]\n" +
+                    "    else\n" +
+                    "        [key+update];\n" +
+                    "\n" +
+                    "std.uniq(\n" +
+                    "    ds.arrays.deepFlatten(\n" +
+                    "        getKeys(\"payload\", payload) + [\"payload\"]\n" +
+                    "    )\n" +
+                    ")\n").build();
 
 
     public ResponseEntity<?> getPayloadVariables(String payload){
-        logger.info("HERE");
         try {
-            Document doc = payloadVariableMapper
-                    .transform(new StringDocument(payload, "application/json"), Map.of(), "application/json");
-
-            logger.info(doc.getContentsAsString());
-
-            List<Keyword> values = Arrays.stream(doc.getContentsAsString()
+            Document<String> doc = payloadVariableMapper
+                    .transform(new DefaultDocument<>(payload, MediaTypes.UNKNOWN));
+            String content = doc.getContent();
+            List<Keyword> values = Arrays.stream(content
+                    .substring(1, content.length()-1)
                     .replaceAll("\"", "")
-                    .replace("[", "")
-                    .replace("]", "")
                     .split(",").clone())
                     .map(item -> new Keyword(item, item, ""))
                     .collect(Collectors.toList());

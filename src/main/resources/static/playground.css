@@ -13,17 +13,10 @@ body {
     background: #000000;
 }
 
-.editorContainer {
-    width: 30%;
-    float: left;
-    margin-right: 5px;
-}
-
-.editor {
-    flex-basis: 33.3%;
-    height: 94.3vh;
-    width: 30%;
-    border: 1px #cecece solid;
+.editor{
+    position: absolute;
+    height:100%;
+    width:100%;
 }
 
 .docsContainer {
@@ -67,4 +60,19 @@ button{
     color: black;
     border:solid;
 
+}
+
+
+#resizeLeft, #resizeMid {
+    height: 94.3vh;
+    width: 34%;
+    border: 3px #cecece solid;
+    position: relative;
+}
+
+#resizeRight {
+    height: 94.3vh;
+    width: 34%;
+    position: relative;
+    border: 3px #cecece solid;
 }
