@@ -10,7 +10,7 @@
     "js-base64": "3.6.0",
     "jquery": "3.5.1",
     "jquery-ui-dist": "1.12.1",
-    "bootstrap": "3.3.2",
+    "bootstrap": "3.4.1",
     "showdown": "1.9.1"
   }
 }
