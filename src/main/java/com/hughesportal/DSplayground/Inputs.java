@@ -8,7 +8,6 @@ public class Inputs {
     private String content;
     private String contentType="application/json";
 
-    Inputs(){}
     Inputs(String name, String content, String contentType){
         this.name = name;
         this.content = content;

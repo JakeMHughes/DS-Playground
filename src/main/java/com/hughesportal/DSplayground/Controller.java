@@ -30,6 +30,16 @@ public class Controller {
         return service.getKeywords();
     }
 
+    @PostMapping(value = "/keywords/script", produces = "application/json")
+    public ResponseEntity<?> getScriptVariables(@RequestBody String value){
+        return service.getScriptVariables(value);
+    }
+
+    @PostMapping(value = "/keywords/payload", produces = "application/json")
+    public ResponseEntity<?> getPayloadVariables(@RequestBody String value){
+        return service.getPayloadVariables(value);
+    }
+
     @GetMapping("/docs")
     public ResponseEntity<?> getDocs() throws IOException {
         return  service.getDocs();
@@ -37,7 +47,6 @@ public class Controller {
 
     @PostMapping("/transform")
     public ResponseEntity<?> transform(@RequestBody DSMap obj){
-        //logger.info(obj.toString());
         return service.transformLogic((DSMap) obj);
     }
 }

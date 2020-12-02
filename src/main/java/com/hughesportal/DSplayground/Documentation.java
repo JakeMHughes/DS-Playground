@@ -6,8 +6,6 @@ public class Documentation {
     private String docs;
 
 
-    Documentation(){}
-
     public Documentation(String nav, String docs) {
         this.nav = nav;
         this.docs = docs;

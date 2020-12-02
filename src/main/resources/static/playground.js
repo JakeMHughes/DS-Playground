@@ -1,5 +1,3 @@
-
-
 //Edit each editor to set the font size
 $(function() {
    var editor;
@@ -9,75 +7,44 @@ $(function() {
    });
 })
 
+//initialize ace js objects
 var beautify = ace.require("ace/ext/beautify"); // get reference to extension
 var langTools = ace.require("ace/ext/language_tools");
 
 var urlHost = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
 
+//initialize ace js editors
+var payloadEditor = getEditor("input-editor", "ace/mode/json", false, false);
+var dsEditor =  getEditor("datasonnet-editor", "ace/mode/json5", true, false);
+var outEditor = getEditor("output-editor", "ace/mode/json5", false, true);
 
-var payloadEditor = ace.edit("payload-editor");
-payloadEditor.setTheme("ace/theme/twilight");
-payloadEditor.getSession().setMode("ace/mode/json");
-payloadEditor.setOptions({
-    enableBasicAutocompletion: true
-});
-
-var dsEditor = ace.edit("ds-editor");
-dsEditor.setTheme("ace/theme/twilight");
-dsEditor.getSession().setMode("ace/mode/json5");
-dsEditor.setOptions({
-    enableBasicAutocompletion: true,
-    enableLiveAutocompletion: true,
-    enableSnippets: true
-});
-
+//get keywords from api
 var entries=null;
 getKeywords();
-getDocs();
 
-var staticWordCompleter = {
-    getCompletions: function(editor, session, pos, prefix, callback) {
-        callback(null, entries.map(function(word) {
-            return {
-                caption: word.name,
-                snippet: word.packageName+"."+word.value,
-                meta: word.packageName,
-                completer: this
-            };
-        }));
-    },
-    insertMatch: function(editor, data) {
-        editor.forEachSelection(function() {
-            editor.insert(data.caption)
-        })
-    }
-}
-langTools.addCompleter(staticWordCompleter);
-dsEditor.completers = [staticWordCompleter];
+//build initial completers for autocomplete
+var staticWordCompleter = buildCompleter(entries);
+var scriptVariablesCompleter = buildCompleter([]);
+var payloadVariablesCompleter = buildCompleter([{"name": "payload","value":"payload", "package":""},
+                                                {"name": "payload.message","value":"payload.message", "package":""}]);
 
-var outEditor = ace.edit("output-editor");
-outEditor.setTheme("ace/theme/twilight");
-outEditor.getSession().setMode("ace/mode/json");
-outEditor.setReadOnly(true)
-outEditor.setOptions({
-    enableBasicAutocompletion: true
-});
+langTools.setCompleters([staticWordCompleter, scriptVariablesCompleter, payloadVariablesCompleter]);
+dsEditor.completers = [staticWordCompleter, scriptVariablesCompleter, payloadVariablesCompleter];
 
 /*******Handles the input change and then posts the data********/
-var beginTime=null;
 dsEditor.on("input", function(){
-    beginTime=new Date().getTime();
     postTransform();
+    postGetVariables("/keywords/script", dsEditor.getValue(),"script");
 });
 
 payloadEditor.on("input", function(){
-    beginTime=new Date().getTime();
     postTransform();
+    postGetVariables("/keywords/payload", payloadEditor.getValue(),"payload");
 });
 
 function postTransform(){
     var payloadName="payload";
-    var payloadContent = encodBase64(payloadEditor.getValue());
+    var payloadContent = Base64.encode(payloadEditor.getValue());
     var payloadContentType="application/json";
 
     var script=dsEditor.getValue();
@@ -85,7 +52,6 @@ function postTransform(){
     var postData={inputs:[input],resources:script};
 
     console.log("Posting...");
-    console.log(postData);
     $.ajax({
         method:"POST",
         url: urlHost+"/transform",
@@ -94,36 +60,132 @@ function postTransform(){
         dataType:"json"
     }).done(function( msg ) {
         console.log(msg);
-        console.log("Elapsed Time:" + ((new Date().getTime()) - beginTime));
         if(msg.success){
+
             if(msg.result.contentType == "application/json"){
                 var json = JSON.parse(msg.result.content);
+                outEditor.getSession().setMode("ace/mode/json");
                 outEditor.setValue(JSON.stringify(json, null, 2));
             }
+            else if(msg.result.contentType == "application/xml"){
+                outEditor.getSession().setMode("ace/mode/xml");
+                outEditor.setValue(prettifyXml(msg.result.content));
+            }
             else{
+                outEditor.getSession().setMode("ace/mode/text");
                 outEditor.setValue(msg.result.content);
             }
             outEditor.clearSelection();
         }else{
+            outEditor.getSession().setMode("ace/mode/json");
             outEditor.setValue(msg.error.message);
             outEditor.clearSelection();
+        }
+
+        var type = msg.success ? msg.result.inputType : msg.error.inputType;
+        switch(type){
+            case "application/json":
+                payloadEditor.getSession().setMode("ace/mode/json");
+                break;
+            case "application/xml":
+                payloadEditor.getSession().setMode("ace/mode/xml");
+                break;
+            default:
+                payloadEditor.getSession().setMode("ace/mode/text");
+                break;
         }
     });
 }
 
-function encodBase64(value){
-    return Base64.encode(value);
-    //return window.btoa(value);
+function prettifyXml(xml, tab) { // tab = optional indent value, default is tab (\t)
+    var formatted = '', indent= '';
+    tab = tab || '\t';
+    xml.split(/>\s*</).forEach(function(node) {
+        if (node.match( /^\/\w/ )) indent = indent.substring(tab.length); // decrease indent by one 'tab'
+        formatted += indent + '<' + node + '>\r\n';
+        if (node.match( /^<?\w[^>]*[^\/]$/ )) indent += tab;              // increase indent
+    });
+    return formatted.substring(1, formatted.length-3);
 }
 
+function getEditor(id, mode, advancedAutoComplete, readOnly){
+    var editor = ace.edit(document.getElementById(id));
+    editor.setTheme(
+        getQueryParameterByName("theme").toUpperCase() == "LIGHT" ? "ace/theme/kuroir" : "ace/theme/twilight"
+    );
+    editor.getSession().setMode(mode);
+    editor.setReadOnly(readOnly);
+    if(advancedAutoComplete){
+        editor.setOptions({
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+            enableSnippets: true
+        });
+    }
+    else{
+        editor.setOptions({
+            enableBasicAutocompletion: true
+        });
+    }
+    return editor;
+}
+
+function getQueryParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return "";
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+function postGetVariables(endpoint, dataIn, type){
+    $.ajax({
+        method:"POST",
+        url: urlHost+endpoint,
+        data: dataIn,
+        contentType:"text/plain; charset=utf-8",
+        async: false
+    }).done(function( msg ) {
+        if(msg != "[]"){
+            if(type == "script"){
+                scriptVariablesCompleter = buildCompleter(msg);
+            } else { payloadVariablesCompleter = buildCompleter(msg); }
+            langTools.setCompleters([staticWordCompleter, scriptVariablesCompleter, payloadVariablesCompleter]);
+            dsEditor.completers = [staticWordCompleter, scriptVariablesCompleter, payloadVariablesCompleter];
+        }
+    }).fail(function( msg ){});
+}
 /*********End input change and data post**********/
+
+function buildCompleter(inputData){
+    var temp = {
+               getCompletions: function(editor, session, pos, prefix, callback) {
+                   callback(null, inputData.map(function(word) {
+                       return {
+                           caption: word.name,
+                           snippet: word.packageName == undefined ? word.value : word.packageName+"."+word.value,
+                           meta: word.packageName,
+                           completer: this
+                       };
+                   }));
+               },
+               insertMatch: function(editor, data) {
+                   editor.forEachSelection(function() {
+                       editor.insert(data.caption)
+                   })
+               }
+           };
+    return temp;
+}
 
 function getKeywords(){
 
     console.log("Retrieving keywords...");
     $.ajax({
         method:"GET",
-        url: urlHost +"/keywords"
+        url: urlHost +"/keywords",
+        async: false
     }).done(function( msg ) {
         console.log("Successfully retrieved keywords.");
         entries=msg;
@@ -133,37 +195,25 @@ function getKeywords(){
 
 /***********Start documentation logic************/
 
-function getDocs(){
-
-    console.log("Retrieving docs...");
-    $.ajax({
-        method:"GET",
-        url: urlHost+"/docs"
-    }).done(function( msg ) {
-        console.log("Successfully retrieved docs.");
-        console.log(msg)
-        createDocsPage(msg.nav,msg.docs);
-    });
-}
-
-function createDocsPage(nav,doc){
-    var converter = new showdown.Converter();
-    document.getElementById("navDocs").innerHTML=converter.makeHtml(nav);
-    document.getElementById("mainDocs").innerHTML=converter.makeHtml(doc);
-}
-
-var extended=false;
-function buttonClick(){
-    if(extended){
-        $(".docsContainer").css('height','4vh');
-        extended=false;
-    }
-    else{
-        $(".docsContainer").css('height','45vh');
-        extended=true;
-    }
-}
-
 /***********End documentation logic************/
 
-//resize editor windows: https://ourcodeworld.com/articles/read/994/how-to-make-an-ace-editor-instance-resizable-by-the-user-dinamically-with-a-drag-and-drop-bar
+
+$( "#resizeLeft" ).resizable({
+    resize: function( event, ui ) {
+        payloadEditor.resize();
+        $("#resizeRight").width(
+            $( ".editors" ).width()-($( "#resizeLeft" ).width() + $( "#resizeMid" ).width())
+        );
+    },
+    handles: "e"
+});
+
+$( "#resizeMid" ).resizable({
+    resize: function( event, ui ) {
+        dsEditor.resize();
+        $("#resizeRight").width(
+            $( ".editors" ).width()-($( "#resizeLeft" ).width() + $( "#resizeMid" ).width())
+        );
+    },
+    handles: "e"
+});

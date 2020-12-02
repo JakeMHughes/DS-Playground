@@ -3,6 +3,7 @@ package com.hughesportal.DSplayground;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Response {
 
@@ -13,17 +14,18 @@ public class Response {
 
     Response(){}
 
-    Response(String jsonResult, String contentType){
+    Response(String jsonResult, String contentType, String inputType){
         masterResponse.put("success", true);
         result = new HashMap<>();
         result.put("content", jsonResult);
         result.put("contentType", contentType);
+        result.put("inputType", Objects.requireNonNullElse(inputType, "application/json"));
         result.put("encoding", "UTF-8");
         result.put("logs", new ArrayList<>());
         masterResponse.put("result", result);
     }
 
-    Response(Map<String, Object> start, Map<String, Object> end, String message){
+    Response(Map<String, Object> start, Map<String, Object> end, String message,String inputType){
         masterResponse.put("success", false);
         error = new HashMap<>();
         Map<String, Object> location = new HashMap<>();
@@ -32,6 +34,7 @@ public class Response {
         error.put("location", location);
         error.put("logs", new ArrayList<>());
         error.put("message", message);
+        error.put("inputType", Objects.requireNonNullElse(inputType, "application/json"));
         masterResponse.put("error", error);
     }
 

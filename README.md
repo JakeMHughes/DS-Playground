@@ -1,4 +1,6 @@
 # DS-Playground
+[![Docker Hub Pulls](https://img.shields.io/docker/pulls/jakeizundead/ds-playground?color=%234518f5&label=Docker%20Pulls&logo=docker&logoColor=%23403d3d&style=for-the-badge)](https://hub.docker.com/r/jakeizundead/ds-playground)
+[![Docker Image Size](https://img.shields.io/docker/image-size/jakeizundead/ds-playground?color=%234518f5&label=Image%20Size&logo=docker&logoColor=%23403d3d&style=for-the-badge)](https://hub.docker.com/r/jakeizundead/ds-playground)
 
 DS-Playground is a Thyme leaf application that makes it easy to 
 set an input and script value to be executed by Datasonnet. It works
@@ -9,9 +11,9 @@ a lot like the Intellij plugin but provides an html interface.
   * Json & Json5 formatting
   * Easily accessible documentation page
   * Fast execution time
-* Wanted Features:
   * The ability to resize editor windows and documentation size
   * Swap between light and dark theme via query parameter
+* Wanted Features:
   * Lexically analyzed auto complete
   * Ability to have multiple files in payload section, i.e. vars file
 
@@ -35,8 +37,6 @@ or you can clone this repository to build and run manually.
 
 #### Local
 ```bash
-git clone https://github.com/MS3Inc/datasonnet-mapper
-mvn clean -Ddockerfile.skip install
 git clone https://github.com/JakeMHughes/DS-Playground && cd DS-Playground
 mvn spring-boot:run
 ```
@@ -50,13 +50,20 @@ docker run -dp 8080:8080 --rm --name=ds-playground jakeizundead/ds-playground:la
 The application gets deployed to port 8080 by default so to get access open up your web browser and travel
 to `http://localhost:8080`.
 
+For light mode, append the query paramater `theme=light` to the url
+
 The left panel is the payload panel, the middle panel is your Datasonnet panel and the right panel
 is a read only ouput panel
 ## Built With
 
-* [Datasonnet](https://github.com/modusbox/datasonnet-mapper) - The data transformation
+* [Datasonnet](https://github.com/datasonnet/datasonnet-mapper) - The data transformation
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Ace](https://ace.c9.io/) - The code editors
+* [Bootstrap](https://getbootstrap.com/)
+* [jQuery](https://jquery.com/)
+* [Showdown](https://github.com/showdownjs/showdown) - Markdown to HTML converter
+* [js-base64](https://github.com/dankogai/js-base64) - Base64 encode functionality
+* [frontend-maven-plugin](https://github.com/eirslett/frontend-maven-plugin) - Install npm packages with maven
 
 ## Contributing
 

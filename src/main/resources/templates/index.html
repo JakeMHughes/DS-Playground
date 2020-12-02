@@ -4,38 +4,48 @@
     <meta charset="UTF-8">
     <title>Datasonnet</title>
 
-    <!-- Latest jQuery from Google CDN -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://togetherjs.com/togetherjs-min.js"></script>
+    <!-- jQuery -->
+    <script th:src="@{/node_modules/jquery/dist/jquery.min.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/node_modules/jquery-ui-dist/jquery-ui.min.js}" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" th:href="@{/node_modules/jquery-ui-dist/jquery-ui.css}" type="text/css">
+
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/node_modules/bootstrap/dist/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/node_modules/bootstrap/dist/css/bootstrap-theme.min.css}" type="text/css">
+    <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.min.js}" type="text/javascript" charset="utf-8"></script>
 
     <!-- Showdown for markdown -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+    <script th:src="@{/node_modules/showdown/dist/showdown.min.js}" type="text/javascript" charset="utf-8"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>-->
 
     <link rel="stylesheet" th:href="@{/playground.css}" type="text/css">
     <!-- Ace Editor -->
-    <script th:src="@{/ace/ace.js}" type="text/javascript" charset="utf-8"></script>
-    <script th:src="@{/ace/ext-language_tools.js}" type="text/javascript" charset="utf-8"></script>
-    <script th:src="@{/ace/ext-beautify.js}" type="text/javascript" charset="utf-8"></script>
-    <script th:src="@{/ace/theme-twilight.js}" type="text/javascript" charset="utf-8"></script>
-    <script th:src="@{/js-base64-master/base64.js}" type="text/javascript" charset="utf-8"></script>
-    <script th:src="@{/playground.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/node_modules/ace-builds/src-min/ace.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/node_modules/ace-builds/src-min/ext-language_tools.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/node_modules/ace-builds/src-min/ext-beautify.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/node_modules/ace-builds/src-min/theme-twilight.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{/node_modules/js-base64/base64.js}" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-<div class="editors">
-    <div class="editor" id="payload-editor">{
+<div class="editors" id="editorsContainer">
+    <div id="resizeLeft">
+        <div class="editor" id="input-editor">{
     "message": "Hello World!"
 }</div>
-
-    <div class="editor" id="ds-editor">payload.message</div>
-
-    <div class="editor" id="output-editor" name="result" sandbox="allow-forms allow-popups allow-scripts allow-same-origin">"Hello World"</div>
-
+    </div>
+    <div id="resizeMid">
+        <div class="editor" id="datasonnet-editor">/** DataSonnet
+version=2.0
+output application/json
+input payload application/json
+*/
+payload.message</div>
+    </div>
+    <div id="resizeRight">
+        <div class="editor" id="output-editor" name="result" sandbox="allow-forms allow-popups allow-scripts allow-same-origin">"Hello World"</div>
+    </div>
 </div>
-<div id="resizable" class="docsContainer">
+<div class="docsContainer">
     <div class="docsHeader">
         <button type="button" onclick="buttonClick()">Documentation</button>
     </div>
@@ -47,5 +57,6 @@
 
 <!-- Set Editor Modes -->
 <script th:src="@{/playground.js}" type="text/javascript" charset="utf-8"></script>
+<script th:src="@{/documentation.js}" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
