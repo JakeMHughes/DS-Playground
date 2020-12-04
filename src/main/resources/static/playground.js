@@ -71,6 +71,10 @@ function postTransform(){
                 outEditor.getSession().setMode("ace/mode/xml");
                 outEditor.setValue(prettifyXml(msg.result.content));
             }
+            else if(msg.result.contentType == "application/yaml"){
+                outEditor.getSession().setMode("ace/mode/yaml");
+                outEditor.setValue(msg.result.content);
+            }
             else{
                 outEditor.getSession().setMode("ace/mode/text");
                 outEditor.setValue(msg.result.content);
@@ -89,6 +93,9 @@ function postTransform(){
                 break;
             case "application/xml":
                 payloadEditor.getSession().setMode("ace/mode/xml");
+                break;
+            case "application/yaml":
+                payloadEditor.getSession().setMode("ace/mode/yaml");
                 break;
             default:
                 payloadEditor.getSession().setMode("ace/mode/text");
