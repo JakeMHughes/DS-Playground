@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,7 +40,6 @@ public class Services {
         }
 
         String inputType = "application/json";
-
         Matcher headerMatcher = Pattern.compile("\\/\\*\\* DataSonnet.*\\*\\/")
                 .matcher(script.replaceAll("\n", " "));
         if(headerMatcher.find()){
@@ -53,22 +53,23 @@ public class Services {
 
         Response resp = null;
         try {
-            Document<Object> doc = new MapperBuilder(script).build()
-                    .transform(new DefaultDocument<>(payload, MediaTypes.UNKNOWN),Map.of(), MediaTypes.ANY,Object.class);
+            Document<String> doc = new MapperBuilder(script).build()
+                    .transform(new DefaultDocument<>(payload, MediaTypes.UNKNOWN),Map.of(), MediaTypes.ANY,String.class);
             resp = new Response(doc.getContent().toString(), doc.getMediaType().toString(),inputType);
         }
         catch (Exception e){
             resp = new Response(Response.errorLoc(0,0,0), Response.errorLoc(0,0,0),
                     Objects.requireNonNullElse(e.getMessage(), "Unknown Error"), inputType);
         }
+        System.out.println("Returning: " + resp.getMasterResponse());
         return  ResponseEntity.ok(resp.getMasterResponse());
     }
 
 
     public ResponseEntity<?> getScriptVariables(String script){
         ArrayList<Keyword> keywords = new ArrayList<>();
-        Matcher scriptMatcher = Pattern.compile("local\\s+(\\S+|\\S+(\\(.*?\\))?)=(.*);")
-                .matcher(script.replaceAll("(\n|\\s+)", " "));
+        Matcher scriptMatcher = Pattern.compile("local\\s+(\\S+|\\S+(\\(.*?\\))?)\\s?=(.*);")
+                .matcher(script.replaceAll("(\n|\\s+)", " ").replaceAll(";", ";\n"));
         while(scriptMatcher.find()){
             String name = scriptMatcher.group(1);
             if(name.contains("(")){
@@ -144,8 +145,7 @@ public class Services {
 
     public ResponseEntity<?> getDocs() throws IOException {
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.set("Content-Type",
-                "application/json");
+        responseHeaders.set("Content-Type", "application/json");
 
         File nav = new File("./docs/nav.md");
         String navStr = new String(Files.readAllBytes(nav.toPath()));
@@ -155,4 +155,20 @@ public class Services {
 
         return ResponseEntity.ok().headers(responseHeaders).body(new Documentation(navStr,docsStr));
     }
+
+/*    private Map<String,String> getImports(String script){
+
+        Map<String, String> mapData = new HashMap<>(Map.of());
+        try {
+            Matcher matcher = Pattern.compile("import\\s*('|\")(.*\\.(libsonnet|ds))('|\")").matcher(script);
+            while (matcher.find()) {
+                String fileLoc = matcher.group(2);
+                String data = Files.readString(Path.of(fileLoc));
+                mapData.put(fileLoc, data);
+            }
+            return mapData;
+        } catch (Exception e){
+            return mapData;
+        }
+    }*/
 }

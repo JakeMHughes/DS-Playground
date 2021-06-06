@@ -71,7 +71,7 @@ function postTransform(){
                 outEditor.getSession().setMode("ace/mode/xml");
                 outEditor.setValue(prettifyXml(msg.result.content));
             }
-            else if(msg.result.contentType == "application/yaml"){
+            else if(msg.result.contentType == "application/yaml" || msg.result.contentType == "application/x-yaml"){
                 outEditor.getSession().setMode("ace/mode/yaml");
                 outEditor.setValue(msg.result.content);
             }
@@ -94,6 +94,7 @@ function postTransform(){
             case "application/xml":
                 payloadEditor.getSession().setMode("ace/mode/xml");
                 break;
+            case "application/x-yaml":
             case "application/yaml":
                 payloadEditor.getSession().setMode("ace/mode/yaml");
                 break;
@@ -223,4 +224,52 @@ $( "#resizeMid" ).resizable({
         );
     },
     handles: "e"
+});
+
+var defaultHeight = $("#resizeLeft").height();
+var extended=false;
+function buttonClick(){
+    if(extended){
+        $(".docsContainer").css('bottom', '0' );
+        $(".docsContainer").css('top', '' );
+        $(".docsContainer").height($( ".docsHeader" ).height())
+        $("#resizeLeft").height(defaultHeight);
+        $("#resizeRight").height(defaultHeight);
+        $("#resizeMid").height(defaultHeight);
+        extended=false;
+    }
+    else{
+        $(".docsContainer").height("45vh");
+        var computedHeight=(defaultHeight + $( ".docsHeader" ).height())  - $(".docsContainer").height()
+        $("#resizeLeft").height(computedHeight);
+        $("#resizeRight").height(computedHeight);
+        $("#resizeMid").height(computedHeight);
+        extended=true;
+    }
+    payloadEditor.resize();
+    dsEditor.resize();
+    outEditor.resize();
+}
+
+$( ".docsContainer" ).resizable({
+    resize: function( event, ui ) {
+        if(ui.element.css('top') != null){
+            extended=true;
+            var computedHeight=(defaultHeight + $( ".docsHeader" ).height())  - $(".docsContainer").height()
+            $("#resizeLeft").height(computedHeight);
+            $("#resizeRight").height(computedHeight);
+            $("#resizeMid").height(computedHeight);
+        }else{
+            extended=false;
+            $("#resizeLeft").height(defaultHeight);
+            $("#resizeRight").height(defaultHeight);
+            $("#resizeMid").height(defaultHeight);
+        }
+        payloadEditor.resize();
+        dsEditor.resize();
+        outEditor.resize();
+    },
+    handles: "n",
+    minHeight: Math.round($( ".docsHeader" ).height()),
+    maxHeight: Math.round($( window ).height() * (2/3))
 });

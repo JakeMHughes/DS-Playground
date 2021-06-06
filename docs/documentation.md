@@ -2851,86 +2851,186 @@ Output:
 ```
 ---
 ## datetime
-### changeTimeZone
-*Changes the date timezone, retaining the instant. This normally results in a change to the local date-time. 
-The response is formatted using the same format as an input.*
+This library uses Java’s DateTimeFormatter library to format the date to a consistent value using ISO_OFFSET_DATE_TIME. If your datetime is not in this format, you can use the parse function to convert it. After you are finished executing your logic, you can use the format function to set the output format.
+### atBeginningOfDay
+*Returns the given datetime at midnight.*
 
 * Params:
-    - 1: datetime1: String
-    - 2: format1: String
-    - 3: datetime2: String
-    - 4: format2: String
+    - 1: datetime: String
 
 Example:
 ```json5
-ds.datetime.changeTimeZone("2019-07-04T21:00:00-0500", "yyyy-MM-dd'T'HH:mm:ssZ", "America/Los_Angeles")
+ds.datetime.atBeginningOfDay("2020-12-31T23:19:35Z")
 ```
 Output:
 ```json5
-"2019-07-04T19:00:00-0700"
+"2020-12-31T00:00:00Z"
+```
+---
+### atBeginningOfHour
+*Returns the given datetime with the minutes and seconds set to zero.*
+
+* Params:
+  - 1: datetime: String
+
+Example:
+```json5
+ds.datetime.atBeginningOfHour("2020-12-31T23:19:35Z")
+```
+Output:
+```json5
+"2020-12-31T23:00:00Z"
+```
+---
+### atBeginningOfMonth
+*Returns the given datetime with the day set to first of the month and the time set to midnight.*
+
+* Params:
+  - 1: datetime: String
+
+Example:
+```json5
+ds.datetime.atBeginningOfMonth("2020-12-31T23:19:35Z")
+```
+Output:
+```json5
+"2020-12-01T00:00:00Z"
+```
+---
+### atBeginningOfWeek
+*Returns the given datetime at the first of the current week and the time set to midnight.*
+
+* Params:
+  - 1: datetime: String
+
+Example:
+```json5
+ds.datetime.atBeginningOfWeek("2020-12-31T23:19:35Z")
+```
+Output:
+```json5
+"2020-12-27T00:00:00Z"
+```
+---
+### atBeginningOfYear
+*Returns the given datetime at the first of the year.*
+
+* Params:
+  - 1: datetime: String
+
+Example:
+```json5
+ds.datetime.atBeginningOfWeek("2020-12-31T23:19:35Z")
+```
+Output:
+```json5
+"2020-01-01T00:00:00Z"
+```
+---
+### changeTimeZone
+*Changes the date timezone, retaining the instant. This normally results in a change to the local date-time.*
+
+* Params:
+  - 1: datetime: String
+  - 2: timezone: String
+
+Example:
+```json5
+ds.datetime.changeTimeZone("2020-12-31T23:19:35Z", "America/Los_Angeles")
+```
+Output:
+```json5
+"2020-12-31T15:19:35-08:00"
 ```
 ---
 ### compare
 *Returns 1 if datetime1 > datetime2, -1 if datetime1 < datetime2, 0 if datetime1 == datetime2.*
 
 * Params:
-    - 1: datetime1: String
-    - 2: format1: String
-    - 3: datetime2: String
-    - 4: format2: String
+  - 1: datetime1: String
+  - 2: datetime2: String
 
 Example:
 ```json5
-ds.datetime.compare("2019-07-04T21:00:00", "yyyy-MM-dd'T'HH:mm:ss", "2019-07-04T21:00:00", "yyyy-MM-dd'T'HH:mm:ss")
+ds.datetime.compare("2020-12-31T23:19:35Z","2020-01-01T00:00:00Z")
 ```
 Output:
 ```json5
-0
+1
+```
+---
+### date
+*This function uses a datetime object to generate a datetime in string format. Every key in the object is an optional number value, except the timezone which is an optional string.*
+
+* Params:
+  - 1: datetime: Object
+
+* DateTime Object Structure:
+```json5
+{
+    "year": 0,
+    "month": 0,
+    "day": 0,
+    "hour": 0,
+    "minute": 0,
+    "second": 0,
+    "timezone": "Z"
+}
+```
+
+Example:
+```json5
+local datetime={
+  "year": 2021,
+  "timezone": "America/Los_Angeles"
+};
+ds.datetime.date(datetime)
+```
+Output:
+```json5
+"2021-01-01T00:00:00-08:00"
 ```
 ---
 ### daysBetween
-*Returns the number of days between to dates. Dates are in "yyyy-MM-dd'T'HH:mm:ss.SSSVV" format.*
+*Returns the number of days between `datetime1` and `datetime2.`*
 
 * Params:
-    - 1: datetime1: String
-    - 2: datetime2: String
+  - 1: datetime1: String
+  - 2: datetime2: String
 
 Example:
 ```json5
-local a = 
-    ds.datetime.format(ds.datetime.now(),"yyyy-MM-dd'T'HH:mm:ss.SSSSSSVV","yyyy-MM-dd'T'HH:mm:ss.SSSVV");
-local b = "2019-09-14T18:53:41.425Z";
+local date1 = "2019-09-20T18:53:41.425Z";
+local date2 = "2019-09-14T18:53:41.425Z";
 
-
-ds.datetime.daysBetween(a,b)
+ds.datetime.daysBetween(date1, date2)
 ```
 Output:
 ```json5
-366
+6
 ```
 ---
 ### format
-*Reformats a datetime string.*
+*Given a datetime, will convert it to the specified output format.*
 
 * Params:
-    - 1: datetime: String
-    - 2: inputFormat: String
-    - 3: outputFormat: String
+  - 1: datetime: String
+  - 2: outputFormat: String
 
 Example:
 ```json5
-ds.datetime.format("2019-07-04T21:00:00Z", "yyyy-MM-dd'T'HH:mm:ssVV", "d MMM uuuu")
+ds.datetime.format("2019-09-20T18:53:41.425Z", "yyyy/MM/dd")
 ```
 Output:
 ```json5
-"4 Jul 2019"
+"2019/09/20"
 ```
 ---
 ### isLeapYear
-*Returns a boolean indicating if the given date year is a leap year. Dates are in "yyyy-MM-dd'T'HH:mm:ss.SSSVV" format*
+*Returns a boolean indicating if `datetime` is a leap year.*
 
 * Params:
-    - 1: datetime: String
+  - 1: datetime: String
 
 Example:
 ```json5
@@ -2941,28 +3041,75 @@ Output:
 false
 ```
 ---
+### minus
+*Subtracts a `period` type from the given datetime.*
+
+* Params:
+  - 1: datetime: String
+  - 2: period: String
+
+Example:
+```json5
+ds.datetime.minus("2019-09-20T18:53:41Z", "P2D")
+```
+Output:
+```json5
+"2019-09-18T18:53:41Z"
+```
+---
 ### now
 *Returns current datetime.*
 
 Example:
 ```json5
-ds.datetime.now
+ds.datetime.now()
 ```
 Output:
 ```json5
-"2020-09-14T19:16:04.529575Z"
+"2021-01-05T13:09:45.476375-05:00"
 ```
 ---
-### toLocalDate
-*Converts date to local date*
+### parse
+*Parses the datetime using the input format and returns the value in the default format. If an epoch or timestamp value is used as the datetime you can use `"epoch"` or `"timestamp"` as the inputFormat*
 
 * Params:
-    - 1: datetime: String
-    - 2: format: String
+  - 1: datetime: String|Number
+  - 2: inputFormat: String
 
 Example:
 ```json5
-ds.datetime.toLocalDate("2019-07-04T21:00:00-0500", "yyyy-MM-dd'T'HH:mm:ssZ")
+ds.datetime.parse("12/31/1990 10:10:10", "MM/dd/yyyy HH:mm:ss")
+```
+Output:
+```json5
+"1990-12-31T10:10:10Z"
+```
+---
+### plus
+*Adds a `period` type from the given datetime.*
+
+* Params:
+  - 1: datetime: String
+  - 2: period: String
+
+Example:
+```json5
+ds.datetime.plus("2019-09-18T18:53:41Z", "P2D")
+```
+Output:
+```json5
+"2019-09-20T18:53:41Z"
+```
+---
+### toLocalDate
+*Converts a zone datetime to a local date*
+
+* Params:
+  - 1: datetime: String
+
+Example:
+```json5
+ds.datetime.toLocalDate("2019-07-04T18:53:41Z")
 ```
 Output:
 ```json5
@@ -2970,15 +3117,14 @@ Output:
 ```
 ---
 ### toLocalDateTime
-*Converts date to local datetime*
+*Converts a zone datetime to a local datetime.*
 
 * Params:
     - 1: datetime: String
-    - 2: format: String
 
 Example:
 ```json5
-ds.datetime.toLocalDateTime("2019-07-04T21:00:00-0500", "yyyy-MM-dd'T'HH:mm:ssZ")
+ds.datetime.toLocalDateTime("2019-07-04T21:00:00Z")
 ```
 Output:
 ```json5
@@ -2986,84 +3132,211 @@ Output:
 ```
 ---
 ### toLocalTime
-*Converts datetime to local time*
+*Converts a zone datetime to a local time.*
 
 * Params:
     - 1: datetime: String
-    - 2: format: String
 
 Example:
 ```json5
-ds.datetime.toLocalTime("2019-07-04T21:00:00-0500", "yyyy-MM-dd'T'HH:mm:ssZ")
+ds.datetime.toLocalTime("2019-07-04T21:00:00Z")
 ```
 Output:
 ```json5
 "21:00:00"
 ```
 ---
-## localdatetime
-### compare
-*Returns 1 if datetime1 > datetime2, -1 if datetime1 < datetime2, and 0 if datetime1 == datetime2. 
-The format1 and format2 parameters must not have an offset or time zone.*
+### today
+*Returns the datetime of the current day at midnight.*
+
+Example:
+```json5
+ds.datetime.today
+```
+Output:
+```json5
+"2021-01-05T00:00:00-05:00"
+```
+---
+### tomorrow
+*Returns the datetime of the next day at midnight.*
+
+Example:
+```json5
+ds.datetime.tomorrow
+```
+Output:
+```json5
+"2021-01-06T00:00:00-05:00"
+```
+---
+### yesterday
+*Returns the datetime of the previous day at midnight.*
+
+Example:
+```json5
+ds.datetime.yesterday
+```
+Output:
+```json5
+"2021-01-04T00:00:00-05:00"
+```
+---
+## period
+### between
+*Returns the period between two datetime objects.*
 
 * Params:
-    - 1: datetime1: String
-    - 2: format1: String
-    - 3: datetime2: String
-    - 4: format2: String
+  - 1: datetime1: String
+  - 2: datetime2: String
 
 Example:
 ```json5
-ds.localdatetime.compare("2019-07-04T21:00:00", "yyyy-MM-dd'T'HH:mm:ss", "2019-07-04T21:00:00", "yyyy-MM-dd'T'HH:mm:ss")
+ds.period.between(
+  ds.datetime.date({year:2020}),
+  ds.datetime.date({year:2019, month: 3})
+)
 ```
 Output:
 ```json5
-0
+"P-10M"
 ```
 ---
-### format
-*Reformats a local date-time string.*
+### days
+*Returns the number of given days in period format.*
 
 * Params:
-    - 1: datetime: String
-    - 2: inputFormat: String
-    - 3: outputFormat: String
+  - 1: num: Number
 
 Example:
 ```json5
-ds.localdatetime.format("2019-07-04T21:00:00", "yyyy-MM-dd'T'HH:mm:ss", "d MMM uuuu")
+ds.period.days(5)
 ```
 Output:
 ```json5
-"4 Jul 2019"
+"P5D"
 ```
 ---
-### now
-*Returns the current date/time from the system UTC clock in ISO-8601 format without a time zone.*
-
-Example:
-```json5
-ds.localdatetime.now
-```
-Output:
-```json5
-"2020-09-14T18:14:01.333122"
-```
----
-### offset
-*The datetime parameter is in the ISO-8601 format without an offset. The period is a string in the ISO-8601 period format.*
+### duration
+*Returns the given time object in a Period of Time format*
 
 * Params:
-    - 1: datetime: String
-    - 2: period: String
+  - 1: time: Object
+  
+* Time Object Structure:
+```json5
+{
+  days: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0
+}
+```
 
 Example:
 ```json5
-ds.localdatetime.offset("2019-07-22T21:00:00", "P1Y1D")
+ds.period.days(5)
 ```
 Output:
 ```json5
-"2020-07-23T21:00:00"
+"PT25H1M1S"
 ```
 ---
+### hours
+*Returns the number of given hours in a Period of Time format.*
+
+* Params:
+  - 1: num: Number
+
+Example:
+```json5
+ds.period.hours(1)
+```
+Output:
+```json5
+"PT1H"
+```
+---
+### minutes
+*Returns the number of given minutes in a Period of Time format.*
+
+* Params:
+  - 1: num: Number
+
+Example:
+```json5
+ds.period.minutes(1)
+```
+Output:
+```json5
+"PT1M"
+```
+---
+### months
+*Returns the number of given months in a Period format*
+
+* Params:
+  - 1: num: Number
+
+Example:
+```json5
+ds.period.months(1)
+```
+Output:
+```json5
+"P1M"
+```
+---
+### period
+*Returns the given time object in a Period format*
+
+* Params:
+  - 1: period: Object
+
+* Example Period Structure
+```json5
+{
+  years: 0,
+  months: 0,
+  days: 0
+}
+```
+Example:
+```json5
+ds.period.period({years: 1, months: 1, days: 1})
+```
+Output:
+```json5
+"P1Y1M1D"
+```
+---
+### seconds
+*Returns the number of given seconds in a Period of Time format.*
+
+* Params:
+  - 1: num: Number
+
+Example:
+```json5
+ds.period.seconds(1)
+```
+Output:
+```json5
+"PT1S"
+```
+---
+### years
+*Returns the number of given years in a Period format*
+
+* Params:
+  - 1: num: Number
+
+Example:
+```json5
+ds.period.years(1)
+```
+Output:
+```json5
+"P1Y"
+```
 ---
