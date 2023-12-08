@@ -30,7 +30,7 @@ public class Services {
         String script = input_data.getResources();
 
         //pull payload
-        for(Map<String,String> var : input_data.getInputsX()){
+        for(Map<String,String> var : input_data.getInputs()){
             if(var.get("name").equals("payload")){
                 payload=new String(Base64.getDecoder().decode(var.get("content")));
             }

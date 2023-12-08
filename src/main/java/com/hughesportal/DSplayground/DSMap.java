@@ -25,18 +25,7 @@ public class DSMap {
         this.resources = res;
     }
 
-
-
-    public ArrayList<Inputs> getInputs() {
-        ArrayList<Inputs> data = new ArrayList<>();
-        for (Map<String,String> mapData : inputs) {
-            data.add(new Inputs(mapData.get("name"), mapData.get("content"), mapData.get("contentType")));
-        }
-
-        return data;
-    }
-
-    public ArrayList<Map<String,String>> getInputsX() {
+    public ArrayList<Map<String,String>> getInputs() {
 
         return inputs;
     }
