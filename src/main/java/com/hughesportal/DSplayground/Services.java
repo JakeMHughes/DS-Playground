@@ -154,6 +154,10 @@ public class Services {
         File docs = new File("./docs/documentation.md");
         String docsStr = new String(Files.readAllBytes(docs.toPath()));
 
-        return ResponseEntity.ok().headers(responseHeaders).body(new Documentation(navStr,docsStr));
+        Map<String,String> docData = new HashMap<>();
+        docData.put("nav", navStr);
+        docData.put("docs", docsStr);
+
+        return ResponseEntity.ok().headers(responseHeaders).body(docData);
     }
 }

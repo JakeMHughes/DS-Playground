@@ -13,10 +13,6 @@ import java.io.IOException;
 @org.springframework.stereotype.Controller
 public class Controller {
 
-
-
-    Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @Autowired
     Services service;
 
