@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -155,20 +154,4 @@ public class Services {
 
         return ResponseEntity.ok().headers(responseHeaders).body(new Documentation(navStr,docsStr));
     }
-
-/*    private Map<String,String> getImports(String script){
-
-        Map<String, String> mapData = new HashMap<>(Map.of());
-        try {
-            Matcher matcher = Pattern.compile("import\\s*('|\")(.*\\.(libsonnet|ds))('|\")").matcher(script);
-            while (matcher.find()) {
-                String fileLoc = matcher.group(2);
-                String data = Files.readString(Path.of(fileLoc));
-                mapData.put(fileLoc, data);
-            }
-            return mapData;
-        } catch (Exception e){
-            return mapData;
-        }
-    }*/
 }

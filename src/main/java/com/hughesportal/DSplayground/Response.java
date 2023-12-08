@@ -8,15 +8,13 @@ import java.util.Objects;
 public class Response {
 
     private Map<String, Object> masterResponse = new HashMap<>();
-    private Map<String, Object> result;
-    private Map<String, Object> error;
 
 
     Response(){}
 
     Response(String jsonResult, String contentType, String inputType){
         masterResponse.put("success", true);
-        result = new HashMap<>();
+        Map<String, Object> result = new HashMap<>();
         result.put("content", jsonResult);
         result.put("contentType", contentType);
         result.put("inputType", Objects.requireNonNullElse(inputType, "application/json"));
@@ -27,7 +25,7 @@ public class Response {
 
     Response(Map<String, Object> start, Map<String, Object> end, String message,String inputType){
         masterResponse.put("success", false);
-        error = new HashMap<>();
+        Map<String, Object> error = new HashMap<>();
         Map<String, Object> location = new HashMap<>();
         location.put("start", start);
         location.put("end", end);
@@ -53,21 +51,5 @@ public class Response {
 
     public void setMasterResponse(Map<String, Object> masterResponse) {
         this.masterResponse = masterResponse;
-    }
-
-    public Map<String, Object> getResult() {
-        return result;
-    }
-
-    public void setResult(Map<String, Object> result) {
-        this.result = result;
-    }
-
-    public Map<String, Object> getError() {
-        return error;
-    }
-
-    public void setError(Map<String, Object> error) {
-        this.error = error;
     }
 }
