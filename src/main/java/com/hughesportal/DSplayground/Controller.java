@@ -47,6 +47,6 @@ public class Controller {
 
     @PostMapping("/transform")
     public ResponseEntity<?> transform(@RequestBody DSMap obj){
-        return service.transformLogic((DSMap) obj);
+        return service.transformLogic(obj);
     }
 }

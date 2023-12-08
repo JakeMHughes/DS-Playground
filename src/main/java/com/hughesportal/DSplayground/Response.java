@@ -16,7 +16,7 @@ public class Response {
         masterResponse.put("success", true);
         Map<String, Object> result = new HashMap<>();
         result.put("content", jsonResult);
-        result.put("contentType", contentType);
+        result.put("contentType", contentType); //output type
         result.put("inputType", Objects.requireNonNullElse(inputType, "application/json"));
         result.put("encoding", "UTF-8");
         result.put("logs", new ArrayList<>());

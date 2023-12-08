@@ -27,17 +27,16 @@ public class Services {
     public ResponseEntity<?> transformLogic(DSMap input_data){
 
         String payload = "";
-        String script = input_data.getResources().toString();
+        String script = input_data.getResources();
 
-        Map<String, Document<?>> variables = new HashMap<>();
-        for(Inputs var : input_data.getInputs()){
-            if(var.getName().equals("payload")){
-                payload=var.getContent();
-            }else {
-                variables.put(var.getName(), new DefaultDocument<>(var.getContent(), MediaType.parseMediaType(var.getContentType())));
+        //pull payload
+        for(Map<String,String> var : input_data.getInputsX()){
+            if(var.get("name").equals("payload")){
+                payload=new String(Base64.getDecoder().decode(var.get("content")));
             }
         }
 
+        //pull inputtype from header
         String inputType = "application/json";
         Matcher headerMatcher = Pattern.compile("\\/\\*\\* DataSonnet.*\\*\\/")
                 .matcher(script.replaceAll("\n", " "));
@@ -50,11 +49,12 @@ public class Services {
         }
 
 
-        Response resp = null;
+        //build response
+        Response resp;
         try {
             Document<String> doc = new MapperBuilder(script).build()
                     .transform(new DefaultDocument<>(payload, MediaTypes.UNKNOWN),Map.of(), MediaTypes.ANY,String.class);
-            resp = new Response(doc.getContent().toString(), doc.getMediaType().toString(),inputType);
+            resp = new Response(doc.getContent(), doc.getMediaType().toString(),inputType);
         }
         catch (Exception e){
             resp = new Response(Response.errorLoc(0,0,0), Response.errorLoc(0,0,0),
@@ -111,7 +111,7 @@ public class Services {
                     "    )\n" +
                     ")\n").build();
 
-
+    //uses DS to pull the variables from the payload for autocomplete
     public ResponseEntity<?> getPayloadVariables(String payload){
         try {
             Document<String> doc = payloadVariableMapper
@@ -130,6 +130,7 @@ public class Services {
         }
     }
 
+    //pre defined keywords for ACE auto complete
     public ResponseEntity<?> getKeywords() throws IOException {
 
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -142,6 +143,7 @@ public class Services {
         return ResponseEntity.ok().headers(responseHeaders).body(wordsStr);
     }
 
+    //get docs for UI documentation
     public ResponseEntity<?> getDocs() throws IOException {
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Content-Type", "application/json");

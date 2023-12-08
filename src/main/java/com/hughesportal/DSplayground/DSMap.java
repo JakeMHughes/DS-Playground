@@ -1,6 +1,7 @@
 package com.hughesportal.DSplayground;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class DSMap {
 
@@ -16,10 +17,10 @@ public class DSMap {
 "resources": "/** DataSonnet\nversion=2.0\noutput application/xml\ninput payload application/json\n\*\/payload"
 }
  */
-    private ArrayList<Inputs> inputs = new ArrayList<>();
-    private Object resources;
+    private final ArrayList<Map<String,String>> inputs;
+    private final String resources;
 
-    DSMap(ArrayList<Inputs> inputs, String res){
+    DSMap(ArrayList<Map<String,String>> inputs, String res){
         this.inputs = inputs;
         this.resources = res;
     }
@@ -27,34 +28,20 @@ public class DSMap {
 
 
     public ArrayList<Inputs> getInputs() {
+        ArrayList<Inputs> data = new ArrayList<>();
+        for (Map<String,String> mapData : inputs) {
+            data.add(new Inputs(mapData.get("name"), mapData.get("content"), mapData.get("contentType")));
+        }
+
+        return data;
+    }
+
+    public ArrayList<Map<String,String>> getInputsX() {
+
         return inputs;
     }
 
-    public Object getResources() {
+    public String getResources() {
         return resources;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder content = new StringBuilder("{\n");
-        content.append("\t\"inputs\":");
-        if(inputs.size()==0){
-            content.append("[],\n");
-        }
-        else{
-            content.append("[\n");
-            for(Inputs in : inputs){
-                if(inputs.indexOf(in) == inputs.size()) {
-                    content.append(in.toString()).append("\n");
-                }else{
-                    content.append(in.toString()).append(",\n");
-                }
-            }
-            content.append("],\n");
-        }
-        content.append("\"resources\": ").append(resources.toString()).append("\n");
-        content.append("}");
-
-        return content.toString();
     }
 }
